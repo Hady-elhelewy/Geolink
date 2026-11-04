@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GeoLink | مساحين</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1b2733;--paper:#f3f5f2;--card:#fff;--line:#d5dbd6;--stake:#e8590c;--ok:#2b8a3e;--mut:#5d6b66}
+@media (prefers-color-scheme:dark){:root{--ink:#eef1ee;--paper:#141b21;--card:#1c262e;--line:#33414a;--mut:#9fb0aa}}
+*{box-sizing:border-box}
+body{margin:0;font-family:Tajawal,Arial,sans-serif;background:var(--paper);color:var(--ink);line-height:1.7;
+background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:32px 32px;background-attachment:fixed}
+main{max-width:560px;margin:0 auto;padding:28px 18px 60px}
+h1{font-size:2.1rem;font-weight:800;margin:.2em 0}
+h2{font-size:1.4rem;margin:0 0 14px}
+p{margin:.4em 0;color:var(--mut)}
+.brand{font-weight:800;letter-spacing:.5px;color:var(--stake)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin:14px 0}
+.big{display:block;width:100%;text-align:right;text-decoration:none;color:inherit;border-right:6px solid var(--stake);cursor:pointer}
+.big b{font-size:1.2rem;display:block}
+label{display:block;font-weight:700;margin:12px 0 4px}
+input,select,textarea{width:100%;font:inherit;padding:11px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink)}
+textarea{min-height:90px}
+button.go{margin-top:18px;width:100%;font:inherit;font-weight:800;font-size:1.05rem;padding:13px;border:0;border-radius:8px;background:var(--stake);color:#fff;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--stake);outline-offset:2px}
+a.back{color:var(--mut);display:inline-block;margin-bottom:8px}
+.msg{padding:12px;border-radius:8px;margin-top:14px;font-weight:700}
+.msg.ok{background:#e6f4ea;color:#1e6b2f}.msg.err{background:#fde8e8;color:#a61e1e}
+.row{border-top:1px dashed var(--line);padding:12px 0}
+.row:first-child{border-top:0}
+.tag{display:inline-block;background:var(--stake);color:#fff;border-radius:99px;padding:0 10px;font-size:.85rem}
+.warn{background:#fff4e6;color:#7a3b00;border:1px solid #ffd8a8;border-radius:8px;padding:10px;font-size:.9rem}
+.tabs{display:flex;gap:8px;margin-bottom:6px}
+.tabs button{flex:1;font:inherit;font-weight:700;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);cursor:pointer}
+.tabs button.on{background:var(--ink);color:var(--paper)}
+</style>
+</head>
+<body>
+<main id="app"></main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.12.2/firebase-app-compat.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.12.2/firebase-firestore-compat.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.12.2/firebase-auth-compat.min.js"></script>
+<script>
+// رقم الواتساب بتاعك بصيغة دولية بدون + (مثال: 201012345678). سيبه فاضي لو مش عايز واتساب.
+const WA_NUMBER = "";
+
+firebase.initializeApp({
+  apiKey: "AIzaSyApICmCU5DVg_-ttahelh3xPuGbDELhcNA",
+  authDomain: "geolink-e80b4.firebaseapp.com",
+  projectId: "geolink-e80b4",
+  storageBucket: "geolink-e80b4.firebasestorage.app",
+  messagingSenderId: "611615414436",
+  appId: "1:611615414436:web:771c18e2dd31ebe5606e31"
+});
+const db = firebase.firestore();
+const auth = firebase.auth();
+const app = document.getElementById("app");
+const GOVS = ["القاهرة","الجيزة","الإسكندرية","القليوبية","الشرقية","الدقهلية","الغربية","كفر الشيخ","المنوفية","البحيرة","مطروح","الإسماعيلية","بورسعيد","السويس","شمال سيناء","جنوب سيناء","دمياط","الفيوم","بني سويف","المنيا","أسيوط","سوهاج","قنا","الأقصر","أسوان","البحر الأحمر","الوادي الجديد","أخرى"];
+const SERVICES = ["رفع مساحي لأرض","توقيع وتحديد مناسيب (إنشاءات)","حساب كميات","رفع مساحي لمبنى قائم","تقسيم أراضي","خدمة أخرى"];
+
+const el = (tag, attrs = {}, ...kids) => {
+  const e = document.createElement(tag);
+  for (const k in attrs) k === "class" ? e.className = attrs[k] : e.setAttribute(k, attrs[k]);
+  kids.forEach(c => e.append(c));
+  return e;
+};
+const opts = list => list.map(x => `<option>${x}</option>`).join("");
+
+function home() {
+  app.innerHTML = `
+    <div class="brand">GeoLink</div>
+    <h1>مساحين موثوقين لشغلك</h1>
+    <p>اطلب مساح لأرضك أو مشروعك، أو سجّل كمساح واستقبل طلبات في محافظتك.</p>
+    <a class="card big" href="#client"><b>أنا عميل، محتاج مساح</b><p>املا بيانات الطلب وهنتواصل معاك.</p></a>
+    <a class="card big" href="#surveyor"><b>أنا مساح، عايز شغل</b><p>سجّل بياناتك وخبراتك.</p></a>`;
+}
+
+function form(kind) {
+  const client = kind === "client";
+  app.innerHTML = `
+    <a class="back" href="#">رجوع</a>
+    <h2>${client ? "طلب مساح" : "تسجيل مساح"}</h2>
+    <form class="card" id="f">
+      <label>الاسم</label><input name="name" required>
+      <label>رقم الموبايل</label><input name="phone" type="tel" inputmode="tel" required placeholder="01xxxxxxxxx">
+      <label>المحافظة</label><select name="gov">${opts(GOVS)}</select>
+      ${client ? `
+      <label>نوع الخدمة</label><select name="service">${opts(SERVICES)}</select>
+      <label>موقع الأرض أو المشروع (المنطقة أو لينك الخريطة)</label><input name="location" required>
+      <label>ملاحظات</label><textarea name="notes"></textarea>` : `
+      <label>التخصص</label><select name="spec">${opts(["مساح عام","مساح إنشاءات","مساح أراضي","مساح طرق"])}</select>
+      <label>سنين الخبرة</label><input name="years" type="number" min="0" max="50" inputmode="numeric" required>
+      <label>الأجهزة المتاحة (توتال ستيشن، GPS، ليزر...)</label><input name="gear">
+      <label>نبذة عن أعمالك</label><textarea name="notes"></textarea>`}
+      <button class="go" type="submit">${client ? "ابعت الطلب" : "سجّل بياناتي"}</button>
+      <div id="out"></div>
+    </form>`;
+  document.getElementById("f").onsubmit = async ev => {
+    ev.preventDefault();
+    const btn = ev.target.querySelector("button"), out = document.getElementById("out");
+    const data = Object.fromEntries(new FormData(ev.target));
+    btn.disabled = true; btn.textContent = "جاري الإرسال...";
+    try {
+      await db.collection(client ? "requests" : "surveyors").add({
+        ...data, status: "new", createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      out.className = "msg ok";
+      out.textContent = client ? "وصل طلبك. هنتواصل معاك قريباً." : "تم تسجيلك. هنتواصل معاك لما يوصل طلب في محافظتك.";
+      ev.target.reset();
+      if (WA_NUMBER) {
+        const t = client ? `طلب مساح جديد من ${data.name} - ${data.service} - ${data.gov}` : `تسجيل مساح جديد: ${data.name} - ${data.spec} - ${data.gov}`;
+        out.append(" ", el("a", { href: `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t)}`, target: "_blank" }, "كمّل على واتساب"));
+      }
+    } catch (e) {
+      out.className = "msg err";
+      out.textContent = "حصلت مشكلة في الإرسال. تأكد من النت وجرب تاني.";
+      console.error(e);
+    }
+    btn.disabled = false; btn.textContent = client ? "ابعت الطلب" : "سجّل بياناتي";
+  };
+}
+
+async function adminPanel(user) {
+  app.innerHTML = `<a class="back" href="#">رجوع</a><h2>لوحة التحكم</h2>
+    <p>مسجّل دخول: <span id="who"></span> <button id="out" class="go" style="width:auto;margin:0 8px;padding:4px 14px;font-size:.9rem">خروج</button></p>
+    <div class="tabs"><button id="t1" class="on">الطلبات</button><button id="t2">المساحين</button></div>
+    <div class="card" id="list">جاري التحميل...</div>`;
+  document.getElementById("who").textContent = user.email;
+  document.getElementById("out").onclick = () => auth.signOut();
+  const list = document.getElementById("list");
+  async function show(col) {
+    list.textContent = "جاري التحميل...";
+    try {
+      const snap = await db.collection(col).orderBy("createdAt", "desc").get();
+      list.textContent = "";
+      if (snap.empty) { list.textContent = "لسه مفيش بيانات."; return; }
+      snap.forEach(d => {
+        const x = d.data(), r = el("div", { class: "row" });
+        const line = col === "requests"
+          ? [x.service, x.gov, x.location] : [x.spec, x.gov, `${x.years || 0} سنة خبرة`, x.gear];
+        r.append(el("b", {}, x.name || "-"), " ", el("span", { class: "tag" }, x.status || "new"),
+          el("div", {}, x.phone || ""), el("div", {}, line.filter(Boolean).join(" | ")));
+        if (x.notes) r.append(el("p", {}, x.notes));
+        const sel = el("select", {});
+        sel.innerHTML = opts(["new","contacted","deposit-paid","done","rejected"]);
+        sel.value = x.status || "new";
+        sel.onchange = () => d.ref.update({ status: sel.value });
+        r.append(sel);
+        list.append(r);
+      });
+    } catch (e) { list.textContent = "تعذر تحميل البيانات."; console.error(e); }
+  }
+  const t1 = document.getElementById("t1"), t2 = document.getElementById("t2");
+  t1.onclick = () => { t1.className = "on"; t2.className = ""; show("requests"); };
+  t2.onclick = () => { t2.className = "on"; t1.className = ""; show("surveyors"); };
+  show("requests");
+}
+
+let unsub;
+function admin() {
+  if (unsub) unsub();
+  unsub = auth.onAuthStateChanged(u => {
+    if (location.hash !== "#admin") return;
+    u ? adminPanel(u) : loginView();
+  });
+}
+function loginView() {
+  app.innerHTML = `<a class="back" href="#">رجوع</a><h2>دخول الأدمن</h2>
+    <form class="card" id="lf">
+      <label>الإيميل</label><input name="email" type="email" autocomplete="username" required>
+      <label>الباسورد</label><input name="pw" type="password" autocomplete="current-password" required>
+      <button class="go" type="submit">دخول</button><div id="lo"></div>
+    </form>`;
+  document.getElementById("lf").onsubmit = async ev => {
+    ev.preventDefault();
+    const f = new FormData(ev.target), lo = document.getElementById("lo");
+    try { await auth.signInWithEmailAndPassword(f.get("email"), f.get("pw")); }
+    catch (e) { lo.className = "msg err"; lo.textContent = "الإيميل أو الباسورد غلط."; }
+  };
+}
+
+function route() {
+  const h = location.hash.slice(1);
+  if (h === "client" || h === "surveyor") form(h);
+  else if (h === "admin") admin();
+  else home();
+  scrollTo(0, 0);
+}
+addEventListener("hashchange", route);
+route();
+</script>
+</body>
+</html>
