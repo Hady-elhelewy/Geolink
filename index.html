@@ -3,41 +3,135 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GeoLink | مساحين</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+<title>GeoLink | أخصائيو المساحة</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2d5be3">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1b2733;--paper:#f3f5f2;--card:#fff;--line:#d5dbd6;--stake:#e8590c;--ok:#2b8a3e;--mut:#5d6b66}
-@media (prefers-color-scheme:dark){:root{--ink:#eef1ee;--paper:#141b21;--card:#1c262e;--line:#33414a;--mut:#9fb0aa}}
+:root{--bg:#f7f9fc;--card:#fff;--line:#e8edf5;--ink:#0f172a;--mut:#64748b;--blue:#2d5be3;--teal:#3fa9cc;--acc:#2d5be3;color-scheme:light}
 *{box-sizing:border-box}
-body{margin:0;font-family:Tajawal,Arial,sans-serif;background:var(--paper);color:var(--ink);line-height:1.7;
-background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:32px 32px;background-attachment:fixed}
-main{max-width:560px;margin:0 auto;padding:28px 18px 60px}
-h1{font-size:2.1rem;font-weight:800;margin:.2em 0}
-h2{font-size:1.4rem;margin:0 0 14px}
+body{margin:0;font-family:'IBM Plex Sans Arabic',Tajawal,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;-webkit-tap-highlight-color:transparent}
+svg{flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+main{max-width:560px;margin:0 auto;padding-bottom:104px}
+main.page{padding:calc(18px + env(safe-area-inset-top,0px)) 18px 120px}
+h2{font-size:1.2rem;margin:0 0 12px;font-weight:700}
 p{margin:.4em 0;color:var(--mut)}
-.brand{font-weight:800;letter-spacing:.5px;color:var(--stake)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin:14px 0}
-.big{display:block;width:100%;text-align:right;text-decoration:none;color:inherit;border-right:6px solid var(--stake);cursor:pointer}
-.big b{font-size:1.2rem;display:block}
-label{display:block;font-weight:700;margin:12px 0 4px}
-input,select,textarea{width:100%;font:inherit;padding:11px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink)}
+a.back{display:inline-block;color:var(--mut);text-decoration:none;margin-bottom:10px;font-weight:500}
+.head{padding:calc(16px + env(safe-area-inset-top,0px)) 18px 24px;background:radial-gradient(#c5d1e6 1.1px,transparent 1.2px) 0 0/24px 24px,linear-gradient(#eef3ff,#fbfcff);border-radius:0 0 38px 38px;box-shadow:0 10px 30px rgba(45,91,227,.07)}
+.bar{display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;gap:12px}
+.lg{width:54px;height:54px;border-radius:18px;background:linear-gradient(135deg,#2d5be3,#46aed0);display:grid;place-items:center;color:#fff;box-shadow:0 8px 18px rgba(45,91,227,.3)}
+.lg svg{width:28px;height:28px}
+.brand b{font-size:1.5rem;font-weight:700;display:block;line-height:1.15}
+.brand small{color:var(--blue);font-weight:600;font-size:.7rem;letter-spacing:.6px}
+.ibs{display:flex;gap:10px}
+.ib{width:46px;height:46px;border-radius:50%;border:0;background:#eaf0f8;display:grid;place-items:center;cursor:pointer;color:#334155}
+.ib svg{width:22px;height:22px}
+.center{text-align:center}
+.badge{display:inline-flex;gap:8px;align-items:center;margin-top:22px;background:#f4f7ff;border:1px solid #dbe5fb;color:var(--blue);padding:8px 16px;border-radius:99px;font-size:.88rem;font-weight:500}
+.badge svg{width:18px;height:18px}
+h1{text-align:center;font-size:2.1rem;font-weight:700;margin:16px 0 6px;line-height:1.3}
+.sub{text-align:center;color:#475569;margin:0 0 22px}
+.cta{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(90deg,#2d5be3,#4fb0d0);color:#fff;text-decoration:none;font-weight:700;font-size:1.05rem;padding:16px;border-radius:20px;box-shadow:0 12px 24px rgba(45,91,227,.28)}
+.cta svg{width:22px;height:22px}
+.inst{display:none;margin:12px auto 0;background:none;border:0;color:var(--blue);font:inherit;font-weight:600;cursor:pointer}
+.sh{display:flex;justify-content:space-between;align-items:center;margin:26px 18px 12px}
+.sh h2{margin:0;display:flex;gap:8px;align-items:center}
+.sh h2 svg{width:24px;height:24px;color:var(--blue)}
+.sh span,.sh .more{color:var(--mut);font-size:.85rem;text-decoration:none}.sh .more{color:var(--blue);font-weight:500}
+.rc2{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:0 18px}
+.rc{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:16px;text-decoration:none;color:var(--ink);box-shadow:0 6px 18px rgba(15,23,42,.05)}
+.chip{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:#eaf1ff;color:var(--blue)}
+.chip svg{width:26px;height:26px}
+.rc.t .chip{background:#e6f8fc;color:var(--teal)}
+.rc b{display:block;margin-top:22px;font-size:1.1rem;font-weight:700}
+.rc p{font-size:.84rem;margin:4px 0 12px;line-height:1.6}
+.rc em{font-style:normal;font-weight:600;color:var(--blue);font-size:.92rem}.rc.t em{color:var(--teal)}
+.adm{margin:14px 18px 0;display:flex;align-items:center;gap:14px;background:#111827;color:#fff;border-radius:24px;padding:18px;text-decoration:none;box-shadow:0 12px 24px rgba(15,23,42,.2)}
+.adm .chip{background:#1f2937;color:#4cc3e0;width:56px;height:56px}
+.adm .tx{flex:1}.adm b{display:block;font-size:1.08rem}.adm p{color:#9ca3af;font-size:.82rem;margin:2px 0 0}
+.adm .go2{width:44px;height:44px;border-radius:50%;background:#1f2937;display:grid;place-items:center}
+.aib{margin:16px 18px 0;display:flex;align-items:center;gap:14px;background:linear-gradient(90deg,#43399a,#2f62e0 55%,#3a7b99);color:#fff;border-radius:24px;padding:18px;text-decoration:none;box-shadow:0 12px 24px rgba(47,98,224,.25)}
+.aib .chip{background:rgba(255,255,255,.18);color:#fcd34d}
+.aib .tx{flex:1}.aib .tt{display:flex;align-items:center;gap:8px;font-weight:700}
+.aib em{font-style:normal;background:#f6c945;color:#111827;border-radius:8px;padding:0 10px;font-size:.78rem}
+.aib p{color:#dbe4ff;font-size:.84rem;margin:2px 0 0}
+.aib .try{background:#fff;color:var(--blue);font-weight:700;padding:9px 18px;border-radius:14px}
+.sv{display:flex;gap:12px;overflow-x:auto;padding:0 18px 8px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.sv::-webkit-scrollbar{display:none}
+.sc{flex:none;width:152px;scroll-snap-align:start;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px 10px;text-align:center;text-decoration:none;color:var(--ink);box-shadow:0 6px 18px rgba(15,23,42,.04)}
+.sc i{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;margin:0 auto 10px}
+.sc i svg{width:28px;height:28px}
+.sc b{display:block;font-size:.98rem}.sc span{color:var(--mut);font-size:.78rem;line-height:1.4;display:block}
+.st{margin:18px;background:#eff3f9;border:1px solid var(--line);border-radius:22px;padding:16px 0}
+.st div{flex:1;text-align:center}.st div+div{border-right:1px solid var(--line)}
+.st b{display:block;font-size:1.35rem;font-weight:700}.st span{color:var(--mut);font-size:.85rem}
+.faq{padding:0 18px}
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:0 14px;margin-bottom:10px}
+summary{cursor:pointer;padding:13px 0;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--blue);font-size:1.3rem;line-height:1}
+details[open] summary::after{content:"\2212"}
+details p{margin:0 0 14px;font-size:.92rem}
+.foot{margin:26px 18px 0;padding:18px 0 4px;border-top:1px solid var(--line);text-align:center;color:var(--mut);font-size:.85rem}
+.foot a{color:var(--blue);text-decoration:none;font-weight:600}
+nav#nav{position:fixed;bottom:0;left:0;right:0;height:80px;background:#fff;border-top:1px solid var(--line);display:flex;align-items:flex-end;padding:0 6px calc(8px + env(safe-area-inset-bottom,0px));z-index:9;box-shadow:0 -8px 24px rgba(15,23,42,.06)}
+nav a{flex:1;text-align:center;text-decoration:none;color:#94a3b8;font-size:.74rem;font-weight:500}
+nav a svg{display:block;margin:0 auto 3px;width:26px;height:26px}
+nav a.on,nav a.ai{color:var(--blue)}
+nav a.fab{margin-top:-34px;color:var(--ink)}
+nav .c{display:grid;place-items:center;width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#2d6bf0,#46aed0);margin:0 auto 4px;border:5px solid #fff;box-shadow:0 8px 20px rgba(45,91,227,.4);color:#fff}
+nav .c svg{width:30px;height:30px;margin:0}
+.toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 18px;border-radius:99px;font-size:.9rem;z-index:20}
+.btn{text-align:center;text-decoration:none;font-weight:600;padding:14px 12px;border-radius:14px;display:block}
+.btn.p{background:linear-gradient(90deg,#2d5be3,#4fb0d0);color:#fff}
+.btn.g{border:1.5px solid var(--line);color:var(--ink);background:#fff}
+.btn.wide{margin-top:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;margin:14px 0;box-shadow:0 6px 18px rgba(15,23,42,.04)}
+label{display:block;font-weight:600;margin:14px 0 6px;font-size:.9rem}
+input,select,textarea{width:100%;font:inherit;padding:13px;border:1.5px solid var(--line);border-radius:14px;background:#f8fafd;color:var(--ink)}
 textarea{min-height:90px}
-button.go{margin-top:18px;width:100%;font:inherit;font-weight:800;font-size:1.05rem;padding:13px;border:0;border-radius:8px;background:var(--stake);color:#fff;cursor:pointer}
-button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--stake);outline-offset:2px}
-a.back{color:var(--mut);display:inline-block;margin-bottom:8px}
-.msg{padding:12px;border-radius:8px;margin-top:14px;font-weight:700}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);background:#fff}
+a:focus-visible,button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+button.go{margin-top:20px;width:100%;font:inherit;font-weight:700;font-size:1.02rem;padding:14px;border:0;border-radius:16px;background:linear-gradient(90deg,#2d5be3,#4fb0d0);color:#fff;cursor:pointer}
+button.go:disabled{opacity:.6}
+.msg{padding:12px;border-radius:12px;margin-top:14px;font-weight:600}
 .msg.ok{background:#e6f4ea;color:#1e6b2f}.msg.err{background:#fde8e8;color:#a61e1e}
-.row{border-top:1px dashed var(--line);padding:12px 0}
-.row:first-child{border-top:0}
-.tag{display:inline-block;background:var(--stake);color:#fff;border-radius:99px;padding:0 10px;font-size:.85rem}
-.warn{background:#fff4e6;color:#7a3b00;border:1px solid #ffd8a8;border-radius:8px;padding:10px;font-size:.9rem}
-.tabs{display:flex;gap:8px;margin-bottom:6px}
-.tabs button{flex:1;font:inherit;font-weight:700;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);cursor:pointer}
-.tabs button.on{background:var(--ink);color:var(--paper)}
+.row{border-top:1px dashed var(--line);padding:12px 0}.row:first-child{border-top:0}
+.tag{display:inline-block;background:var(--blue);color:#fff;border-radius:99px;padding:0 10px;font-size:.8rem}
+.warn{background:#eef3ff;color:#1e3a8a;border:1px solid #cfdcfb;border-radius:10px;padding:10px;font-size:.88rem}
+.tabs{display:flex;gap:8px;margin:6px 0}
+.tabs button{flex:1;font:inherit;font-weight:600;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);cursor:pointer}
+.tabs button.on{background:var(--ink);color:#fff}
+.cnt{margin-top:8px;padding:10px 12px;border-radius:12px;background:#f1f5f9;color:var(--mut);font-size:.86rem}
+.cnt.ok{background:#e6edfb;color:#1d4ed8;font-weight:600}
+.done{text-align:center;padding:30px 20px}
+.tick{width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,#2d5be3,#46aed0);margin:0 auto 14px;display:grid;place-items:center;color:#fff}
+.tick svg{width:38px;height:38px;stroke-width:3}
+.chat{display:flex;flex-direction:column;min-height:calc(100vh - 150px)}
+.chat-h{display:flex;align-items:center;gap:12px;padding:6px 0 14px}
+.chat-h i{width:46px;height:46px;border-radius:15px;background:linear-gradient(135deg,#43399a,#2f62e0);display:grid;place-items:center;color:#fff}
+.chat-h svg{width:24px;height:24px}
+.chat-h b{display:block}.chat-h span{color:var(--mut);font-size:.82rem}
+.msgs{flex:1;display:flex;flex-direction:column;gap:10px;padding-bottom:10px}
+.m{max-width:86%;padding:11px 14px;border-radius:18px;line-height:1.7;font-size:.95rem;white-space:pre-wrap}
+.m.bot{background:var(--card);border:1px solid var(--line);align-self:flex-start;border-bottom-right-radius:6px}
+.m.me{background:var(--blue);color:#fff;align-self:flex-end;border-bottom-left-radius:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.chips button{font:inherit;font-size:.84rem;padding:7px 12px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.cform{position:sticky;bottom:calc(86px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;background:var(--bg);padding:8px 0}
+.cform input{flex:1}
+.cform button{width:50px;border:0;border-radius:14px;background:var(--blue);cursor:pointer;display:grid;place-items:center;color:#fff}
+.cform svg{width:22px;height:22px;transform:scaleX(-1)}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+main>*{animation:rise .4s ease both}
+@media (prefers-reduced-motion:reduce){main>*{animation:none}}
 </style>
 </head>
 <body>
 <main id="app"></main>
+<nav id="nav"></nav>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.12.2/firebase-app-compat.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.12.2/firebase-firestore-compat.min.js"></script>
@@ -56,9 +150,12 @@ firebase.initializeApp({
 });
 const db = firebase.firestore();
 const auth = firebase.auth();
+const ADMIN_UID = "gPceivu7FAa1YkRP5mdjrksFJmm2";
 const app = document.getElementById("app");
+let dip;
+addEventListener("beforeinstallprompt", e => { e.preventDefault(); dip = e; const b = document.getElementById("inst"); if (b) b.style.display = "block"; });
 const GOVS = ["القاهرة","الجيزة","الإسكندرية","القليوبية","الشرقية","الدقهلية","الغربية","كفر الشيخ","المنوفية","البحيرة","مطروح","الإسماعيلية","بورسعيد","السويس","شمال سيناء","جنوب سيناء","دمياط","الفيوم","بني سويف","المنيا","أسيوط","سوهاج","قنا","الأقصر","أسوان","البحر الأحمر","الوادي الجديد","أخرى"];
-const SERVICES = ["رفع مساحي لأرض","توقيع وتحديد مناسيب (إنشاءات)","حساب كميات","رفع مساحي لمبنى قائم","تقسيم أراضي","خدمة أخرى"];
+const SERVICES = ["رفع مساحي لأرض","توقيع وتحديد مناسيب (إنشاءات)","حساب كميات","رفع مساحي لمبنى قائم","تقسيم أراضي","استشارة مساحية","تقرير كروكي","خدمة أخرى"];
 
 const el = (tag, attrs = {}, ...kids) => {
   const e = document.createElement(tag);
@@ -68,64 +165,163 @@ const el = (tag, attrs = {}, ...kids) => {
 };
 const opts = list => list.map(x => `<option>${x}</option>`).join("");
 
+const IC = {
+  bell: "M18 16v-5a6 6 0 10-12 0v5l-2 2h16zM10 20a2 2 0 004 0",
+  chat: "M21 12a8 8 0 01-11.5 7.2L4 20l1-4.6A8 8 0 1121 12z",
+  pin: "M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11zM12 7.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z",
+  bot: "M12 3v3M8 6h8a3 3 0 013 3v7a3 3 0 01-3 3H8a3 3 0 01-3-3V9a3 3 0 013-3zM9 12h.01M15 12h.01M9.5 16h5",
+  wallet: "M4 7a2 2 0 012-2h11v3M4 7v10a2 2 0 002 2h13V8H6a2 2 0 01-2-2M16 13h.01",
+  star: "M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z",
+  helmet: "M4 17h16M5 17v-2a7 7 0 0114 0v2M10 8V5h4v3",
+  user: "M12 12a4 4 0 100-8 4 4 0 000 8zM4 21c0-4 4-6 8-6s8 2 8 6",
+  shield: "M12 3l8 3v6c0 4.5-3.2 7.6-8 9-4.8-1.4-8-4.5-8-9V6zM9 12l2 2 4-4",
+  send: "M4 12l16-8-6 16-3-7z",
+  map: "M9 4L3 6v14l6-2 6 2 6-2V4l-6 2zM9 4v14M15 6v14",
+  globe: "M12 21a9 9 0 100-18 9 9 0 000 18zM3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18",
+  check: "M12 21a9 9 0 100-18 9 9 0 000 18zM8.5 12l2.5 2.5 4.5-5",
+  users: "M9 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM2 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5M16 5a3.5 3.5 0 010 7M18 14.5c2.5.6 4 2.2 4 5",
+  arrow: "M19 12H5M11 6l-6 6 6 6",
+  wand: "M5 19L17 7M14 4l1 2 2 1-2 1-1 2-1-2-2-1 2-1zM19 12l.7 1.3L21 14l-1.3.7L19 16l-.7-1.3L17 14l1.3-.7z",
+  layers: "M12 3l9 5-9 5-9-5zM3 13l9 5 9-5",
+  chip: "M7 7h10v10H7zM9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4",
+  clip: "M9 4h6v3H9zM7 5H5v16h14V5h-2M8 12h8M8 16h5",
+  plus: "M12 5v14M5 12h14",
+  home: "M3 11l9-8 9 8v10h-6v-6H9v6H3z",
+  poly: "M5 5h8l6 4-3 10H5z",
+  calc: "M6 3h12v18H6zM9 7h6M9 11h.01M12 11h.01M15 11h.01M9 15h.01M12 15h.01M15 15h.01",
+  doc: "M7 3h7l5 5v13H7zM14 3v5h5M10 15l2-2 2 2 2-2"
+};
+let statsP;
+const statsOnce = () => statsP || (statsP = db.collection("stats").doc("active").get().then(d => d.exists ? d.data() : {}).catch(() => ({})));
+
+function toast(t) { const e = el("div", { class: "toast" }, t); document.body.append(e); setTimeout(() => e.remove(), 1800); }
+
 function home() {
+  const ic = d => `<svg viewBox="0 0 24 24"><path d="${d}"/></svg>`;
+  const sv = (d, bg, fg, t, sub) => `<a class="sc" href="#client"><i style="background:${bg};color:${fg}">${ic(d)}</i><b>${t}</b><span>${sub}</span></a>`;
   app.innerHTML = `
-    <div class="brand">GeoLink</div>
-    <h1>مساحين موثوقين لشغلك</h1>
-    <p>اطلب مساح لأرضك أو مشروعك، أو سجّل كمساح واستقبل طلبات في محافظتك.</p>
-    <a class="card big" href="#client"><b>أنا عميل، محتاج مساح</b><p>املا بيانات الطلب وهنتواصل معاك.</p></a>
-    <a class="card big" href="#surveyor"><b>أنا مساح، عايز شغل</b><p>سجّل بياناتك وخبراتك.</p></a>`;
+  <div class="head">
+    <div class="bar">
+      <div class="brand"><div class="lg">${ic(IC.map)}</div><div><b>GeoLink</b><small>GEOSPATIAL PLATFORM</small></div></div>
+      <div class="ibs"><button class="ib" id="b1" aria-label="اللغة">${ic(IC.globe)}</button><button class="ib" id="b2" aria-label="الإشعارات">${ic(IC.bell)}</button></div>
+    </div>
+    <div class="center"><span class="badge">${ic(IC.check)}ابدأ طلبك في دقيقة</span></div>
+    <h1>منصة خدمات المساحة</h1>
+    <p class="sub">اربط مشروعك بأخصائي مساحة بكل سهولة، أو انضم كأخصائي لاستقبال الطلبات.</p>
+    <a class="cta" href="#client">${ic(IC.arrow)}اطلب أخصائي مساحة الآن</a>
+    <button id="inst" class="inst">ثبّت التطبيق على موبايلك</button>
+  </div>
+  <div class="sh"><h2>${ic(IC.users)}حدد نوع حسابك للاستمرار</h2><span>3 أدوار متاحين</span></div>
+  <div class="rc2">
+    <a class="rc" href="#client"><div class="chip">${ic(IC.user)}</div><b>العميل</b><p>اطلب خدمة مساحة وتابع طلبك بسهولة</p><em>ابدأ كعميل ‹</em></a>
+    <a class="rc t" href="#pro"><div class="chip">${ic(IC.helmet)}</div><b>أخصائي المساحة</b><p>عرض الطلبات المتاحة وملفك المهني</p><em>انضم للمهنيين ‹</em></a>
+  </div>
+  <a class="adm" href="#admin"><div class="chip">${ic(IC.shield)}</div><div class="tx"><b>الإدارة</b><p>إدارة الطلبات والأخصائيين والاعتمادات</p></div><span class="go2">${ic(IC.arrow)}</span></a>
+  <a class="aib" href="#ai"><div class="chip">${ic(IC.wand)}</div><div class="tx"><div class="tt"><span>GeoLink AI Assistant</span><em>جديد</em></div><p>اسأل عن أي حاجة في المساحة</p></div><span class="try">تجربة</span></a>
+  <div class="sh"><h2>${ic(IC.layers)}خدماتنا السريعة</h2><a class="more" href="#client">عرض الكل</a></div>
+  <div class="sv">
+    ${sv(IC.map, "#eaf1ff", "#2d5be3", "رفع مساحي", "تحديد حدود وإحداثيات")}
+    ${sv(IC.poly, "#e8f8ee", "#1f9d55", "تخطيط أراضي", "تقسيم وتصاميم أراضي")}
+    ${sv(IC.calc, "#f1ecff", "#7c3aed", "استشارات", "حلول مساحية")}
+    ${sv(IC.doc, "#fff3df", "#d97706", "تقارير كروكي", "كروكي للأراضي")}
+  </div>
+  <div id="stats" class="st" style="display:none"></div>
+  <div class="sh"><h2>الأسئلة الشائعة</h2></div>
+  <div class="faq">
+    <details><summary>ازاي أطلب أخصائي مساحة؟</summary><p>اضغط على "اطلب أخصائي مساحة"، املا نوع الخدمة وموقع الأرض، وهنتواصل معاك على واتساب.</p></details>
+    <details><summary>هل التسجيل للأخصائيين مجاني؟</summary><p>أيوه، التسجيل مجاني. وبعد اعتماد حسابك بتشوف الطلبات المتاحة.</p></details>
+    <details><summary>بتغطوا أنهي محافظات؟</summary><p>بنستقبل طلبات من كل المحافظات، والتنفيذ بيكون حسب توفر الأخصائيين في منطقتك.</p></details>
+    <details><summary>إمتى هتتواصلوا معايا؟</summary><p>بنتواصل معاك على الرقم اللي كتبته في الطلب في أقرب وقت.</p></details>
+  </div>
+  <div class="foot">${WA_NUMBER ? `<a href="https://wa.me/${WA_NUMBER}" target="_blank" rel="noopener">كلّمنا على واتساب</a><br>` : ""}© 2026 GeoLink</div>`;
+  document.getElementById("b1").onclick = () => toast("اللغة العربية فقط حالياً");
+  document.getElementById("b2").onclick = () => toast("الإشعارات قريباً");
+  const ib = document.getElementById("inst");
+  if (dip) ib.style.display = "block";
+  ib.onclick = async () => { dip.prompt(); dip = null; ib.style.display = "none"; };
+  statsOnce().then(st => {
+    const v = Object.values(st).map(x => Math.max(0, +x || 0)), n = v.reduce((a, b) => a + b, 0), g = v.filter(x => x > 0).length, box = document.getElementById("stats");
+    if (box && n > 0) { box.style.display = "flex"; box.innerHTML = `<div><b>${n}</b><span>أخصائي نشط</span></div><div><b>${g}</b><span>محافظة مغطاة</span></div>`; }
+  });
 }
 
 function form(kind) {
   const client = kind === "client";
   app.innerHTML = `
     <a class="back" href="#">رجوع</a>
-    <h2>${client ? "طلب مساح" : "تسجيل مساح"}</h2>
+    <h2>${client ? "طلب أخصائي مساحة" : "تسجيل أخصائي مساحة"}</h2>
     <form class="card" id="f">
       <label>الاسم</label><input name="name" required>
       <label>رقم الموبايل</label><input name="phone" type="tel" inputmode="tel" required placeholder="01xxxxxxxxx">
-      <label>المحافظة</label><select name="gov">${opts(GOVS)}</select>
+      <label>المحافظة</label><select name="gov">${opts(GOVS)}</select>${client ? '<div id="cnt" class="cnt"></div>' : ""}
       ${client ? `
       <label>نوع الخدمة</label><select name="service">${opts(SERVICES)}</select>
       <label>موقع الأرض أو المشروع (المنطقة أو لينك الخريطة)</label><input name="location" required>
       <label>ملاحظات</label><textarea name="notes"></textarea>` : `
-      <label>التخصص</label><select name="spec">${opts(["مساح عام","مساح إنشاءات","مساح أراضي","مساح طرق"])}</select>
+      <label>الإيميل (لدخولك بعد الاعتماد)</label><input name="email" type="email" autocomplete="username" required>
+      <label>الباسورد (6 حروف أو أكتر)</label><input name="pw" type="password" autocomplete="new-password" minlength="6" required>
+      <label>التخصص</label><select name="spec">${opts(["مساحة عامة","مساحة إنشاءات","مساحة أراضي","مساحة طرق"])}</select>
       <label>سنين الخبرة</label><input name="years" type="number" min="0" max="50" inputmode="numeric" required>
       <label>الأجهزة المتاحة (توتال ستيشن، GPS، ليزر...)</label><input name="gear">
       <label>نبذة عن أعمالك</label><textarea name="notes"></textarea>`}
       <button class="go" type="submit">${client ? "ابعت الطلب" : "سجّل بياناتي"}</button>
       <div id="out"></div>
     </form>`;
+  if (client) {
+    const gs = app.querySelector('select[name="gov"]'), box = document.getElementById("cnt");
+    const upd = async () => {
+      const st = await statsOnce(), n = +st[gs.value] || 0;
+      box.textContent = n > 0 ? `${n} أخصائي مساحة نشط في ${gs.value}` : `لسه مفيش أخصائيين معتمدين في ${gs.value}، وهنتواصل معاك لما يتوفر أخصائي.`;
+      box.className = "cnt" + (n > 0 ? " ok" : "");
+    };
+    gs.onchange = upd; upd();
+  }
   document.getElementById("f").onsubmit = async ev => {
     ev.preventDefault();
     const btn = ev.target.querySelector("button"), out = document.getElementById("out");
     const data = Object.fromEntries(new FormData(ev.target));
     btn.disabled = true; btn.textContent = "جاري الإرسال...";
     try {
-      await db.collection(client ? "requests" : "surveyors").add({
-        ...data, status: "new", createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      out.className = "msg ok";
-      out.textContent = client ? "وصل طلبك. هنتواصل معاك قريباً." : "تم تسجيلك. هنتواصل معاك لما يوصل طلب في محافظتك.";
-      ev.target.reset();
-      if (WA_NUMBER) {
-        const t = client ? `طلب مساح جديد من ${data.name} - ${data.service} - ${data.gov}` : `تسجيل مساح جديد: ${data.name} - ${data.spec} - ${data.gov}`;
-        out.append(" ", el("a", { href: `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t)}`, target: "_blank" }, "كمّل على واتساب"));
-      }
+      await save(client, data);
+      done(client, data);
     } catch (e) {
       out.className = "msg err";
-      out.textContent = "حصلت مشكلة في الإرسال. تأكد من النت وجرب تاني.";
+      out.textContent = e.code === "auth/email-already-in-use" ? "الإيميل ده مسجّل قبل كده. ادخل من صفحة دخول الأخصائيين." : e.code === "auth/weak-password" ? "الباسورد ضعيف، لازم 6 حروف على الأقل." : e.code === "auth/invalid-email" ? "الإيميل مش مكتوب صح." : "حصلت مشكلة في الإرسال. تأكد من النت وجرب تاني.";
       console.error(e);
     }
     btn.disabled = false; btn.textContent = client ? "ابعت الطلب" : "سجّل بياناتي";
   };
 }
 
+async function save(client, data) {
+  const ts = firebase.firestore.FieldValue.serverTimestamp();
+  if (client) {
+    const ref = db.collection("requests").doc(), b = db.batch();
+    b.set(ref, { ...data, status: "new", createdAt: ts });
+    b.set(db.collection("board").doc(ref.id), { service: data.service, gov: data.gov, status: "open", createdAt: ts });
+    await b.commit();
+  } else {
+    const { email, pw, ...rest } = data;
+    const cred = await auth.createUserWithEmailAndPassword(email, pw);
+    await db.collection("surveyors").doc(cred.user.uid).set({ ...rest, status: "new", createdAt: ts });
+  }
+}
+
+function done(client, data) {
+  const t = client ? `طلب أخصائي مساحة جديد من ${data.name} - ${data.service} - ${data.gov}` : `تسجيل أخصائي مساحة جديد: ${data.name} - ${data.spec} - ${data.gov}`;
+  document.getElementById("f").outerHTML = `<div class="card done">
+    <div class="tick"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <h2>${client ? "وصل طلبك" : "تم تسجيلك"}</h2>
+    <p>${client ? "هنتواصل معاك على رقم الموبايل اللي كتبته." : "تم إنشاء حسابك. هنراجع بياناتك ونعتمد الحساب، وبعدها تقدر تشوف الطلبات."}</p>
+    ${WA_NUMBER ? `<a class="btn p wide" href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t)}" target="_blank" rel="noopener">كمّل على واتساب</a>` : ""}
+    ${client ? "" : `<a class="btn p wide" href="#pro">دخول الأخصائيين</a>`}
+    <a class="btn g wide" href="#">رجوع للرئيسية</a></div>`;
+}
+
 async function adminPanel(user) {
   app.innerHTML = `<a class="back" href="#">رجوع</a><h2>لوحة التحكم</h2>
     <p>مسجّل دخول: <span id="who"></span> <button id="out" class="go" style="width:auto;margin:0 8px;padding:4px 14px;font-size:.9rem">خروج</button></p>
-    <div class="tabs"><button id="t1" class="on">الطلبات</button><button id="t2">المساحين</button></div>
+    <div class="tabs"><button id="t1" class="on">الطلبات</button><button id="t2">الأخصائيين</button></div>
     <div class="card" id="list">جاري التحميل...</div>`;
   document.getElementById("who").textContent = user.email;
   document.getElementById("out").onclick = () => auth.signOut();
@@ -134,20 +330,36 @@ async function adminPanel(user) {
     list.textContent = "جاري التحميل...";
     try {
       const snap = await db.collection(col).orderBy("createdAt", "desc").get();
+      const ap = col === "surveyors" ? new Set((await db.collection("approved").get()).docs.map(a => a.id)) : null;
       list.textContent = "";
       if (snap.empty) { list.textContent = "لسه مفيش بيانات."; return; }
       snap.forEach(d => {
         const x = d.data(), r = el("div", { class: "row" });
         const line = col === "requests"
           ? [x.service, x.gov, x.location] : [x.spec, x.gov, `${x.years || 0} سنة خبرة`, x.gear];
-        r.append(el("b", {}, x.name || "-"), " ", el("span", { class: "tag" }, x.status || "new"),
+        r.append(el("b", {}, x.name || "-"), " ", el("span", { class: "tag" }, (ap && ap.has(d.id)) ? "معتمد" : (x.status || "new")),
           el("div", {}, x.phone || ""), el("div", {}, line.filter(Boolean).join(" | ")));
         if (x.notes) r.append(el("p", {}, x.notes));
         const sel = el("select", {});
         sel.innerHTML = opts(["new","contacted","deposit-paid","done","rejected"]);
         sel.value = x.status || "new";
-        sel.onchange = () => d.ref.update({ status: sel.value });
+        sel.onchange = () => { d.ref.update({ status: sel.value }); if (col === "requests") db.collection("board").doc(d.id).update({ status: ["new", "contacted"].includes(sel.value) ? "open" : "closed" }).catch(() => {}); };
         r.append(sel);
+        if (ap) {
+          const ab = el("button", { class: "go", style: "margin-top:8px;padding:8px" }, ap.has(d.id) ? "إلغاء الاعتماد" : "اعتماد");
+          ab.onclick = async () => {
+            ab.disabled = true;
+            try {
+              const was = ap.has(d.id);
+              if (was) await db.collection("approved").doc(d.id).delete();
+              else await db.collection("approved").doc(d.id).set({ name: x.name || "", at: firebase.firestore.FieldValue.serverTimestamp() });
+              if (x.gov) await db.collection("stats").doc("active").set({ [x.gov]: firebase.firestore.FieldValue.increment(was ? -1 : 1) }, { merge: true });
+              statsP = null;
+              show(col);
+            } catch (e) { ab.textContent = "فشل، جرّب تاني"; }
+          };
+          r.append(ab);
+        }
         list.append(r);
       });
     } catch (e) { list.textContent = "تعذر تحميل البيانات."; console.error(e); }
@@ -163,16 +375,52 @@ function admin() {
   if (unsub) unsub();
   unsub = auth.onAuthStateChanged(u => {
     if (location.hash !== "#admin") return;
-    u ? adminPanel(u) : loginView();
+    u ? (u.uid === ADMIN_UID ? adminPanel(u) : denied()) : loginView();
   });
 }
-function loginView() {
-  app.innerHTML = `<a class="back" href="#">رجوع</a><h2>دخول الأدمن</h2>
+function denied() {
+  app.innerHTML = `<div class="card done"><h2>الصفحة دي للأدمن فقط</h2><button id="so" class="go">خروج</button><a class="btn g wide" href="#pro">دخول الأخصائيين</a></div>`;
+  document.getElementById("so").onclick = () => auth.signOut();
+}
+
+function pro() {
+  if (unsub) unsub();
+  unsub = auth.onAuthStateChanged(u => {
+    if (location.hash !== "#pro") return;
+    u ? proBoard(u) : loginView("دخول الأخصائيين", `<p style="text-align:center">لسه ما سجلتش؟ <a href="#surveyor" style="color:var(--acc);font-weight:600">سجّل كأخصائي مساحة</a></p>`);
+  });
+}
+
+async function proBoard(u) {
+  if (u.uid === ADMIN_UID) { app.innerHTML = `<div class="card done"><h2>أنت مسجّل كأدمن</h2><a class="btn p wide" href="#admin">لوحة التحكم</a></div>`; return; }
+  app.innerHTML = `<h2>الطلبات المتاحة</h2><p>مسجّل دخول: <span id="who"></span> <button id="out" class="go" style="width:auto;margin:0 8px;padding:4px 14px;font-size:.9rem">خروج</button></p><div id="pl">جاري التحميل...</div>`;
+  document.getElementById("who").textContent = u.email;
+  document.getElementById("out").onclick = () => auth.signOut();
+  const pl = document.getElementById("pl");
+  try {
+    const ok = await db.collection("approved").doc(u.uid).get();
+    if (!ok.exists) { pl.innerHTML = `<div class="card done"><h2>حسابك قيد المراجعة</h2><p>هنراجع بياناتك ونعتمد حسابك، وهتقدر تشوف الطلبات بعدها.</p></div>`; return; }
+    const snap = await db.collection("board").orderBy("createdAt", "desc").limit(100).get();
+    const open = snap.docs.filter(d => d.data().status === "open");
+    pl.textContent = "";
+    if (!open.length) { pl.innerHTML = `<div class="card">مفيش طلبات متاحة دلوقتي. ارجع شوف بعد شوية.</div>`; return; }
+    pl.append(el("p", {}, "بيانات العميل بتتشارك بعد الاتفاق مع GeoLink."));
+    open.forEach(d => {
+      const x = d.data(), t = x.createdAt ? x.createdAt.toDate().toLocaleDateString("ar-EG") : "";
+      const card = el("div", { class: "card" });
+      card.append(el("b", {}, x["service"] || "-"), " ", el("span", { class: "tag" }, "متاح"), el("div", {}, x.gov || ""), el("p", {}, t));
+      pl.append(card);
+    });
+  } catch (e) { pl.textContent = "تعذر تحميل الطلبات."; console.error(e); }
+}
+
+function loginView(title = "دخول الأدمن", extra = "") {
+  app.innerHTML = `<a class="back" href="#">رجوع</a><h2>${title}</h2>
     <form class="card" id="lf">
       <label>الإيميل</label><input name="email" type="email" autocomplete="username" required>
       <label>الباسورد</label><input name="pw" type="password" autocomplete="current-password" required>
       <button class="go" type="submit">دخول</button><div id="lo"></div>
-    </form>`;
+    </form>${extra}`;
   document.getElementById("lf").onsubmit = async ev => {
     ev.preventDefault();
     const f = new FormData(ev.target), lo = document.getElementById("lo");
@@ -181,13 +429,89 @@ function loginView() {
   };
 }
 
+// رابط خدمة الذكاء الاصطناعي (فاضي دلوقتي، وبعد ربط الخدمة بنحط هنا الرابط)
+const AI_ENDPOINT = "";
+const KB = [
+  [["توتال", "total"], "التوتال ستيشن جهاز يقيس الزوايا والمسافات إلكترونياً ويحسب إحداثيات النقاط، ويُستخدم في الرفع المساحي والتوقيع."],
+  [["منسوب", "مناسيب", "ميزان"], "المنسوب هو ارتفاع نقطة عن مستوى مرجعي. بيتقاس بجهاز الميزان (Level) أو التوتال ستيشن، وبيُستخدم في الحفر والردم وتحديد الميول."],
+  [["توقيع"], "التوقيع هو نقل نقاط المشروع من المخطط إلى الأرض باستخدام إحداثياتها، زي المحاور والأعمدة والحدود."],
+  [["رفع"], "الرفع المساحي هو قياس مواضع الأرض والمعالم ورسمها على خريطة بإحداثيات ومناسيب."],
+  [["gps", "rtk", "جي بي"], "أجهزة GPS/RTK بتدّي دقة بالسنتيمترات في الظروف الجيدة، بس بتحتاج سماء مفتوحة وتصحيحات من قاعدة أو شبكة."],
+  [["كميات", "حفر", "ردم"], "حساب الكميات بيعتمد على مناسيب الأرض الطبيعية ومناسيب التصميم، وحجم الحفر والردم بيطلع من الفرق بينهم."],
+  [["تقسيم"], "تقسيم الأراضي بيشمل تحديد حدود كل قطعة وتوقيع نقاطها على الأرض حسب المخطط المعتمد."],
+  [["سعر", "تكلفة", "كام"], "السعر بيتحدد حسب نوع الخدمة والمساحة والموقع. اطلب أخصائي مساحة وهنتفق على التفاصيل قبل بداية الشغل."],
+  [["اطلب", "طلب", "ازاي"], "اضغط على «اطلب أخصائي مساحة»، املا نوع الخدمة وموقع الأرض، وهنتواصل معاك على واتساب."]
+];
+async function aiAnswer(q) {
+  if (AI_ENDPOINT) {
+    const r = await fetch(AI_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question: q }) });
+    const j = await r.json(); return j.answer || "ممكن تعيد صياغة السؤال؟";
+  }
+  const t = q.toLowerCase();
+  const hit = KB.find(([ks]) => ks.some(k => t.includes(k)));
+  return hit ? hit[1] : "سؤال كويس. للتفاصيل الفنية الأعمق اطلب أخصائي مساحة من المنصة" + (WA_NUMBER ? "، أو كلّمنا على واتساب." : ".");
+}
+function ai() {
+  const ic = d => `<svg viewBox="0 0 24 24"><path d="${d}"/></svg>`;
+  app.innerHTML = `<div class="chat">
+    <div class="chat-h"><i>${ic(IC.bot)}</i><div><b>GeoLink AI</b><span>مساعدك في مجال المساحة</span></div></div>
+    <div id="msgs" class="msgs"></div><div id="chips" class="chips"></div>
+    <form id="cf" class="cform"><input id="ci" placeholder="اكتب سؤالك عن المساحة..." autocomplete="off" aria-label="سؤالك"><button aria-label="إرسال">${ic(IC.send)}</button></form></div>`;
+  const msgs = document.getElementById("msgs"), ci = document.getElementById("ci");
+  const add = (who, t) => { const m = el("div", { class: "m " + who }, t); msgs.append(m); scrollTo(0, document.body.scrollHeight); return m; };
+  add("bot", "أنا مساعدك الذكي في مجال المساحة. كيف يمكنني مساعدتك اليوم؟");
+  const ask = async q => {
+    if (!q.trim()) return;
+    document.getElementById("chips").textContent = "";
+    add("me", q); const w = add("bot", "...");
+    try { w.textContent = await aiAnswer(q); } catch (e) { w.textContent = "حصلت مشكلة، جرّب تاني بعد شوية."; }
+    scrollTo(0, document.body.scrollHeight);
+  };
+  ["إيه هو التوتال ستيشن؟", "يعني إيه مناسيب؟", "الفرق بين الرفع والتوقيع", "ازاي أطلب أخصائي مساحة؟"].forEach(t => {
+    const b = el("button", { type: "button" }, t); b.onclick = () => ask(t); document.getElementById("chips").append(b);
+  });
+  document.getElementById("cf").onsubmit = ev => { ev.preventDefault(); const q = ci.value; ci.value = ""; ask(q); };
+}
+
+function my() {
+  app.innerHTML = `<h2>طلباتي</h2><div class="card done"><div class="tick"><svg viewBox="0 0 24 24"><path d="${IC.clip}"/></svg></div><h2>متابعة طلباتك قريباً</h2><p>هتقدر تتابع حالة كل طلب من هنا. دلوقتي بنتواصل معاك على واتساب بعد ما تبعت الطلب.</p><a class="btn p wide" href="#client">اطلب أخصائي مساحة</a></div>`;
+}
+
+function account() {
+  if (unsub) unsub();
+  unsub = auth.onAuthStateChanged(u => {
+    if (location.hash !== "#account") return;
+    const adm = u && u.uid === ADMIN_UID;
+    app.innerHTML = `<h2>حسابي</h2><div class="card">` + (u
+      ? `<p>مسجّل دخول: <b id="who"></b></p><a class="btn p wide" href="${adm ? "#admin" : "#pro"}">${adm ? "لوحة التحكم" : "صفحة الأخصائي"}</a><button id="so" class="go">خروج</button>`
+      : `<p>سجّل دخولك كأخصائي مساحة لتشوف الطلبات المتاحة.</p><a class="btn p wide" href="#pro">دخول الأخصائيين</a><a class="btn g wide" href="#surveyor">تسجيل أخصائي جديد</a>`) + `</div>`;
+    if (u) { document.getElementById("who").textContent = u.email; document.getElementById("so").onclick = () => auth.signOut(); }
+  });
+}
+
+function setNav(h) {
+  const nav = document.getElementById("nav");
+  nav.style.display = h === "admin" ? "none" : "flex";
+  const it = (k, t, d, cls = "") => `<a href="#${k}" class="${cls} ${(h === k || (k === "account" && h === "pro")) ? "on" : ""}"><svg viewBox="0 0 24 24"><path d="${d}"/></svg>${t}</a>`;
+  nav.innerHTML = it("", "الرئيسية", IC.home) + it("ai", "GeoAI", IC.chip, "ai")
+    + `<a href="#client" class="fab"><span class="c"><svg viewBox="0 0 24 24"><path d="${IC.plus}"/></svg></span>طلب جديد</a>`
+    + it("my", "طلباتي", IC.clip) + it("account", "حسابي", IC.user);
+}
+
 function route() {
   const h = location.hash.slice(1);
   if (h === "client" || h === "surveyor") form(h);
   else if (h === "admin") admin();
+  else if (h === "pro") pro();
+  else if (h === "ai") ai();
+  else if (h === "my") my();
+  else if (h === "account") account();
   else home();
+  app.className = ["client", "surveyor", "admin", "pro", "ai", "my", "account"].includes(h) ? "page" : "";
+  setNav(h);
   scrollTo(0, 0);
 }
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
 addEventListener("hashchange", route);
 route();
 </script>
