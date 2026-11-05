@@ -21,7 +21,7 @@ a.back{display:inline-block;color:var(--mut);text-decoration:none;margin-bottom:
 .head{padding:calc(16px + env(safe-area-inset-top,0px)) 18px 24px;background:radial-gradient(#c5d1e6 1.1px,transparent 1.2px) 0 0/24px 24px,linear-gradient(#eef3ff,#fbfcff);border-radius:0 0 38px 38px;box-shadow:0 10px 30px rgba(45,91,227,.07)}
 .bar{display:flex;justify-content:space-between;align-items:center}
 .brand{display:flex;align-items:center;gap:12px}
-.lg{width:54px;height:54px;border-radius:18px;background:linear-gradient(135deg,#2d5be3,#46aed0);display:grid;place-items:center;color:#fff;box-shadow:0 8px 18px rgba(45,91,227,.3)}
+.lg{width:56px;height:56px;border-radius:16px;box-shadow:0 8px 18px rgba(9,22,44,.3);display:block}
 .lg svg{width:28px;height:28px}
 .brand b{font-size:1.5rem;font-weight:700;display:block;line-height:1.15}
 .brand small{color:var(--blue);font-weight:600;font-size:.7rem;letter-spacing:.6px}
@@ -127,6 +127,11 @@ button.go:disabled{opacity:.6}
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 main>*{animation:rise .4s ease both}
 @media (prefers-reduced-motion:reduce){main>*{animation:none}}
+.asst{margin:14px 18px 0;display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#ecfdf5,#eefbfd);border:1px solid #cfeee6;border-radius:24px;padding:16px;text-decoration:none;color:var(--ink);box-shadow:0 6px 18px rgba(15,23,42,.04)}
+.asst .tx{flex:1}.asst b{display:block;font-size:1.12rem;font-weight:700}
+.asst p{font-size:.84rem;margin:4px 0 8px;line-height:1.6}
+.asst em{font-style:normal;font-weight:600;color:#0f9d8a;font-size:.92rem}
+.asst .ill{width:96px;height:96px;flex:none;border-radius:22px;object-fit:cover}
 </style>
 </head>
 <body>
@@ -194,6 +199,33 @@ const IC = {
 let statsP;
 const statsOnce = () => statsP || (statsP = db.collection("stats").doc("active").get().then(d => d.exists ? d.data() : {}).catch(() => ({})));
 
+const SKILLS = ["مساعد مساحة", "رودمان", "مشغّل أجهزة", "مساعد أعمال إنشاءات"];
+function assistantForm() {
+  app.innerHTML = `<a class="back" href="#">رجوع</a><h2>انضم كمساعد مساحة</h2>
+    <form class="card" id="af">
+      <label>الاسم</label><input name="name" required>
+      <label>رقم الموبايل</label><input name="phone" type="tel" inputmode="tel" required placeholder="01xxxxxxxxx">
+      <label>المحافظة</label><select name="gov">${opts(GOVS)}</select>
+      <label>التخصص</label><select name="skill">${opts(SKILLS)}</select>
+      <label>سنين الخبرة</label><input name="years" type="number" min="0" max="50" inputmode="numeric" required>
+      <label>نبذة عن خبرتك</label><textarea name="notes"></textarea>
+      <button class="go" type="submit">سجّل بياناتي</button><div id="ao"></div>
+    </form>`;
+  document.getElementById("af").onsubmit = async ev => {
+    ev.preventDefault();
+    const btn = ev.target.querySelector("button"), out = document.getElementById("ao");
+    const data = Object.fromEntries(new FormData(ev.target));
+    btn.disabled = true; btn.textContent = "جاري الإرسال...";
+    try {
+      await db.collection("assistants").add({ ...data, status: "new", createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+      ev.target.outerHTML = `<div class="card done"><div class="tick"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h2>تم تسجيلك</h2><p>هنتواصل معاك لما تتوفر فرصة عمل مناسبة في محافظتك.</p><a class="btn g wide" href="#">رجوع للرئيسية</a></div>`;
+    } catch (e) {
+      out.className = "msg err"; out.textContent = "حصلت مشكلة في الإرسال. تأكد من النت وجرب تاني."; console.error(e);
+      btn.disabled = false; btn.textContent = "سجّل بياناتي";
+    }
+  };
+}
+
 function toast(t) { const e = el("div", { class: "toast" }, t); document.body.append(e); setTimeout(() => e.remove(), 1800); }
 
 function home() {
@@ -202,7 +234,7 @@ function home() {
   app.innerHTML = `
   <div class="head">
     <div class="bar">
-      <div class="brand"><div class="lg">${ic(IC.map)}</div><div><b>GeoLink</b><small>GEOSPATIAL PLATFORM</small></div></div>
+      <div class="brand"><img class="lg" src="icon-192.png" alt="GeoLink"><div><b>GeoLink</b><small>GEOSPATIAL PLATFORM</small></div></div>
       <div class="ibs"><button class="ib" id="b1" aria-label="اللغة">${ic(IC.globe)}</button><button class="ib" id="b2" aria-label="الإشعارات">${ic(IC.bell)}</button></div>
     </div>
     <div class="center"><span class="badge">${ic(IC.check)}ابدأ طلبك في دقيقة</span></div>
@@ -211,11 +243,12 @@ function home() {
     <a class="cta" href="#client">${ic(IC.arrow)}اطلب أخصائي مساحة الآن</a>
     <button id="inst" class="inst">ثبّت التطبيق على موبايلك</button>
   </div>
-  <div class="sh"><h2>${ic(IC.users)}حدد نوع حسابك للاستمرار</h2><span>3 أدوار متاحين</span></div>
+  <div class="sh"><h2>${ic(IC.users)}حدد نوع حسابك للاستمرار</h2><span>4 أدوار متاحين</span></div>
   <div class="rc2">
     <a class="rc" href="#client"><div class="chip">${ic(IC.user)}</div><b>العميل</b><p>اطلب خدمة مساحة وتابع طلبك بسهولة</p><em>ابدأ كعميل ‹</em></a>
     <a class="rc t" href="#pro"><div class="chip">${ic(IC.helmet)}</div><b>أخصائي المساحة</b><p>عرض الطلبات المتاحة وملفك المهني</p><em>انضم للمهنيين ‹</em></a>
   </div>
+  <a class="asst" href="#assistant"><div class="tx"><b>مساعد المساحة</b><p>سجّل بياناتك وخبراتك واستقبل فرص عمل في مجال المساحة.</p><em>انضم كمساعد مساحة ‹</em></div><img class="ill" src="assistant.png" alt=""></a>
   <a class="adm" href="#admin"><div class="chip">${ic(IC.shield)}</div><div class="tx"><b>الإدارة</b><p>إدارة الطلبات والأخصائيين والاعتمادات</p></div><span class="go2">${ic(IC.arrow)}</span></a>
   <a class="aib" href="#ai"><div class="chip">${ic(IC.wand)}</div><div class="tx"><div class="tt"><span>GeoLink AI Assistant</span><em>جديد</em></div><p>اسأل عن أي حاجة في المساحة</p></div><span class="try">تجربة</span></a>
   <div class="sh"><h2>${ic(IC.layers)}خدماتنا السريعة</h2><a class="more" href="#client">عرض الكل</a></div>
@@ -321,7 +354,7 @@ function done(client, data) {
 async function adminPanel(user) {
   app.innerHTML = `<a class="back" href="#">رجوع</a><h2>لوحة التحكم</h2>
     <p>مسجّل دخول: <span id="who"></span> <button id="out" class="go" style="width:auto;margin:0 8px;padding:4px 14px;font-size:.9rem">خروج</button></p>
-    <div class="tabs"><button id="t1" class="on">الطلبات</button><button id="t2">الأخصائيين</button></div>
+    <div class="tabs"><button id="t1" class="on">الطلبات</button><button id="t2">الأخصائيين</button><button id="t3">المساعدين</button></div>
     <div class="card" id="list">جاري التحميل...</div>`;
   document.getElementById("who").textContent = user.email;
   document.getElementById("out").onclick = () => auth.signOut();
@@ -336,7 +369,7 @@ async function adminPanel(user) {
       snap.forEach(d => {
         const x = d.data(), r = el("div", { class: "row" });
         const line = col === "requests"
-          ? [x.service, x.gov, x.location] : [x.spec, x.gov, `${x.years || 0} سنة خبرة`, x.gear];
+          ? [x.service, x.gov, x.location] : col === "assistants" ? [x.skill, x.gov, `${x.years || 0} سنة خبرة`] : [x.spec, x.gov, `${x.years || 0} سنة خبرة`, x.gear];
         r.append(el("b", {}, x.name || "-"), " ", el("span", { class: "tag" }, (ap && ap.has(d.id)) ? "معتمد" : (x.status || "new")),
           el("div", {}, x.phone || ""), el("div", {}, line.filter(Boolean).join(" | ")));
         if (x.notes) r.append(el("p", {}, x.notes));
@@ -364,9 +397,8 @@ async function adminPanel(user) {
       });
     } catch (e) { list.textContent = "تعذر تحميل البيانات."; console.error(e); }
   }
-  const t1 = document.getElementById("t1"), t2 = document.getElementById("t2");
-  t1.onclick = () => { t1.className = "on"; t2.className = ""; show("requests"); };
-  t2.onclick = () => { t2.className = "on"; t1.className = ""; show("surveyors"); };
+  const tabsB = ["t1", "t2", "t3"].map(i => document.getElementById(i)), cols = ["requests", "surveyors", "assistants"];
+  tabsB.forEach((b, i) => b.onclick = () => { tabsB.forEach(x => x.className = ""); b.className = "on"; show(cols[i]); });
   show("requests");
 }
 
@@ -505,9 +537,10 @@ function route() {
   else if (h === "pro") pro();
   else if (h === "ai") ai();
   else if (h === "my") my();
+  else if (h === "assistant") assistantForm();
   else if (h === "account") account();
   else home();
-  app.className = ["client", "surveyor", "admin", "pro", "ai", "my", "account"].includes(h) ? "page" : "";
+  app.className = ["client", "surveyor", "admin", "pro", "ai", "my", "account", "assistant"].includes(h) ? "page" : "";
   setNav(h);
   scrollTo(0, 0);
 }
