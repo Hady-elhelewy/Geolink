@@ -77,7 +77,7 @@ details p{margin:0 0 14px;font-size:.92rem}
 .foot{margin:26px 18px 0;padding:18px 0 4px;border-top:1px solid var(--line);text-align:center;color:var(--mut);font-size:.85rem}
 .foot a{color:var(--blue);text-decoration:none;font-weight:600}
 nav#nav{position:fixed;bottom:0;left:0;right:0;height:80px;background:#fff;border-top:1px solid var(--line);display:flex;align-items:flex-end;padding:0 6px calc(8px + env(safe-area-inset-bottom,0px));z-index:9;box-shadow:0 -8px 24px rgba(15,23,42,.06)}
-nav a{flex:1;text-align:center;text-decoration:none;color:#94a3b8;font-size:.74rem;font-weight:500}
+nav a{flex:1;min-width:0;text-align:center;text-decoration:none;color:#94a3b8;font-size:.7rem;font-weight:500;white-space:nowrap}
 nav a svg{display:block;margin:0 auto 3px;width:26px;height:26px}
 nav a.on,nav a.ai{color:var(--blue)}
 nav a.fab{margin-top:-34px;color:var(--ink)}
@@ -132,6 +132,26 @@ main>*{animation:rise .4s ease both}
 .asst p{font-size:.84rem;margin:4px 0 8px;line-height:1.6}
 .asst em{font-style:normal;font-weight:600;color:#0f9d8a;font-size:.92rem}
 .asst .ill{width:96px;height:96px;flex:none;border-radius:22px;object-fit:cover}
+.tl-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 6px}
+.tl{display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:12px;font:inherit;font-weight:600;font-size:.88rem;color:var(--ink);cursor:pointer;text-align:right}
+.tl svg{width:24px;height:24px;color:var(--blue)}
+.tl.on{border-color:var(--blue);background:#f1f5ff;color:var(--blue)}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
+.seg button{flex:1 0 auto;white-space:nowrap;font:inherit;font-size:.84rem;font-weight:600;padding:9px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
+.seg button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rs{display:flex;align-items:center;gap:8px;padding:10px 0;border-top:1px dashed var(--line)}
+.rs:first-child{border-top:0}
+.rs span{color:var(--mut);font-size:.84rem;flex:0 0 36%}
+.rs b{flex:1;font-weight:600;word-break:break-word;min-width:0}
+.cp{font:inherit;font-size:.78rem;padding:5px 10px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--blue);cursor:pointer}
+.cp.all{width:100%;margin-top:10px;padding:10px;font-size:.9rem;font-weight:600}
+.lnk{background:none;border:0;color:var(--blue);font:inherit;font-weight:600;cursor:pointer;padding:6px 0}
+.hint{color:var(--mut);font-size:.86rem;margin:10px 0 0}
+#rs{margin-top:10px}
+nav#nav{padding:0 2px calc(8px + env(safe-area-inset-bottom,0px))}
+nav .g{flex:1;display:flex;min-width:0}
+nav a.fab{flex:none;width:72px}
 </style>
 </head>
 <body>
@@ -194,7 +214,9 @@ const IC = {
   home: "M3 11l9-8 9 8v10h-6v-6H9v6H3z",
   poly: "M5 5h8l6 4-3 10H5z",
   calc: "M6 3h12v18H6zM9 7h6M9 11h.01M12 11h.01M15 11h.01M9 15h.01M12 15h.01M15 15h.01",
-  doc: "M7 3h7l5 5v13H7zM14 3v5h5M10 15l2-2 2 2 2-2"
+  doc: "M7 3h7l5 5v13H7zM14 3v5h5M10 15l2-2 2 2 2-2",
+  ruler: "M3 17L17 3l4 4L7 21zM8 12l2 2M11 9l2 2M14 6l2 2",
+  tools: "M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"
 };
 let statsP;
 const statsOnce = () => statsP || (statsP = db.collection("stats").doc("active").get().then(d => d.exists ? d.data() : {}).catch(() => ({})));
@@ -525,10 +547,280 @@ function setNav(h) {
   const nav = document.getElementById("nav");
   nav.style.display = h === "admin" ? "none" : "flex";
   const it = (k, t, d, cls = "") => `<a href="#${k}" class="${cls} ${(h === k || (k === "account" && h === "pro")) ? "on" : ""}"><svg viewBox="0 0 24 24"><path d="${d}"/></svg>${t}</a>`;
-  nav.innerHTML = it("", "الرئيسية", IC.home) + it("ai", "GeoAI", IC.chip, "ai")
+  nav.innerHTML = `<div class="g">${it("", "الرئيسية", IC.home) + it("ai", "GeoAI", IC.chip, "ai") + it("tools", "الأدوات", IC.tools)}</div>`
     + `<a href="#client" class="fab"><span class="c"><svg viewBox="0 0 24 24"><path d="${IC.plus}"/></svg></span>طلب جديد</a>`
-    + it("my", "طلباتي", IC.clip) + it("account", "حسابي", IC.user);
+    + `<div class="g">${it("my", "طلباتي", IC.clip) + it("account", "حسابي", IC.user)}</div>`;
 }
+
+// ===== GeoLink tools: math =====
+const WGS = { a: 6378137, f: 1 / 298.257223563 };
+WGS.e2 = WGS.f * (2 - WGS.f); WGS.ep2 = WGS.e2 / (1 - WGS.e2);
+const rad = d => d * Math.PI / 180, deg = r => r * 180 / Math.PI;
+const zoneOf = lon => Math.min(60, Math.max(1, Math.floor((lon + 180) / 6) + 1));
+const bandOf = lat => (lat < -80 || lat > 84) ? "" : "CDEFGHJKLMNPQRSTUVWXX"[Math.floor((lat + 80) / 8)];
+function toUTM(lat, lon, zone) {
+  zone = zone || zoneOf(lon);
+  const k0 = 0.9996, { a, e2, ep2 } = WGS, p = rad(lat), l0 = rad((zone - 1) * 6 - 180 + 3);
+  const sn = Math.sin(p), cs = Math.cos(p), tn = Math.tan(p);
+  const N = a / Math.sqrt(1 - e2 * sn * sn), T = tn * tn, C = ep2 * cs * cs, A = (rad(lon) - l0) * cs;
+  const M = a * ((1 - e2 / 4 - 3 * e2 * e2 / 64 - 5 * e2 ** 3 / 256) * p - (3 * e2 / 8 + 3 * e2 * e2 / 32 + 45 * e2 ** 3 / 1024) * Math.sin(2 * p) + (15 * e2 * e2 / 256 + 45 * e2 ** 3 / 1024) * Math.sin(4 * p) - (35 * e2 ** 3 / 3072) * Math.sin(6 * p));
+  const E = 500000 + k0 * N * (A + (1 - T + C) * A ** 3 / 6 + (5 - 18 * T + T * T + 72 * C - 58 * ep2) * A ** 5 / 120);
+  let Nn = k0 * (M + N * tn * (A * A / 2 + (5 - T + 9 * C + 4 * C * C) * A ** 4 / 24 + (61 - 58 * T + T * T + 600 * C - 330 * ep2) * A ** 6 / 720));
+  const south = lat < 0; if (south) Nn += 1e7;
+  return { zone, south, band: bandOf(lat), E, N: Nn };
+}
+function fromUTM(E, Nn, zone, south) {
+  const k0 = 0.9996, { a, e2, ep2 } = WGS, x = E - 500000, y = south ? Nn - 1e7 : Nn, M = y / k0;
+  const mu = M / (a * (1 - e2 / 4 - 3 * e2 * e2 / 64 - 5 * e2 ** 3 / 256)), e1 = (1 - Math.sqrt(1 - e2)) / (1 + Math.sqrt(1 - e2));
+  const p1 = mu + (3 * e1 / 2 - 27 * e1 ** 3 / 32) * Math.sin(2 * mu) + (21 * e1 * e1 / 16 - 55 * e1 ** 4 / 32) * Math.sin(4 * mu) + (151 * e1 ** 3 / 96) * Math.sin(6 * mu) + (1097 * e1 ** 4 / 512) * Math.sin(8 * mu);
+  const s = Math.sin(p1), c = Math.cos(p1), t = Math.tan(p1), C1 = ep2 * c * c, T1 = t * t, N1 = a / Math.sqrt(1 - e2 * s * s), R1 = a * (1 - e2) / Math.pow(1 - e2 * s * s, 1.5), D = x / (N1 * k0);
+  const lat = p1 - (N1 * t / R1) * (D * D / 2 - (5 + 3 * T1 + 10 * C1 - 4 * C1 * C1 - 9 * ep2) * D ** 4 / 24 + (61 + 90 * T1 + 298 * C1 + 45 * T1 * T1 - 252 * ep2 - 3 * C1 * C1) * D ** 6 / 720);
+  const lon = rad((zone - 1) * 6 - 180 + 3) + (D - (1 + 2 * T1 + C1) * D ** 3 / 6 + (5 - 2 * C1 + 28 * T1 - 3 * C1 * C1 + 8 * ep2 + 24 * T1 * T1) * D ** 5 / 120) / c;
+  return { lat: deg(lat), lon: deg(lon) };
+}
+function vincenty(la1, lo1, la2, lo2) {
+  const { a, f } = WGS, b = a * (1 - f), L = rad(lo2 - lo1);
+  const U1 = Math.atan((1 - f) * Math.tan(rad(la1))), U2 = Math.atan((1 - f) * Math.tan(rad(la2)));
+  const sU1 = Math.sin(U1), cU1 = Math.cos(U1), sU2 = Math.sin(U2), cU2 = Math.cos(U2);
+  let lam = L, it = 0, sS, cS, sig, sA, c2A, c2SM, sL, cL;
+  do {
+    sL = Math.sin(lam); cL = Math.cos(lam);
+    sS = Math.hypot(cU2 * sL, cU1 * sU2 - sU1 * cU2 * cL);
+    if (sS === 0) return { s: 0, a1: 0, a2: 0 };
+    cS = sU1 * sU2 + cU1 * cU2 * cL; sig = Math.atan2(sS, cS);
+    sA = cU1 * cU2 * sL / sS; c2A = 1 - sA * sA;
+    c2SM = c2A !== 0 ? cS - 2 * sU1 * sU2 / c2A : 0;
+    const C = f / 16 * c2A * (4 + f * (4 - 3 * c2A)), prev = lam;
+    lam = L + (1 - C) * f * sA * (sig + C * sS * (c2SM + C * cS * (-1 + 2 * c2SM * c2SM)));
+    if (Math.abs(lam - prev) < 1e-12) break;
+  } while (++it < 200);
+  const u2 = c2A * (a * a - b * b) / (b * b), A = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2))), B = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
+  const dS = B * sS * (c2SM + B / 4 * (cS * (-1 + 2 * c2SM * c2SM) - B / 6 * c2SM * (-3 + 4 * sS * sS) * (-3 + 4 * c2SM * c2SM)));
+  return { s: b * A * (sig - dS), a1: (deg(Math.atan2(cU2 * sL, cU1 * sU2 - sU1 * cU2 * cL)) + 360) % 360, a2: (deg(Math.atan2(cU1 * sL, -sU1 * cU2 + cU1 * sU2 * cL)) + 360) % 360 };
+}
+function dms(d, p = 2) {
+  const sg = d < 0 ? "-" : ""; d = Math.abs(d);
+  let g = Math.floor(d), m = Math.floor((d - g) * 60), s = ((d - g) * 60 - m) * 60;
+  if (+s.toFixed(p) >= 60) { s = 0; m++; } if (m >= 60) { m = 0; g++; }
+  return `${sg}${g}°${String(m).padStart(2, "0")}′${s.toFixed(p).padStart(p ? p + 3 : 2, "0")}″`;
+}
+const nz = s => String(s).replace(/[٠-٩]/g, c => "٠١٢٣٤٥٦٧٨٩".indexOf(c)).replace(/[۰-۹]/g, c => "۰۱۲۳۴۵۶۷۸۹".indexOf(c)).replace(/٫/g, ".").replace(/−/g, "-");
+const num = s => { const t = nz(s).trim().replace(",", "."); return t === "" ? NaN : Number(t); };
+function ang(s) {
+  s = nz(s).trim(); if (!s) return NaN;
+  const neg = /^-/.test(s) || /^[SWsw]/.test(s) || /[SWsw]\s*$/.test(s);
+  const n = (s.match(/\d+(?:[.,]\d+)?/g) || []).map(x => parseFloat(x.replace(",", ".")));
+  if (!n.length || n.length > 3) return NaN;
+  const v = n[0] + (n[1] || 0) / 60 + (n[2] || 0) / 3600; return neg ? -v : v;
+}
+const pts = (t, n = 2) => nz(t).split(/\n+/).map(l => l.trim()).filter(Boolean).map(l => l.split(/[\s,;]+/).filter(Boolean).map(Number)).filter(r => r.length >= n && r.slice(0, n).every(isFinite));
+function polyArea(P) {
+  const [ox, oy] = P[0]; let s = 0, cx = 0, cy = 0, per = 0;
+  for (let i = 0; i < P.length; i++) {
+    const x1 = P[i][0] - ox, y1 = P[i][1] - oy, x2 = P[(i + 1) % P.length][0] - ox, y2 = P[(i + 1) % P.length][1] - oy, c = x1 * y2 - x2 * y1;
+    s += c; cx += (x1 + x2) * c; cy += (y1 + y2) * c; per += Math.hypot(x2 - x1, y2 - y1);
+  }
+  const A = s / 2; return { area: Math.abs(A), per, cx: A ? cx / (6 * A) + ox : ox, cy: A ? cy / (6 * A) + oy : oy };
+}
+const azim = (dx, dy) => (deg(Math.atan2(dx, dy)) + 360) % 360;
+function quad(az) {
+  const ns = (az > 90 && az < 270) ? "S" : "N", ew = az < 180 ? "E" : "W";
+  const a = az <= 90 ? az : az <= 180 ? 180 - az : az <= 270 ? az - 180 : 360 - az;
+  return `${ns} ${dms(a, 0)} ${ew}`;
+}
+const FED = 4200.833333333333;
+function feddan(a) {
+  let t = Math.round(a / (FED / 576) * 100); const f = Math.floor(t / 57600); t -= f * 57600; const k = Math.floor(t / 2400); t -= k * 2400;
+  return `${f} فدان ${k} قيراط ${(t / 100).toFixed(2)} سهم`;
+}
+
+// ===== GeoLink tools: calculators (pure, testable) =====
+const f3 = x => x.toFixed(3);
+const fmt = x => String(+x.toPrecision(10));
+const SH = {
+  rect: ["مستطيل", [["a", "الطول (م)"], ["b", "العرض (م)"]]],
+  tri: ["مثلث (قاعدة وارتفاع)", [["a", "القاعدة (م)"], ["h", "الارتفاع (م)"]]],
+  heron: ["مثلث (3 أضلاع)", [["a", "الضلع الأول (م)"], ["b", "الضلع الثاني (م)"], ["c", "الضلع الثالث (م)"]]],
+  circle: ["دائرة", [["r", "نصف القطر (م)"]]],
+  trap: ["شبه منحرف", [["a", "القاعدة الأولى (م)"], ["b", "القاعدة الثانية (م)"], ["h", "الارتفاع (م)"]]]
+};
+const UN = {
+  len: ["الطول", [["متر (م)", 1], ["كيلومتر (كم)", 1000], ["سنتيمتر (سم)", .01], ["مليمتر (مم)", .001], ["بوصة (in)", .0254], ["قدم (ft)", .3048], ["ياردة (yd)", .9144], ["ميل (mi)", 1609.344], ["قدم مساحي أمريكي", 1200 / 3937], ["ميل بحري", 1852], ["شين (Chain)", 20.1168], ["قصبة", 3.55]]],
+  area: ["المساحة", [["متر مربع (م²)", 1], ["كيلومتر مربع (كم²)", 1e6], ["هكتار", 1e4], ["فدان", FED], ["قيراط", FED / 24], ["سهم", FED / 576], ["قصبة مربعة", 12.6025], ["أكر (acre)", 4046.8564224], ["قدم مربع (ft²)", .09290304], ["ياردة مربعة (yd²)", .83612736], ["ميل مربع (mi²)", 2589988.110336]]],
+  ang: ["الزوايا", [["درجة (°)", 1], ["راديان (rad)", 180 / Math.PI], ["جراد (gon)", .9], ["دقيقة قوسية (′)", 1 / 60], ["ثانية قوسية (″)", 1 / 3600]]],
+  vol: ["الحجم", [["متر مكعب (م³)", 1], ["لتر", .001], ["سنتيمتر مكعب (سم³)", 1e-6], ["قدم مكعب (ft³)", .028316846592], ["ياردة مكعبة (yd³)", .764554857984], ["جالون أمريكي", .003785411784]]],
+  slope: ["الميل", []]
+};
+function areaRows(A, extra = []) {
+  return [["المساحة (م²)", f3(A)], ["فدان / قيراط / سهم", feddan(A)], ["فدان", (A / FED).toFixed(4)], ["هكتار", (A / 1e4).toFixed(5)], ["كم²", (A / 1e6).toFixed(6)], ["أكر (acre)", (A / 4046.8564224).toFixed(4)], ["قدم² (ft²)", (A / .09290304).toFixed(2)], ...extra];
+}
+function coordCompute(m, v) {
+  if (m === "w2u") {
+    const la = ang(v.a1), lo = ang(v.a2), zr = String(v.a3 || "").trim(), z = zr ? Math.round(num(zr)) : 0;
+    if (isNaN(la) || isNaN(lo)) return null;
+    if (la < -80 || la > 84 || Math.abs(lo) > 180) return "خط العرض يجب أن يكون بين -80 و84، وخط الطول بين -180 و180.";
+    if (zr && !(z >= 1 && z <= 60)) return "رقم المنطقة يجب أن يكون بين 1 و60.";
+    if (z && Math.abs(z - zoneOf(lo)) > 1 && Math.abs(z - zoneOf(lo)) < 59) return "المنطقة المحددة بعيدة عن موقع النقطة. اترك الخانة فارغة للحساب التلقائي.";
+    const u = toUTM(la, lo, z);
+    return [["المنطقة (Zone)", `${u.zone}${u.band}`], ["نصف الكرة", u.south ? "جنوب (S)" : "شمال (N)"], ["Easting (م)", f3(u.E)], ["Northing (م)", f3(u.N)], ["UTM كنص", `${u.zone}${u.band} ${f3(u.E)} ${f3(u.N)}`]];
+  }
+  const E = num(v.a1), N = num(v.a2), z = Math.round(num(v.a3)), south = v.a4 === "S";
+  if ([E, N, z].some(isNaN)) return null;
+  if (!(z >= 1 && z <= 60)) return "رقم المنطقة يجب أن يكون بين 1 و60.";
+  if (E < 100000 || E > 900000 || N < 0 || N > 10001000) return "قيم Easting/Northing خارج المدى المعقول لنظام UTM.";
+  const r = fromUTM(E, N, z, south), la = r.lat.toFixed(8), lo = r.lon.toFixed(8);
+  return [["خط العرض", la], ["خط الطول", lo], ["العرض DMS", dms(Math.abs(r.lat)) + (r.lat >= 0 ? " N" : " S")], ["الطول DMS", dms(Math.abs(r.lon)) + (r.lon >= 0 ? " E" : " W")], ["Lat, Lon", `${la}, ${lo}`]];
+}
+function areaCompute(m, v) {
+  if (m === "shape") {
+    const q = {}; SH[v.sh][1].forEach(([k]) => q[k] = num(v[k]));
+    const vals = Object.values(q); if (vals.some(isNaN)) return null;
+    if (vals.some(x => x <= 0)) return "كل القيم يجب أن تكون أكبر من صفر.";
+    let A, per = null;
+    if (v.sh === "rect") { A = q.a * q.b; per = 2 * (q.a + q.b); }
+    else if (v.sh === "tri") A = q.a * q.h / 2;
+    else if (v.sh === "heron") { const s = (q.a + q.b + q.c) / 2, t = s * (s - q.a) * (s - q.b) * (s - q.c); if (t <= 0) return "الأضلاع لا تكوّن مثلثاً."; A = Math.sqrt(t); per = 2 * s; }
+    else if (v.sh === "circle") { A = Math.PI * q.r * q.r; per = 2 * Math.PI * q.r; }
+    else A = (q.a + q.b) / 2 * q.h;
+    return areaRows(A, per ? [["المحيط (م)", f3(per)]] : []);
+  }
+  const P = pts(v.t); if (!P.length) return null;
+  if (P.length < 3) return "أدخل 3 نقاط على الأقل.";
+  if (m === "en") { const r = polyArea(P); return areaRows(r.area, [["المحيط (م)", f3(r.per)], ["عدد النقاط", String(P.length)], ["مركز E", f3(r.cx)], ["مركز N", f3(r.cy)]]); }
+  if (P.some(p => Math.abs(p[0]) > 84 || Math.abs(p[1]) > 180)) return "الصيغة: خط العرض ثم خط الطول بالدرجات العشرية.";
+  const z = zoneOf(P[0][1]);
+  if (P.some(p => Math.abs(zoneOf(p[1]) - z) > 1)) return "النقاط تمتد على أكثر من منطقة UTM، قسّم الحدود.";
+  const U = P.map(p => { const u = toUTM(p[0], p[1], z); return [u.E, u.N]; }), r = polyArea(U);
+  return areaRows(r.area, [["المحيط (م)", f3(r.per)], ["عدد النقاط", String(P.length)], ["المنطقة (UTM)", `${z}${bandOf(P[0][0])}`]]);
+}
+function distCompute(m, v) {
+  if (m === "pp") {
+    const [e1, n1, e2, n2] = ["e1", "n1", "e2", "n2"].map(k => num(v[k])); if ([e1, n1, e2, n2].some(isNaN)) return null;
+    const dx = e2 - e1, dy = n2 - n1, d = Math.hypot(dx, dy); if (d === 0) return "النقطتان متطابقتان.";
+    const az = azim(dx, dy), bk = (az + 180) % 360;
+    const rows = [["ΔE (م)", f3(dx)], ["ΔN (م)", f3(dy)], ["المسافة الأفقية (م)", f3(d)], ["الاتجاه (Azimuth)", `${dms(az)} (${az.toFixed(6)}°)`], ["الاتجاه العكسي", `${dms(bk)} (${bk.toFixed(6)}°)`], ["الاتجاه الربعي", quad(az)]];
+    const z1 = num(v.z1), z2 = num(v.z2);
+    if (!isNaN(z1) && !isNaN(z2)) { const dz = z2 - z1; rows.push(["ΔZ (م)", f3(dz)], ["المسافة المائلة (م)", f3(Math.hypot(d, dz))], ["الميل (%)", (dz / d * 100).toFixed(3)], ["الزاوية الرأسية", dms(deg(Math.atan2(dz, d)))]); }
+    return rows;
+  }
+  if (m === "pf") {
+    const e1 = num(v.e1), n1 = num(v.n1), az = ang(v.az), d = num(v.d); if ([e1, n1, az, d].some(isNaN)) return null;
+    if (d < 0) return "المسافة يجب ألا تكون سالبة.";
+    const e2 = e1 + d * Math.sin(rad(az)), n2 = n1 + d * Math.cos(rad(az));
+    return [["Easting (م)", f3(e2)], ["Northing (م)", f3(n2)], ["E, N", `${f3(e2)}, ${f3(n2)}`]];
+  }
+  const [la1, lo1, la2, lo2] = ["la1", "lo1", "la2", "lo2"].map(k => ang(v[k])); if ([la1, lo1, la2, lo2].some(isNaN)) return null;
+  if ([la1, la2].some(x => Math.abs(x) > 90) || [lo1, lo2].some(x => Math.abs(x) > 180)) return "العرض بين -90 و90، والطول بين -180 و180.";
+  const r = vincenty(la1, lo1, la2, lo2); if (r.s === 0) return "النقطتان متطابقتان.";
+  if (!isFinite(r.s)) return "تعذر الحساب (نقطتان متقابلتان تقريباً على الكرة).";
+  const bk = (r.a2 + 180) % 360;
+  return [["المسافة (م)", f3(r.s)], ["المسافة (كم)", (r.s / 1000).toFixed(6)], ["الاتجاه الأمامي", `${dms(r.a1)} (${r.a1.toFixed(6)}°)`], ["الاتجاه العكسي", `${dms(bk)} (${bk.toFixed(6)}°)`]];
+}
+function unitCompute(cat, v) {
+  const x = num(v.val); if (isNaN(x)) return null;
+  if (cat === "slope") {
+    let t;
+    if (v.st === "pct") t = x / 100;
+    else if (v.st === "deg") { if (Math.abs(x) >= 90) return "الزاوية يجب أن تكون أقل من 90°."; t = Math.tan(rad(x)); }
+    else { if (x === 0) return "نسبة الميل لا يمكن أن تكون صفراً."; t = 1 / x; }
+    const d = deg(Math.atan(t));
+    return [["نسبة مئوية (%)", fmt(t * 100)], ["درجات (°)", fmt(d)], ["د°ق′ث″", dms(d)], ["نسبة (1 : n)", t === 0 ? "∞" : "1 : " + fmt(Math.abs(1 / t))]];
+  }
+  const L = UN[cat][1], fi = Math.min(Math.max(+v.from || 0, 0), L.length - 1), base = x * L[fi][1];
+  const rows = L.map(([n, f], i) => i === fi ? null : [n, fmt(base / f)]).filter(Boolean);
+  if (cat === "area" && base >= 0) rows.push(["فدان / قيراط / سهم", feddan(base)]);
+  if (cat === "ang") rows.push(["د°ق′ث″ (DMS)", dms(base)]);
+  return rows;
+}
+
+// ===== GeoLink tools: UI =====
+const TL = { coord: ["تحويل الإحداثيات", IC.globe], area: ["حساب المساحات", IC.poly], dist: ["المسافات والاتجاهات", IC.ruler], unit: ["تحويل الوحدات", IC.calc] };
+const fld = (id, label, ph = "", im = "decimal") => `<div><label for="${id}">${label}</label><input id="${id}" dir="ltr" inputmode="${im}" autocomplete="off" placeholder="${ph}"></div>`;
+const g2 = (...c) => `<div class="g2">${c.join("")}</div>`;
+const seg = (id, o, cur) => `<div class="seg" id="${id}">${o.map(([k, t]) => `<button type="button" data-k="${k}" class="${k === cur ? "on" : ""}">${t}</button>`).join("")}</div>`;
+const slc = (id, label, o, cur) => `<div><label for="${id}">${label}</label><select id="${id}">${o.map(([k, t]) => `<option value="${k}"${String(k) === String(cur) ? " selected" : ""}>${t}</option>`).join("")}</select></div>`;
+function wire(id, cb) {
+  const b = document.getElementById(id);
+  b.onclick = e => { const x = e.target.closest("button"); if (x) cb(x.dataset.k); };
+}
+function copyText(t) {
+  const ok = () => toast("تم النسخ");
+  const fb = () => { const a = document.createElement("textarea"); a.value = t; a.style.cssText = "position:fixed;opacity:0"; document.body.append(a); a.select(); try { document.execCommand("copy") ? ok() : toast("تعذر النسخ"); } catch (e) { toast("تعذر النسخ"); } a.remove(); };
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).then(ok, fb); else fb();
+}
+function showRes(box, items) {
+  if (items === null) { box.innerHTML = `<p class="hint">أدخل القيم لعرض النتائج.</p>`; box.onclick = null; return; }
+  if (typeof items === "string") { box.innerHTML = `<div class="msg err">${items}</div>`; box.onclick = null; return; }
+  box.innerHTML = items.map(([k, v], i) => `<div class="rs"><span>${k}</span><b dir="ltr">${v}</b><button type="button" class="cp" data-i="${i}">نسخ</button></div>`).join("")
+    + `<button type="button" class="cp all" data-i="all">نسخ كل النتائج</button>`;
+  box.onclick = e => {
+    const b = e.target.closest(".cp"); if (!b) return;
+    copyText(b.dataset.i === "all" ? items.map(([k, v]) => `${k}: ${v}`).join("\n") : String(items[+b.dataset.i][1]));
+  };
+}
+function hook(ids, compute, box) {
+  const run = () => { const v = {}; ids.forEach(i => v[i] = document.getElementById(i).value); showRes(box, compute(v)); };
+  ids.forEach(i => { const e = document.getElementById(i); e.addEventListener("input", run); e.addEventListener("change", run); });
+  run();
+}
+function fillEx(vals) { Object.entries(vals).forEach(([k, v]) => { document.getElementById(k).value = v; }); document.getElementById(Object.keys(vals)[0]).dispatchEvent(new Event("input")); }
+
+function coordTool(p, m = "w2u") {
+  const w = m === "w2u";
+  p.innerHTML = `<div class="card">${seg("sg", [["w2u", "WGS84 إلى UTM"], ["u2w", "UTM إلى WGS84"]], m)}`
+    + (w ? g2(fld("a1", "خط العرض", "30.0444", "text"), fld("a2", "خط الطول", "31.2357", "text")) + fld("a3", "رقم المنطقة (اختياري)", "تلقائي")
+      : g2(fld("a1", "Easting (م)", "329899.643"), fld("a2", "Northing (م)", "3325016.736")) + g2(fld("a3", "رقم المنطقة", "36"), slc("a4", "نصف الكرة", [["N", "شمال"], ["S", "جنوب"]], "N")))
+    + `<p class="hint">${w ? "يقبل درجات عشرية أو درجات ودقائق وثوانٍ (مثال: 30 2 39.84 N)." : "النظام المرجعي: WGS84 / UTM."}</p><button type="button" class="lnk" id="ex">تعبئة مثال (القاهرة)</button><div id="rs"></div></div>`;
+  wire("sg", k => coordTool(p, k));
+  hook(w ? ["a1", "a2", "a3"] : ["a1", "a2", "a3", "a4"], v => coordCompute(m, v), document.getElementById("rs"));
+  document.getElementById("ex").onclick = () => {
+    if (w) fillEx({ a1: "30.0444", a2: "31.2357" });
+    else { const u = toUTM(30.0444, 31.2357); fillEx({ a1: u.E.toFixed(3), a2: u.N.toFixed(3), a3: String(u.zone) }); }
+  };
+}
+function areaTool(p, m = "shape", shp = "rect") {
+  let body, ids;
+  if (m === "shape") {
+    const F = SH[shp][1]; ids = ["sh", ...F.map(f => f[0])];
+    body = slc("sh", "الشكل", Object.entries(SH).map(([k, s]) => [k, s[0]]), shp) + g2(...F.map(([k, l]) => fld(k, l)));
+  } else {
+    ids = ["t"];
+    body = `<label for="t">${m === "en" ? "النقاط (E N)" : "النقاط (خط العرض، خط الطول)"}</label><textarea id="t" dir="ltr" placeholder="${m === "en" ? "500000 3000000&#10;500100 3000000&#10;500100 3000100&#10;500000 3000100" : "30.0000 31.0000&#10;30.0000 31.0010&#10;30.0010 31.0010&#10;30.0010 31.0000"}"></textarea>`
+      + `<p class="hint">${m === "en" ? "كل سطر نقطة، وافصل بين E وN بمسافة أو فاصلة. رتّب النقاط بالتسلسل حول الحدود." : "كل سطر نقطة بالدرجات العشرية. تُحسب المساحة على مسقط UTM."}</p>`;
+  }
+  p.innerHTML = `<div class="card">${seg("sg", [["shape", "شكل هندسي"], ["en", "إحداثيات E,N"], ["ll", "إحداثيات جغرافية"]], m)}${body}<div id="rs"></div></div>`;
+  wire("sg", k => areaTool(p, k));
+  hook(ids, v => areaCompute(m, v), document.getElementById("rs"));
+  if (m === "shape") document.getElementById("sh").onchange = e => areaTool(p, "shape", e.target.value);
+}
+function distTool(p, m = "pp") {
+  const M = {
+    pp: [["e1", "E1", "1000"], ["n1", "N1", "2000"], ["e2", "E2", "1100"], ["n2", "N2", "2100"], ["z1", "المنسوب 1 (اختياري)", "", "text"], ["z2", "المنسوب 2 (اختياري)", "", "text"]],
+    pf: [["e1", "E1", "1000"], ["n1", "N1", "2000"], ["az", "الاتجاه Azimuth", "45 أو 45 30 0", "text"], ["d", "المسافة (م)", "100"]],
+    geo: [["la1", "خط العرض 1", "30.0444", "text"], ["lo1", "خط الطول 1", "31.2357", "text"], ["la2", "خط العرض 2", "31.2001", "text"], ["lo2", "خط الطول 2", "29.9187", "text"]]
+  }[m];
+  const hints = { pp: "Azimuth = الزاوية من الشمال مع عقارب الساعة.", pf: "الاتجاه بالدرجات العشرية أو درجات ودقائق وثوانٍ.", geo: "المسافة على سطح الإهليلج WGS84 (طريقة Vincenty)." };
+  p.innerHTML = `<div class="card">${seg("sg", [["pp", "بين نقطتين"], ["pf", "نقطة من مسافة واتجاه"], ["geo", "جغرافي"]], m)}`
+    + M.map((f, i) => i % 2 ? "" : g2(fld(...f), M[i + 1] ? fld(...M[i + 1]) : "")).join("") + `<p class="hint">${hints[m]}</p><div id="rs"></div></div>`;
+  wire("sg", k => distTool(p, k));
+  hook(M.map(f => f[0]), v => distCompute(m, v), document.getElementById("rs"));
+}
+function unitTool(p, cat = "len") {
+  const sl = cat === "slope";
+  p.innerHTML = `<div class="card">${seg("sg", Object.entries(UN).map(([k, c]) => [k, c[0]]), cat)}`
+    + (sl ? g2(fld("val", "القيمة", "", "text"), slc("st", "نوع القيمة", [["pct", "نسبة مئوية %"], ["deg", "درجات °"], ["ratio", "نسبة 1 : n (أدخل n)"]], "pct"))
+      : g2(fld("val", "القيمة", "1"), slc("from", "من وحدة", UN[cat][1].map(([n], i) => [i, n]), 0)))
+    + `<div id="rs"></div></div>`;
+  wire("sg", k => unitTool(p, k));
+  hook(sl ? ["val", "st"] : ["val", "from"], v => unitCompute(cat, v), document.getElementById("rs"));
+}
+function tools(k = "coord") {
+  app.innerHTML = `<h2>الأدوات</h2><p style="margin:0 0 12px">حسابات مساحية سريعة تعمل مباشرة على جهازك.</p>`
+    + `<div class="tl-grid">${Object.entries(TL).map(([id, [t, d]]) => `<button type="button" data-k="${id}" class="tl${id === k ? " on" : ""}"><svg viewBox="0 0 24 24"><path d="${d}"/></svg><span>${t}</span></button>`).join("")}</div><div id="tp"></div>`;
+  app.querySelector(".tl-grid").onclick = e => { const b = e.target.closest(".tl"); if (b) tools(b.dataset.k); };
+  ({ coord: coordTool, area: areaTool, dist: distTool, unit: unitTool })[k](document.getElementById("tp"));
+}
+
 
 function route() {
   const h = location.hash.slice(1);
@@ -536,11 +828,12 @@ function route() {
   else if (h === "admin") admin();
   else if (h === "pro") pro();
   else if (h === "ai") ai();
+  else if (h === "tools") tools();
   else if (h === "my") my();
   else if (h === "assistant") assistantForm();
   else if (h === "account") account();
   else home();
-  app.className = ["client", "surveyor", "admin", "pro", "ai", "my", "account", "assistant"].includes(h) ? "page" : "";
+  app.className = ["client", "surveyor", "admin", "pro", "ai", "my", "account", "assistant", "tools"].includes(h) ? "page" : "";
   setNav(h);
   scrollTo(0, 0);
 }
