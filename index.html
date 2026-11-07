@@ -152,6 +152,24 @@ main>*{animation:rise .4s ease both}
 nav#nav{padding:0 2px calc(8px + env(safe-area-inset-bottom,0px))}
 nav .g{flex:1;display:flex;min-width:0}
 nav a.fab{flex:none;width:72px}
+.mk{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:0 18px}
+.mc{display:block;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:16px;text-decoration:none;color:var(--ink);box-shadow:0 6px 18px rgba(15,23,42,.05)}
+.mc i{width:50px;height:50px;border-radius:16px;display:grid;place-items:center}.mc i svg{width:26px;height:26px}
+.mc b{display:block;margin-top:16px;font-size:1.02rem;font-weight:700}.mc p{font-size:.8rem;margin:4px 0 0;line-height:1.6}
+.m1 i{background:#eaf1ff;color:#2d5be3}.m2 i{background:#e6f8fc;color:#2a9fc4}.m3 i{background:#eceffd;color:#4b4fd1}.m4 i{background:#e6f7f2;color:#139a7a}
+.sp{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:14px;margin:12px 0;text-decoration:none;color:var(--ink);box-shadow:0 6px 18px rgba(15,23,42,.04)}
+.av{flex:none;width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg,#2d5be3,#46aed0);color:#fff;display:grid;place-items:center;font-weight:700;font-size:1.1rem}.av.big{width:72px;height:72px;font-size:1.4rem;margin-bottom:10px}
+.si{flex:1;min-width:0}.sn{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.sn small{color:var(--mut);font-size:.72rem;background:#f1f5f9;border-radius:99px;padding:0 8px}
+.vb{display:inline-grid;place-items:center;color:var(--blue)}.vb svg{width:20px;height:20px}
+.sh2{color:#334155;font-size:.9rem}.sm{color:var(--mut);font-size:.82rem}
+.cx{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.cx span,.pick button{font:inherit;font-size:.76rem;background:#eef3ff;color:#2446b8;border-radius:99px;padding:3px 10px;border:0}
+.pick button{cursor:pointer;background:#f1f5f9;color:var(--mut);font-size:.82rem;padding:6px 12px}.pick button.on{background:var(--blue);color:#fff}
+.sf{display:flex;gap:12px;flex-wrap:wrap;font-size:.82rem;color:var(--mut)}.sf .ok{color:#15803d;font-weight:600}.sf .no{color:#b45309}
+.tg{background:#e6f7f2;color:#0f766e;border-radius:99px;padding:0 10px;font-size:.78rem}
+.kv{display:flex;justify-content:space-between;padding:8px 0;border-top:1px dashed var(--line)}.kv:first-child{border-top:0}.kv span{color:var(--mut)}
+.pct{display:flex;align-items:center;gap:12px;font-weight:600}.pct .bar{flex:1;height:8px;background:#e8edf5;border-radius:9px;overflow:hidden;display:block}.pct .bar i{display:block;height:100%;background:linear-gradient(90deg,#2d5be3,#46aed0);width:0}
+.chk{display:flex;gap:10px;align-items:center}.chk input{width:auto}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 </style>
 </head>
 <body>
@@ -191,6 +209,8 @@ const el = (tag, attrs = {}, ...kids) => {
 const opts = list => list.map(x => `<option>${x}</option>`).join("");
 
 const IC = {
+  search: "M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.3-4.3",
+  brief: "M3 8h18v12H3zM8 8V5h8v3M3 13h18",
   bell: "M18 16v-5a6 6 0 10-12 0v5l-2 2h16zM10 20a2 2 0 004 0",
   chat: "M21 12a8 8 0 01-11.5 7.2L4 20l1-4.6A8 8 0 1121 12z",
   pin: "M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11zM12 7.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z",
@@ -259,16 +279,18 @@ function home() {
       <div class="brand"><img class="lg" src="icon-192.png" alt="GeoLink"><div><b>GeoLink</b><small>GEOSPATIAL PLATFORM</small></div></div>
       <div class="ibs"><button class="ib" id="b1" aria-label="اللغة">${ic(IC.globe)}</button><button class="ib" id="b2" aria-label="الإشعارات">${ic(IC.bell)}</button></div>
     </div>
-    <div class="center"><span class="badge">${ic(IC.check)}ابدأ طلبك في دقيقة</span></div>
+    <div class="center"><span class="badge">${ic(IC.check)}المنصة المساندة المعتمدة الأولى</span></div>
     <h1>منصة خدمات المساحة</h1>
     <p class="sub">اربط مشروعك بأخصائي مساحة بكل سهولة، أو انضم كأخصائي لاستقبال الطلبات.</p>
     <a class="cta" href="#client">${ic(IC.arrow)}اطلب أخصائي مساحة الآن</a>
     <button id="inst" class="inst">ثبّت التطبيق على موبايلك</button>
   </div>
-  <div class="sh"><h2>${ic(IC.users)}حدد نوع حسابك للاستمرار</h2><span>4 أدوار متاحين</span></div>
-  <div class="rc2">
-    <a class="rc" href="#client"><div class="chip">${ic(IC.user)}</div><b>العميل</b><p>اطلب خدمة مساحة وتابع طلبك بسهولة</p><em>ابدأ كعميل ‹</em></a>
-    <a class="rc t" href="#pro"><div class="chip">${ic(IC.helmet)}</div><b>أخصائي المساحة</b><p>عرض الطلبات المتاحة وملفك المهني</p><em>انضم للمهنيين ‹</em></a>
+  <div class="sh"><h2>${ic(IC.users)}سوق خدمات المساحة</h2><span>4 مسارات</span></div>
+  <div class="mk">
+    <a class="mc m1" href="#client"><i>${ic(IC.doc)}</i><b>انشر طلب عمل</b><p>اطلب خدمة مساحة وحدد تفاصيل مشروعك</p></a>
+    <a class="mc m2" href="#specialists"><i>${ic(IC.search)}</i><b>اكتشف الأخصائيين</b><p>تصفح الملفات المهنية وقارن بينها</p></a>
+    <a class="mc m3" href="#jobs"><i>${ic(IC.brief)}</i><b>تصفح فرص العمل</b><p>للأخصائيين: الطلبات المتاحة الآن</p></a>
+    <a class="mc m4" href="#profile"><i>${ic(IC.star)}</i><b>اعرض خدماتك</b><p>أنشئ ملفك المهني وخدماتك</p></a>
   </div>
   <a class="asst" href="#assistant"><div class="tx"><b>مساعد المساحة</b><p>سجّل بياناتك وخبراتك واستقبل فرص عمل في مجال المساحة.</p><em>انضم كمساعد مساحة ‹</em></div><img class="ill" src="assistant.png" alt=""></a>
   <a class="adm" href="#admin"><div class="chip">${ic(IC.shield)}</div><div class="tx"><b>الإدارة</b><p>إدارة الطلبات والأخصائيين والاعتمادات</p></div><span class="go2">${ic(IC.arrow)}</span></a>
@@ -541,6 +563,101 @@ function account() {
       : `<p>سجّل دخولك كأخصائي مساحة لتشوف الطلبات المتاحة.</p><a class="btn p wide" href="#pro">دخول الأخصائيين</a><a class="btn g wide" href="#surveyor">تسجيل أخصائي جديد</a>`) + `</div>`;
     if (u) { document.getElementById("who").textContent = u.email; document.getElementById("so").onclick = () => auth.signOut(); }
   });
+}
+
+const SPEC_LIST = ["رفع مساحي طبوغرافي", "مساحة حدود وملكيات", "توقيع (Setting out)", "مساحة As-Built", "مساحة GNSS", "خدمات Total Station", "مراقبة جودة المساحة QC", "حساب كميات", "استشارات مساحية"];
+const M_esc = x => String(x ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const M_svg = d => `<svg viewBox="0 0 24 24"><path d="${d}"/></svg>`;
+const M_ini = n => String(n || "?").trim().split(/\s+/).slice(0, 2).map(w => w[0]).join("");
+const M_rate = p => p.ratingCount > 0 ? `★ ${(+p.ratingAvg).toFixed(1)} (${p.ratingCount})` : "جديد";
+const M_when = t => t && t.toDate ? t.toDate().toLocaleDateString("ar-EG") : "";
+const M_empty = (t, a = "") => `<div class="card done"><p>${t}</p>${a}</div>`;
+const M_v = id => document.getElementById(id).value;
+const M_card = (id, p) => `<a class="sp" href="#sp:${id}"><div class="av">${M_esc(M_ini(p.name))}</div><div class="si"><div class="sn"><b>${M_esc(p.name)}</b>${p.verified ? `<span class="vb" title="موثّق">${M_svg(IC.check)}</span>` : "<small>غير موثّق</small>"}</div><div class="sh2">${M_esc(p.headline)}</div><div class="sm">${M_esc(p.gov)} · ${+p.years} سنة خبرة</div><div class="cx">${(p.specs || []).slice(0, 3).map(x => `<span>${M_esc(x)}</span>`).join("")}</div><div class="sf"><span>${M_rate(p)}</span><span>${+p.completed || 0} مشروع</span><span class="${p.available ? "ok" : "no"}">${p.available ? "متاح" : "غير متاح"}</span></div></div></a>`;
+function M_pager(col, order, render, filters, listId, moreId, emptyMsg) {
+  let items = [], last = null;
+  const list = document.getElementById(listId), more = document.getElementById(moreId);
+  const draw = () => { const L = render(items); list.innerHTML = L || M_empty(items.length ? "مفيش نتائج بالفلاتر دي." : emptyMsg); };
+  const load = async () => {
+    try {
+      let q = db.collection(col).orderBy(order, "desc").limit(20); if (last) q = q.startAfter(last);
+      const snap = await q.get(); snap.forEach(d => items.push({ id: d.id, d: d.data() }));
+      last = snap.docs[snap.docs.length - 1] || last; more.style.display = snap.size === 20 ? "block" : "none"; draw();
+    } catch (e) { list.textContent = "تعذر تحميل البيانات. اتأكد إن قواعد Firebase محدّثة."; console.error(e); }
+  };
+  app.querySelectorAll("input,select").forEach(e => e.oninput = draw); more.onclick = load; load();
+}
+function specialistsPage() {
+  const sel = (id, l, o) => `<div><label>${l}</label><select id="${id}">${o}</select></div>`;
+  app.innerHTML = `<h2>اكتشف الأخصائيين</h2><div class="card"><input id="q" placeholder="ابحث بالاسم أو التخصص أو الجهاز..." aria-label="بحث">
+    <div class="f2">${sel("fg", "المحافظة", `<option value="">الكل</option>${opts(GOVS)}`)}${sel("fs", "التخصص", `<option value="">الكل</option>${opts(SPEC_LIST)}`)}</div>
+    <div class="f2">${sel("fy", "سنين الخبرة", '<option value="0">أي خبرة</option><option value="3">3+</option><option value="5">5+</option><option value="10">10+</option>')}${sel("fr", "التقييم", '<option value="0">الكل</option><option value="3">3+</option><option value="4">4+</option><option value="4.5">4.5+</option>')}</div>
+    <div class="f2">${sel("fa", "التوفر", '<option value="">الكل</option><option value="1">متاح فقط</option>')}${sel("fo", "الترتيب", '<option value="new">الأحدث</option><option value="rate">الأعلى تقييماً</option><option value="exp">الأكثر خبرة</option>')}</div></div>
+    <div id="sl">جاري التحميل...</div><button id="sm" class="btn g wide" style="display:none">عرض المزيد</button>`;
+  M_pager("specialistProfiles", "updatedAt", items => {
+    const q = M_v("q").trim().toLowerCase(), g = M_v("fg"), s = M_v("fs"), y = +M_v("fy"), r = +M_v("fr"), a = M_v("fa"), o = M_v("fo");
+    const L = items.filter(({ d: p }) => (!g || p.gov === g) && (!s || (p.specs || []).includes(s)) && p.years >= y && (+p.ratingAvg || 0) >= r && (!a || p.available) && (!q || [p.name, p.headline, p.equipment, ...(p.specs || [])].join(" ").toLowerCase().includes(q)));
+    L.sort((x, z) => o === "rate" ? (+z.d.ratingAvg || 0) - (+x.d.ratingAvg || 0) : o === "exp" ? z.d.years - x.d.years : 0);
+    return L.map(({ id, d }) => M_card(id, d)).join("");
+  }, 0, "sl", "sm", `لسه مفيش أخصائيين نشروا ملفاتهم.</p><a class="btn p wide" href="#profile">اعرض خدماتك</a><p>`);
+}
+async function specialistDetail(id) {
+  app.innerHTML = `<a class="back" href="#specialists">رجوع</a><div id="sd">جاري التحميل...</div>`;
+  const box = document.getElementById("sd");
+  try {
+    const d = await db.collection("specialistProfiles").doc(id).get();
+    if (!d.exists) { box.innerHTML = M_empty("الملف ده مش موجود."); return; }
+    const p = d.data(), card = (t, b) => b ? `<div class="card"><h2>${t}</h2><p>${b}</p></div>` : "";
+    box.innerHTML = `<div class="card"><div class="av big">${M_esc(M_ini(p.name))}</div><h2>${M_esc(p.name)} ${p.verified ? `<span class="vb">${M_svg(IC.check)}</span>` : ""}</h2><p>${M_esc(p.headline)}</p><div class="sf"><span>${M_rate(p)}</span><span>${+p.completed || 0} مشروع</span><span class="${p.available ? "ok" : "no"}">${p.available ? "متاح" : "غير متاح"}</span></div></div>
+      <div class="card"><div class="kv"><span>المحافظة</span><b>${M_esc(p.gov)}</b></div><div class="kv"><span>سنين الخبرة</span><b>${+p.years}</b></div><div class="kv"><span>التوثيق</span><b>${p.verified ? "موثّق" : "غير موثّق بعد"}</b></div></div>
+      ${(p.specs || []).length ? `<div class="card"><h2>التخصصات</h2><div class="cx">${p.specs.map(x => `<span>${M_esc(x)}</span>`).join("")}</div></div>` : ""}${card("الأجهزة والمهارات", M_esc(p.equipment))}${card("نبذة", M_esc(p.bio))}
+      <div class="card"><p>التواصل مع الأخصائي هيتم من خلال طلب تعاون جوّه المنصة (لسه مش مفعّل). بيانات التواصل الشخصية مش بتظهر علناً.</p></div>`;
+  } catch (e) { box.textContent = "تعذر تحميل الملف."; console.error(e); }
+}
+function jobsPage() {
+  app.innerHTML = `<h2>فرص العمل</h2><div class="card"><div class="f2"><div><label>المحافظة</label><select id="jg"><option value="">الكل</option>${opts(GOVS)}</select></div><div><label>نوع الخدمة</label><select id="js"><option value="">الكل</option>${opts(SERVICES)}</select></div></div></div>
+    <div id="jl">جاري التحميل...</div><button id="jm" class="btn g wide" style="display:none">عرض المزيد</button>
+    <p>تقديم العروض على الطلبات لسه مش مفعّل، وبيتضاف في مرحلة العروض.</p>`;
+  M_pager("board", "createdAt", items => items.filter(({ d: x }) => x.status === "open" && (!M_v("jg") || x.gov === M_v("jg")) && (!M_v("js") || x["service"] === M_v("js")))
+    .map(({ d: x }) => `<div class="card"><div class="sn"><b>${M_esc(x["service"])}</b><span class="tg">مفتوح</span></div><div class="sm">${M_esc(x.gov)} · ${M_when(x.createdAt)}</div></div>`).join(""), 0, "jl", "jm",
+    `مفيش طلبات متاحة دلوقتي.</p><a class="btn p wide" href="#client">انشر طلب عمل</a><p>`);
+}
+function profilePage() {
+  if (unsub) unsub();
+  unsub = auth.onAuthStateChanged(u => {
+    if (location.hash !== "#profile") return;
+    u ? profileForm(u) : loginView("دخول الأخصائيين", `<p style="text-align:center">لسه ما سجلتش؟ <a href="#surveyor" style="color:var(--blue);font-weight:600">أنشئ حساب أخصائي</a></p>`);
+  });
+}
+async function profileForm(u) {
+  app.innerHTML = `<h2>ملفي المهني</h2><div id="pf">جاري التحميل...</div>`;
+  let o = {};
+  try { const d = await db.collection("specialistProfiles").doc(u.uid).get(); if (d.exists) o = d.data(); }
+  catch (e) { document.getElementById("pf").textContent = "تعذر تحميل ملفك. اتأكد إن قواعد Firebase محدّثة."; console.error(e); return; }
+  const sel = new Set(o.specs || []);
+  document.getElementById("pf").innerHTML = `<div class="card"><div class="pct"><span id="pc"></span><div class="bar"><i id="pb"></i></div></div></div>
+    <form class="card" id="pform"><label>الاسم الكامل</label><input name="name" value="${M_esc(o.name)}" required maxlength="100">
+    <label>المسمى المهني</label><input name="headline" value="${M_esc(o.headline)}" required maxlength="120" placeholder="مثال: أخصائي مساحة إنشائية - Total Station وGNSS">
+    <div class="f2"><div><label>سنين الخبرة</label><input name="years" type="number" min="0" max="60" value="${o.years ?? ""}" required></div><div><label>المحافظة</label><select name="gov">${opts(GOVS)}</select></div></div>
+    <label>التخصصات</label><div class="cx pick">${SPEC_LIST.map(x => `<button type="button" class="${sel.has(x) ? "on" : ""}">${M_esc(x)}</button>`).join("")}</div>
+    <label>الأجهزة والمهارات الفنية</label><textarea name="equipment" maxlength="300">${M_esc(o.equipment)}</textarea>
+    <label>نبذة عنك</label><textarea name="bio" maxlength="1500">${M_esc(o.bio)}</textarea>
+    <label class="chk"><input type="checkbox" name="available" ${o.available !== false ? "checked" : ""}> متاح لاستقبال أعمال جديدة</label>
+    <button class="go" type="submit">حفظ ونشر ملفي</button><div id="po"></div>${o.name ? `<a class="btn g wide" href="#sp:${u.uid}">عرض ملفي العام</a>` : ""}</form>
+    <p>صورة الملف والأعمال السابقة بتتفعّل لما نفعّل Firebase Storage.</p>`;
+  const f = document.getElementById("pform"); f.gov.value = o.gov || GOVS[0];
+  const pct = () => { const c = [f.name.value.trim(), f.headline.value.trim(), f.years.value !== "", f.querySelector(".pick .on"), f.equipment.value.trim(), f.bio.value.trim(), f.gov.value].filter(Boolean).length, p = Math.round(c / 7 * 100);
+    document.getElementById("pc").textContent = `اكتمال الملف ${p}%`; document.getElementById("pb").style.width = p + "%"; };
+  f.querySelectorAll(".pick button").forEach(b => b.onclick = () => { b.classList.toggle("on"); pct(); }); f.oninput = pct; pct();
+  f.onsubmit = async ev => {
+    ev.preventDefault(); const btn = f.querySelector(".go"), out = document.getElementById("po"); btn.disabled = true; btn.textContent = "جاري الحفظ...";
+    try {
+      await db.collection("specialistProfiles").doc(u.uid).set({ name: f.name.value.trim(), headline: f.headline.value.trim(), years: +f.years.value, gov: f.gov.value, specs: [...f.querySelectorAll(".pick .on")].map(b => b.textContent),
+        equipment: f.equipment.value.trim(), bio: f.bio.value.trim(), available: f.available.checked, verified: o.verified === true, ratingAvg: o.ratingAvg || 0, ratingCount: o.ratingCount || 0, completed: o.completed || 0, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+      out.className = "msg ok"; out.textContent = "تم حفظ ملفك ونشره في دليل الأخصائيين.";
+    } catch (e) { out.className = "msg err"; out.textContent = "تعذر الحفظ. اتأكد من القواعد والاتصال."; console.error(e); }
+    btn.disabled = false; btn.textContent = "حفظ ونشر ملفي";
+  };
 }
 
 function setNav(h) {
@@ -830,10 +947,14 @@ function route() {
   else if (h === "ai") ai();
   else if (h === "tools") tools();
   else if (h === "my") my();
+  else if (h === "jobs") jobsPage();
+  else if (h === "specialists") specialistsPage();
+  else if (h === "profile") profilePage();
+  else if (/^sp:\w+$/.test(h)) specialistDetail(h.slice(3));
   else if (h === "assistant") assistantForm();
   else if (h === "account") account();
   else home();
-  app.className = ["client", "surveyor", "admin", "pro", "ai", "my", "account", "assistant", "tools"].includes(h) ? "page" : "";
+  app.className = ["client", "surveyor", "admin", "pro", "ai", "my", "account", "assistant", "tools", "jobs", "specialists", "profile"].includes(h) || h.startsWith("sp:") ? "page" : "";
   setNav(h);
   scrollTo(0, 0);
 }
