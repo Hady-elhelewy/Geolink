@@ -413,6 +413,121 @@ function route() {
   window.scrollTo(0, 0);
 }
 auth.onAuthStateChanged(u => { currentUser = u; });
+// ============================================================
+// 4. إضافات الشبكة الاجتماعية (إعجاب، تعليق، رسائل، إشعارات)
+// ============================================================
+
+// أ. دوال الإعجاب والتعليق
+window.doLike = async function(postId, btn) {
+  if (!currentUser) return toast("سجّل دخولك أولاً للإعجاب");
+  try {
+    const postRef = db.collection("posts").doc(postId);
+    const likeRef = postRef.collection("likes").doc(currentUser.uid);
+    const doc = await likeRef.get();
+    if (doc.exists) {
+      await likeRef.delete();
+      await postRef.update({ likes: firebase.firestore.FieldValue.increment(-1) });
+      btn.classList.remove("liked");
+    } else {
+      await likeRef.set({ createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+      await postRef.update({ likes: firebase.firestore.FieldValue.increment(1) });
+      btn.classList.add("liked");
+      // إضافة إشعار لصاحب المنشور
+      const postSnap = await postRef.get();
+      if (postSnap.data().uid && postSnap.data().uid !== currentUser.uid) {
+        await db.collection("notifications").add({
+          to: postSnap.data().uid, from: currentUser.displayName || currentUser.email, type: "like",
+          postId: postId, read: false, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      }
+    }
+  } catch (e) { toast("حدث خطأ"); }
+};
+
+window.openComments = async function(postId) {
+  if (!currentUser) return toast("سجّل دخولك أولاً للتعليق");
+  const txt = prompt("اكتب تعليقك:");
+  if (!txt) return;
+  try {
+    await db.collection("comments").add({
+      postId: postId, text: txt, author: currentUser.displayName || currentUser.email,
+      uid: currentUser.uid, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    const postSnap = await db.collection("posts").doc(postId).get();
+    await db.collection("posts").doc(postId).update({ comments: firebase.firestore.FieldValue.increment(1) });
+    if (postSnap.data().uid && postSnap.data().uid !== currentUser.uid) {
+      await db.collection("notifications").add({
+        to: postSnap.data().uid, from: currentUser.displayName || currentUser.email, type: "comment",
+        postId: postId, text: txt, read: false, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    }
+    toast("تم إضافة التعليق");
+    renderFeed();
+  } catch (e) { toast("حدث خطأ"); }
+};
+
+// ب. الإشعارات والرسائل
+function notificationsView() {
+  app.className = "page"; renderNav('home');
+  app.innerHTML = `<h2>الإشعارات</h2><div id="notif-list" class="card">جاري التحميل...</div>`;
+  if (!currentUser) return (document.getElementById("notif-list").innerHTML = "سجّل دخولك لعرض الإشعارات.");
+  db.collection("notifications").where("to", "==", currentUser.uid).orderBy("createdAt", "desc").limit(20).get()
+    .then(snap => {
+      if (snap.empty) return (document.getElementById("notif-list").innerHTML = "لا توجد إشعارات.");
+      document.getElementById("notif-list").innerHTML = snap.docs.map(d => {
+        const x = d.data();
+        return `<div style="padding:10px 0;border-bottom:1px solid var(--line);"><b>${x.from}</b> ${x.type === "like" ? "أعجب بمنشورك" : "علّق على منشورك"} <span style="font-size:0.75rem;color:gray;">${x.text || ""}</span></div>`;
+      }).join("");
+    });
+}
+
+function messagesView() {
+  app.className = "page"; renderNav('home');
+  app.innerHTML = `<h2>الرسائل</h2><div class="card">صفحة الرسائل قيد التطوير.</div>`;
+}
+
+// ج. تحديث دالة عرض المنشورات لتشمل الإعجاب والتعليق الحقيقي
+async function renderFeed() {
+  const feed = document.getElementById("feed-container");
+  if (!feed) return;
+  feed.innerHTML = `<div class="empty">جاري التحميل...</div>`;
+  const posts = await loadPosts();
+  feed.innerHTML = "";
+  posts.forEach(post => {
+    feed.append(el("article", { class: "post-card", innerHTML: `
+      <div class="post-header"><img class="post-avatar" src="https://ui-avatars.com/api/?name=${encodeURIComponent(post.author)}&background=102A56&color=fff"><div class="post-meta"><h4>${post.author} ${post.verified ? `<svg viewBox="0 0 24 24"><path d="${IC.check}"/></svg>` : ''}</h4><p>${post.role}</p></div><div class="post-time">${post.time}</div></div>
+      <div class="post-content"><p>${post.content}</p></div>${post.image ? `<img class="post-media" src="${post.image}">` : ''}
+      <div class="post-stats"><span>👍 ${post.likes} إعجاب</span><span>💬 ${post.comments} تعليق</span></div>
+      <div class="post-actions">
+        <button class="action-btn like-btn" onclick="doLike('${post.id}', this)"><svg viewBox="0 0 24 24"><path d="${IC.like}"/></svg> إعجاب</button>
+        <button class="action-btn" onclick="openComments('${post.id}')"><svg viewBox="0 0 24 24"><path d="${IC.comment}"/></svg> تعليق</button>
+        <button class="action-btn"><svg viewBox="0 0 24 24"><path d="${IC.share}"/></svg> مشاركة</button>
+      </div>` }));
+  });
+}
+
+// د. ربط الواجهات الجديدة بالأزرار
+const originalRenderNav = renderNav;
+renderNav = function(active) {
+  originalRenderNav(active);
+  // إضافة زر الإشعارات في الهيدر
+  const headerActions = document.querySelector(".header-actions");
+  if (headerActions && !document.getElementById("notif-btn")) {
+    const btn = el("button", { class: "icon-btn", id: "notif-btn", onclick: "location.hash='#notifications'" });
+    btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="${IC.bell}"/></svg><span class="dot"></span>`;
+    headerActions.prepend(btn);
+  }
+};
+
+// هـ. إضافة الإشعارات والرسائل للراوتر
+const originalRoute = route;
+route = function() {
+  const h = location.hash.slice(1);
+  if (h === "notifications") { notificationsView(); return; }
+  if (h === "messages") { messagesView(); return; }
+  originalRoute();
+};
+
 window.onhashchange = route;
 route();
 </script>
