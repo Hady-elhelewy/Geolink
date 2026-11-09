@@ -220,6 +220,7 @@ function calcCurve(R, D) {
   const h = D * rad(1) / 2, T = R * Math.tan(h), Lc = R * D * rad(1), LC = 2 * R * Math.sin(h), Ex = R * (1 / Math.cos(h) - 1), M = R * (1 - Math.cos(h));
   return [["نصف القطر R (م)", f3(R)], ["زاوية الانحراف Δ °", D.toFixed(5)], ["طول المماس T (م)", f3(T)], ["طول المنحنى L (م)", f3(Lc)], ["الوتر الطويل LC (م)", f3(LC)], ["المسافة الخارجية E (م)", f3(Ex)], ["السهم الأوسط M (م)", f3(M)]];
 } // ============================================================
+// ============================================================
 // 3. إعدادات Firebase والمتغيرات
 // ============================================================
 const WA_NUMBER = "201020259546";
@@ -231,199 +232,41 @@ firebase.initializeApp({
 const db = firebase.firestore(); const auth = firebase.auth();
 const ADMIN_UID = "gPceivu7FAa1YkRP5mdjrksFJmm2";
 const app = document.getElementById("app");
-let currentUser = null, currentTab = "foryou";
+let currentUser = null;
 const GOVS = ["القاهرة","الجيزة","الإسكندرية","القليوبية","الشرقية","الدقهلية","الغربية","كفر الشيخ","المنوفية","البحيرة","مطروح","الإسماعيلية","بورسعيد","السويس","شمال سيناء","جنوب سيناء","دمياط","الفيوم","بني سويف","المنيا","أسيوط","سوهاج","قنا","الأقصر","أسوان","البحر الأحمر","الوادي الجديد","أخرى"];
 const SERVICES = ["رفع مساحي لأرض","توقيع وتحديد مناسيب (إنشاءات)","حساب كميات","رفع مساحي لمبنى قائم","تقسيم أراضي","استشارة مساحية","تقرير كروكي","خدمة أخرى"];
-const SH = { rect: ["مستطيل", [["a", "الطول (م)"], ["b", "العرض (م)"]]], tri: ["مثلث (قاعدة وارتفاع)", [["a", "القاعدة (م)"], ["h", "الارتفاع (م)"]]], heron: ["مثلث (3 أضلاع)", [["a", "الضلع الأول (م)"], ["b", "الضلع الثاني (م)"], ["c", "الضلع الثالث (م)"]]], circle: ["دائرة", [["r", "نصف القطر (م)"]]], trap: ["شبه منحرف", [["a", "القاعدة الأولى (م)"], ["b", "القاعدة الثانية (م)"], ["h", "الارتفاع (م)"]]] };
-const UN = { len: ["الطول", [["متر (م)", 1], ["كيلومتر (كم)", 1000], ["سنتيمتر (سم)", .01], ["مليمتر (مم)", .001], ["بوصة (in)", .0254], ["قدم (ft)", .3048], ["ياردة (yd)", .9144], ["ميل (mi)", 1609.344], ["ميل بحري", 1852]]], area: ["المساحة", [["متر مربع (م²)", 1], ["كيلومتر مربع (كم²)", 1e6], ["هكتار", 1e4], ["فدان", FED], ["قيراط", FED / 24], ["سهم", FED / 576], ["أكر (acre)", 4046.8564224], ["قدم مربع (ft²)", .09290304]]], ang: ["الزوايا", [["درجة (°)", 1], ["راديان (rad)", 180 / Math.PI], ["جراد (gon)", .9], ["دقيقة قوسية (′)", 1 / 60], ["ثانية قوسية (″)", 1 / 3600]]], vol: ["الحجم", [["متر مكعب (م³)", 1], ["لتر", .001], ["قدم مكعب (ft³)", .028316846592]]] };
 
+// --- المساعدات (Helpers) ---
 const el = (tag, attrs = {}, ...kids) => { const e = document.createElement(tag); for (const k in attrs) k === "class" ? e.className = attrs[k] : e.setAttribute(k, attrs[k]); kids.forEach(c => e.append(c)); return e; };
 function toast(t) { const e = el("div", { class: "toast" }, t); document.body.append(e); setTimeout(() => e.remove(), 2200); }
 function closeModal(id) { document.getElementById(id).classList.remove("show"); }
-window.closeModal = closeModal;
 
-const MOCK_POSTS = [{ id: 1, author: "مكتب AL Helwey", role: "Surveyor / QC Team Leader", time: "منذ ساعتين", content: "تم بحمد الله الانتهاء من أعمال الرفع المساحي لمشروع O&M Complex. #مساحة", image: "https://images.unsplash.com/photo-1541888078693-019d16e6d5e1?auto=format&fit=crop&q=80&w=600", likes: 124, comments: 12, verified: true }, { id: 2, author: "م. أحمد مصطفى", role: "GIS Specialist", time: "منذ 5 ساعات", content: "نصيحة اليوم: تأكد من وجود سماء مفتوحة عند العمل بـ RTK.", image: null, likes: 89, comments: 5, verified: false }];
+const MOCK_POSTS = [
+  { id: 1, author: "مكتب AL Helwey", role: "Surveyor / QC Team Leader", time: "منذ ساعتين", content: "تم بحمد الله الانتهاء من أعمال الرفع المساحي لمشروع O&M Complex.", image: "https://images.unsplash.com/photo-1541888078693-019d16e6d5e1?auto=format&fit=crop&q=80&w=600", likes: 124, comments: 12, verified: true }
+];
 
 // ============================================================
-// 4. التنقل والواجهات (Home, Profile, Network, Jobs)
+// 4. دوال المنشورات الحقيقية (Reading & Interacting)
 // ============================================================
-function renderNav(active) {
-  document.getElementById("nav").innerHTML = `
-    <a href="#home" class="${active === 'home' ? 'on' : ''}"><svg viewBox="0 0 24 24"><path d="${IC.home}"/></svg><span>الرئيسية</span></a>
-    <a href="#network" class="${active === 'network' ? 'on' : ''}"><svg viewBox="0 0 24 24"><path d="${IC.network}"/></svg><span>شبكتي</span></a>
-    <a href="#compose" class="fab" onclick="openComposer()"><div class="c-fab"><svg viewBox="0 0 24 24"><path d="${IC.plus}"/></svg></div></a>
-    <a href="#jobs" class="${active === 'jobs' ? 'on' : ''}"><svg viewBox="0 0 24 24"><path d="${IC.brief}"/></svg><span>الوظائف</span></a>
-    <a href="#profile" class="${active === 'profile' ? 'on' : ''}"><svg viewBox="0 0 24 24"><path d="${IC.user}"/></svg><span>حسابي</span></a>`;
-}
-
-function openComposer() {
-  document.getElementById("composer-user").innerHTML = `<img id="composer-avatar" src="https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser ? (currentUser.displayName || currentUser.email) : "G")}&background=1677F2&color=fff" style="width:40px;height:40px;border-radius:50%;"><div><b id="composer-name" style="color:var(--navy);">${currentUser ? (currentUser.displayName || currentUser.email) : "زائر"}</b><div style="font-size:0.78rem; color:var(--mut);">${currentUser ? "أخصائي مساحة" : "سجّل دخولك للنشر"}</div></div>`;
-  document.getElementById("composer").classList.add("show");
-  document.getElementById("publish-btn").onclick = async () => {
-    const text = document.getElementById("post-text").value.trim();
-    if (!text) return toast("اكتب شيئاً أولاً");
-    const btn = document.getElementById("publish-btn"); btn.disabled = true; btn.textContent = "جاري النشر...";
-    try {
-      if (currentUser) await db.collection("posts").add({ text, author: currentUser.displayName || currentUser.email, role: "أخصائي مساحة", uid: currentUser.uid, createdAt: firebase.firestore.FieldValue.serverTimestamp(), likes: 0, comments: 0 });
-      else MOCK_POSTS.unshift({ id: Date.now(), author: "أنت (زائر)", role: "مستخدم", time: "الآن", content: text, image: null, likes: 0, comments: 0, verified: false });
-      closeModal("composer"); document.getElementById("post-text").value = ""; toast("تم النشر بنجاح"); if (location.hash === "#home" || location.hash === "") renderFeed();
-    } catch (e) { toast("حدث خطأ"); }
-    btn.disabled = false; btn.textContent = "نشر";
-  };
-}
-
 async function loadPosts() {
   let posts = [];
   try {
     const snap = await db.collection("posts").orderBy("createdAt", "desc").limit(20).get();
-    snap.forEach(d => { const x = d.data(); posts.push({ id: d.id, author: x.author || "مستخدم", role: x.role || "أخصائي", time: x.createdAt ? x.createdAt.toDate().toLocaleDateString("ar-EG") : "الآن", content: x.text, image: x.image || null, likes: x.likes || 0, comments: x.comments || 0, verified: x.verified || false }); });
-  } catch (e) { }
-  return posts.length ? posts : MOCK_POSTS;
+    snap.forEach(d => {
+      const x = d.data();
+      posts.push({ id: d.id, author: x.author || "مستخدم", role: x.role || "أخصائي", time: x.createdAt ? x.createdAt.toDate().toLocaleDateString("ar-EG") : "الآن", content: x.text, image: x.image || null, likes: x.likes || 0, comments: x.comments || 0, verified: x.verified || false });
+    });
+  } catch (e) { console.warn("خطأ في جلب المنشورات:", e); }
+  return posts.length ? posts : MOCK_POSTS; 
 }
 
-async function renderFeed() {
-  const feed = document.getElementById("feed-container");
-  if (!feed) return;
-  feed.innerHTML = `<div class="empty">جاري التحميل...</div>`;
-  const posts = await loadPosts();
-  feed.innerHTML = "";
-  posts.forEach(post => {
-    feed.append(el("article", { class: "post-card", innerHTML: `
-      <div class="post-header"><img class="post-avatar" src="https://ui-avatars.com/api/?name=${encodeURIComponent(post.author)}&background=102A56&color=fff"><div class="post-meta"><h4>${post.author} ${post.verified ? `<svg viewBox="0 0 24 24"><path d="${IC.check}"/></svg>` : ''}</h4><p>${post.role}</p></div><div class="post-time">${post.time}</div></div>
-      <div class="post-content"><p>${post.content}</p></div>${post.image ? `<img class="post-media" src="${post.image}">` : ''}
-      <div class="post-stats"><span>👍 ${post.likes} إعجاب</span><span>${post.comments} تعليق</span></div>
-      <div class="post-actions"><button class="action-btn like-btn"><svg viewBox="0 0 24 24"><path d="${IC.like}"/></svg> إعجاب</button><button class="action-btn"><svg viewBox="0 0 24 24"><path d="${IC.comment}"/></svg> تعليق</button><button class="action-btn"><svg viewBox="0 0 24 24"><path d="${IC.share}"/></svg> مشاركة</button></div>` }));
-  });
-  feed.querySelectorAll('.like-btn').forEach(btn => btn.onclick = function () { this.classList.toggle('liked'); });
-}
-
-function homeView() {
-  app.className = ""; renderNav('home');
-  app.innerHTML = `
-    <header class="top-header"><div class="brand-logo"><div class="g-icon"><svg viewBox="0 0 24 24"><path d="${IC.globe}"/></svg></div><div class="brand-text">Geo<span>Link</span></div></div><div class="search-bar"><svg viewBox="0 0 24 24"><path d="${IC.search}"/></svg><span>بحث...</span></div><div class="header-actions"><button class="icon-btn"><svg viewBox="0 0 24 24"><path d="${IC.bell}"/></svg><span class="dot"></span></button><button class="icon-btn" onclick="location.hash='#ai'"><svg viewBox="0 0 24 24"><path d="${IC.wand}"/></svg></button></div></header>
-    <div class="feed-tabs"><button class="on">لك</button><button>متابعة</button><button>مشاريع</button></div>
-    <div class="stories-wrap"><div class="story"><div class="story-img add"><svg viewBox="0 0 24 24"><path d="${IC.plus}"/></svg></div><span>قصتك</span></div><div class="story"><div class="story-img"><img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=150"></div><span>O&M</span></div></div>
-    <div class="composer-bar" onclick="openComposer()"><img src="https://ui-avatars.com/api/?name=${currentUser ? 'U' : 'G'}&background=1677F2&color=fff"><div class="fake-input">شارك إنجازاً، مشروعاً، أو استشارة...</div><button class="media-btn">📷</button></div>
-    <div class="section-head">أدواتك السريعة <a href="#tools">عرض الكل</a></div>
-    <div class="quick-tools">
-      <a class="tool-card" href="#ai"><i><svg viewBox="0 0 24 24"><path d="${IC.wand}"/></svg></i><b>GeoAI</b><span>مساعد ذكي</span></a>
-      <a class="tool-card" href="#tool:coord"><i><svg viewBox="0 0 24 24"><path d="${IC.map}"/></svg></i><b>إحداثيات</b><span>WGS84/UTM</span></a>
-      <a class="tool-card" href="#tool:level"><i><svg viewBox="0 0 24 24"><path d="M3 7h18v6H3zM12 13v8M8 21h8M7 10h.01"/></svg></i><b>مناسيب</b><span>ميزانية</span></a>
-      <a class="tool-card" href="#tool:area"><i><svg viewBox="0 0 24 24"><path d="${IC.poly}"/></svg></i><b>مساحات</b><span>حساب المساحة</span></a>
-    </div>
-    <div id="feed-container" class="feed"></div>`;
-  renderFeed();
-}
-
-function profileView() {
-  app.className = "page"; renderNav('profile');
-  const name = currentUser ? (currentUser.displayName || currentUser.email.split("@")[0]) : "زائر";
-  app.innerHTML = `<div class="card" style="padding:0; overflow:hidden;"><div class="profile-cover"><img src="https://images.unsplash.com/photo-1541888078693-019d16e6d5e1?auto=format&fit=crop&q=80&w=800"></div><div class="profile-avatar-wrap"><img class="profile-avatar" src="https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=1677F2&color=fff&size=120"></div><div class="profile-info"><div class="profile-name">${name} ${currentUser ? `<svg class="verified" viewBox="0 0 24 24"><path d="${IC.check}"/></svg>` : ''}</div><div class="profile-title">${currentUser ? "أخصائي مساحة | Total Station" : "سجّل دخولك لاستكمال ملفك"}</div><div class="profile-loc">📍 ${currentUser ? "مصر" : "—"}</div><div class="profile-stats"><span><b>1.2K</b> متابع</span><span><b>520</b> اتصال</span><span><b>7</b> خبرة</span></div><div class="profile-actions">${currentUser ? `<button class="primary" onclick="location.hash='#pro'">تعديل</button>` : `<button class="primary" onclick="location.hash='#pro'">تسجيل الدخول</button><button class="secondary" onclick="location.hash='#surveyor'">إنشاء حساب</button>`}</div></div></div>
-    <div class="card"><h3 style="margin-top:0;">الأدوات والإعدادات</h3><a href="#tools" style="display:flex; align-items:center; gap:12px; padding:14px 0; border-bottom:1px solid var(--line);"><svg viewBox="0 0 24 24" style="width:22px;height:22px;color:var(--blue);"><path d="${IC.tools}"/></svg><span style="flex:1; font-weight:600;">جميع أدوات المساحة</span></a><a href="#admin" style="display:flex; align-items:center; gap:12px; padding:14px 0;"><svg viewBox="0 0 24 24" style="width:22px;height:22px;color:var(--blue);"><path d="${IC.shield}"/></svg><span style="flex:1; font-weight:600;">لوحة التحكم</span></a></div>`;
-}
-
-function networkView() { app.className = "page"; renderNav('network'); app.innerHTML = `<h2>شبكتي</h2><div class="card">اقتراحات لك قريباً.</div>`; }
-function jobsView() { app.className = "page"; renderNav('jobs'); app.innerHTML = `<h2>فرص العمل</h2><div class="card"><b>Surveyor - Total Station</b><p>القاهرة · بدوام كامل</p><button class="go">تقدم الآن</button></div>`; }
-function adminView() { app.className = "page"; renderNav('profile'); app.innerHTML = `<h2>الإدارة</h2><div class="card">هذه الصفحة مخصصة للأدمن فقط.</div>`; }
-
-// ============================================================
-// 5. الأدوات الـ 10
-// ============================================================
-function toolsHub() {
-  app.className = "page"; renderNav('home');
-  const T = [["coord", "تحويل الإحداثيات"], ["dist", "المسافات والاتجاهات"], ["area", "حساب المساحات"], ["calc", "حساب الإحداثيات"], ["level", "حساب المناسيب"], ["slope", "الميول والانحدارات"], ["earth", "الحفر والردم"], ["trav", "الترافيرس"], ["curve", "المنحنيات"], ["unit", "تحويل الوحدات"]];
-  app.innerHTML = `<h2>الأدوات المساحية</h2><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">${T.map(([k, name]) => `<a href="#tool:${k}" class="card" style="margin:0;padding:16px;text-align:center;display:block;font-weight:bold;color:var(--navy);">${name}</a>`).join("")}</div>`;
-}
-
-function coordTool() {
-  app.className = "page"; renderNav('home');
-  app.innerHTML = `<h2>تحويل الإحداثيات</h2><div class="card"><label>Lat</label><input id="lat" value="30.0444"><label>Lon</label><input id="lon" value="31.2357"><div id="res"></div></div>`;
-  const c = () => { const lat = ang(document.getElementById("lat").value), lon = ang(document.getElementById("lon").value); if (isNaN(lat)) return; const u = toUTM(lat, lon); document.getElementById("res").innerHTML = `<div style="background:#eee;padding:14px;">Zone: ${u.zone}${u.band}<br>E: ${f3(u.E)}<br>N: ${f3(u.N)}</div>`; };
-  document.getElementById("lat").oninput = c; document.getElementById("lon").oninput = c; c();
-}
-function distTool() {
-  app.className = "page"; renderNav('home');
-  app.innerHTML = `<h2>المسافات</h2><div class="card"><label>E1</label><input id="e1" value="1000"><label>N1</label><input id="n1" value="2000"><label>E2</label><input id="e2" value="1100"><label>N2</label><input id="n2" value="2100"><div id="res"></div></div>`;
-  const c = () => { const e1 = num(document.getElementById("e1").value), n1 = num(document.getElementById("n1").value), e2 = num(document.getElementById("e2").value), n2 = num(document.getElementById("n2").value); if ([e1,n1,e2,n2].some(isNaN)) return; document.getElementById("res").innerHTML = `<div style="background:#eee;padding:14px;">Dist: ${f3(Math.hypot(e2-e1, n2-n1))}<br>Az: ${dms(azim(e2-e1, n2-n1))}</div>`; };
-  ["e1","n1","e2","n2"].forEach(id => document.getElementById(id).oninput = c); c();
-}
-function areaTool() {
-  app.className = "page"; renderNav('home');
-  app.innerHTML = `<h2>المساحات</h2><div class="card"><label>الطول</label><input id="a" value="50"><label>العرض</label><input id="b" value="20"><div id="res"></div></div>`;
-  const c = () => { const a = num(document.getElementById("a").value), b = num(document.getElementById("b").value); if (isNaN(a) || isNaN(b)) return; document.getElementById("res").innerHTML = `<div style="background:#eee;padding:14px;">المساحة: ${f3(a*b)} م²<br>${feddan(a*b)}</div>`; };
-  document.getElementById("a").oninput = c; document.getElementById("b").oninput = c; c();
-}
-function levelTool() {
-  app.className = "page"; renderNav('home');
-  app.innerHTML = `<h2>المناسيب</h2><div class="card"><label>RL نقطة البداية</label><input id="rl0" value="100"><label>القراءات (BS/FS القيمة)</label><textarea id="t" rows="4">BS 1.5\nFS 1.2</textarea><div id="res"></div></div>`;
-  const c = () => { const rl0 = num(document.getElementById("rl0").value), L = document.getElementById("t").value.split("\n").filter(x=>x.trim()); let rl = rl0, out = ""; L.forEach(l => { const p = l.split(" "); const t = p[0].toUpperCase(), v = num(p[1]); if (isNaN(v)) return; if (t === "BS") rl += v; else if (t === "FS") rl -= v; out += `${t} ${v} -> RL: ${f3(rl)}<br>`; }); document.getElementById("res").innerHTML = `<div style="background:#eee;padding:14px;">${out}</div>`; };
-  document.getElementById("rl0").oninput = c; document.getElementById("t").oninput = c; c();
-}
-function slopeTool() {
-  app.className = "page"; renderNav('home');
-  app.innerHTML = `<h2>الميول</h2><div class="card"><label>المسافة الأفقية</label><input id="d" value="100"><label>فرق المنسوب</label><input id="h" value="10"><div id="res"></div></div>`;
-  const c = () => { const d = num(document.getElementById("d").value), h = num(document.getElementById("h").value); if (isNaN(d) || isNaN(h) || d===0) return; document.getElementById("res").innerHTML = `<div style="background:#eee;padding:14px;">الميل: ${((h/d)*100).toFixed(2)}%<br>الزاوية: ${deg(Math.atan(h/d)).toFixed(2)}°</div>`; };
-  document.getElementById("d").oninput = c; document.getElementById("h").oninput = c; c();
-}
-function earthTool() {
-  app.className = "page"; renderNav('home');
-  app.innerHTML = `<h2>الحفر والردم</h2><div class="card"><label>مقاطع (مسافة، حفر، ردم)</label><textarea id="t" rows="4">0 10 0\n20 15 5</textarea><div id="res"></div></div>`;
-  const c = () => { const L = document.getElementById("t").value.split("\n").filter(x=>x.trim()).map(l => l.split(" ").map(Number)); if (L.length < 2) return; let cut = 0, fill = 0; for (let i=1; i<L.length; i++) { const d = L[i][0] - L[i-1][0]; if (d<=0) return; cut += ((L[i][1]+L[i-1][1])/2)*d; fill += ((L[i][2]+L[i-1][2])/2)*d; } document.getElementById("res").innerHTML = `<div style="background:#eee;padding:14px;">حفر: ${f3(cut)}<br>ردم: ${f3(fill)}</div>`; };
-  document.getElementById("t").oninput = c; c();
-}
-function calcTool() { app.className = "page"; renderNav('home'); app.innerHTML = `<h2>حساب الإحداثيات</h2><div class="card">قيد التطوير.</div>`; }
-function travTool() { app.className = "page"; renderNav('home'); app.innerHTML = `<h2>الترافيرس</h2><div class="card">قيد التطوير.</div>`; }
-function curveTool() { app.className = "page"; renderNav('home'); app.innerHTML = `<h2>المنحنيات</h2><div class="card">قيد التطوير.</div>`; }
-function unitTool() { app.className = "page"; renderNav('home'); app.innerHTML = `<h2>تحويل الوحدات</h2><div class="card">قيد التطوير.</div>`; }
-
-// ============================================================
-// 6. الذكاء الاصطناعي والنماذج
-// ============================================================
-function aiView() {
-  app.className = "page"; document.getElementById("nav").style.display = "none";
-  app.innerHTML = `<header class="top-header"><a href="#home"><svg viewBox="0 0 24 24" style="transform:scaleX(-1);"><path d="${IC.arrow}"/></svg></a><b>GeoAI</b><div></div></header><div style="padding:16px;padding-bottom:90px;" id="msgs"><div class="m bot">أهلاً بك! اسألني عن المساحة.</div></div><div class="chat-input"><input id="inp" placeholder="اكتب سؤالك..."><button id="send"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button></div>`;
-  const send = () => { const q = document.getElementById("inp").value; if (!q) return; document.getElementById("inp").value = ""; const m = document.getElementById("msgs"); m.innerHTML += `<div class="m me">${q}</div>`; m.innerHTML += `<div class="m bot">جاري البحث...</div>`; setTimeout(() => { m.lastElementChild.textContent = "هذا سؤال ممتاز! فريق GeoLink سيتواصل معك قريباً."; window.scrollTo(0, document.body.scrollHeight); }, 800); };
-  document.getElementById("send").onclick = send; document.getElementById("inp").onkeydown = e => { if (e.key === "Enter") send(); };
-}
-function formView(kind) {
-  app.className = "page"; document.getElementById("nav").style.display = "flex"; const client = kind === "client";
-  app.innerHTML = `<h2>${client ? "طلب أخصائي" : "تسجيل أخصائي"}</h2><form class="card" id="f"><label>الاسم</label><input name="name" required><label>الموبايل</label><input name="phone" required><label>المحافظة</label><input name="gov" required><button class="go">إرسال</button><div id="out"></div></form>`;
-  document.getElementById("f").onsubmit = async (e) => { e.preventDefault(); const b = e.target.querySelector("button"); b.disabled = true; b.textContent = "جاري..."; try { await db.collection(client ? "requests" : "surveyors").add(Object.fromEntries(new FormData(e.target))); e.target.outerHTML = `<div class="card" style="text-align:center;color:green;font-weight:bold;">تم بنجاح!</div>`; } catch (err) { document.getElementById("out").innerHTML = `<span style="color:red;">خطأ في الاتصال</span>`; b.disabled = false; b.textContent = "إرسال"; } };
-}
-
-// ============================================================
-// 7. الراوتر (Router)
-// ============================================================
-function route() {
-  const h = location.hash.slice(1) || "home";
-  document.getElementById("nav").style.display = "flex";
-  if (h === "home") homeView();
-  else if (h === "tools") toolsHub();
-  else if (h === "profile") profileView();
-  else if (h === "network") networkView();
-  else if (h === "jobs") jobsView();
-  else if (h === "ai") aiView();
-  else if (h === "admin") adminView();
-  else if (h === "client" || h === "surveyor") formView(h);
-  else if (h.startsWith("tool:")) {
-    const t = h.split(":")[1];
-    if (t === "coord") coordTool(); else if (t === "dist") distTool(); else if (t === "area") areaTool(); else if (t === "level") levelTool(); else if (t === "slope") slopeTool(); else if (t === "earth") earthTool(); else if (t === "calc") calcTool(); else if (t === "trav") travTool(); else if (t === "curve") curveTool(); else if (t === "unit") unitTool(); else homeView();
-  }
-  else homeView();
-  window.scrollTo(0, 0);
-}
-auth.onAuthStateChanged(u => { currentUser = u; });
-// ============================================================
-// 4. إضافات الشبكة الاجتماعية (إعجاب، تعليق، رسائل، إشعارات)
-// ============================================================
-
-// أ. دوال الإعجاب والتعليق
-window.doLike = async function(postId, btn) {
+async function doLike(postId, btn) {
   if (!currentUser) return toast("سجّل دخولك أولاً للإعجاب");
   try {
     const postRef = db.collection("posts").doc(postId);
     const likeRef = postRef.collection("likes").doc(currentUser.uid);
     const doc = await likeRef.get();
+    
     if (doc.exists) {
       await likeRef.delete();
       await postRef.update({ likes: firebase.firestore.FieldValue.increment(-1) });
@@ -432,7 +275,7 @@ window.doLike = async function(postId, btn) {
       await likeRef.set({ createdAt: firebase.firestore.FieldValue.serverTimestamp() });
       await postRef.update({ likes: firebase.firestore.FieldValue.increment(1) });
       btn.classList.add("liked");
-      // إضافة إشعار لصاحب المنشور
+      
       const postSnap = await postRef.get();
       if (postSnap.data().uid && postSnap.data().uid !== currentUser.uid) {
         await db.collection("notifications").add({
@@ -441,10 +284,10 @@ window.doLike = async function(postId, btn) {
         });
       }
     }
-  } catch (e) { toast("حدث خطأ"); }
-};
+  } catch (e) { console.error(e); toast("حدث خطأ، حاول لاحقاً"); }
+}
 
-window.openComments = async function(postId) {
+async function addComment(postId) {
   if (!currentUser) return toast("سجّل دخولك أولاً للتعليق");
   const txt = prompt("اكتب تعليقك:");
   if (!txt) return;
@@ -453,8 +296,10 @@ window.openComments = async function(postId) {
       postId: postId, text: txt, author: currentUser.displayName || currentUser.email,
       uid: currentUser.uid, createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
+    
     const postSnap = await db.collection("posts").doc(postId).get();
     await db.collection("posts").doc(postId).update({ comments: firebase.firestore.FieldValue.increment(1) });
+    
     if (postSnap.data().uid && postSnap.data().uid !== currentUser.uid) {
       await db.collection("notifications").add({
         to: postSnap.data().uid, from: currentUser.displayName || currentUser.email, type: "comment",
@@ -463,14 +308,89 @@ window.openComments = async function(postId) {
     }
     toast("تم إضافة التعليق");
     renderFeed();
-  } catch (e) { toast("حدث خطأ"); }
-};
+  } catch (e) { console.error(e); toast("حدث خطأ، حاول لاحقاً"); }
+}
 
-// ب. الإشعارات والرسائل
+async function publishPost() {
+  const text = document.getElementById("post-text").value.trim();
+  if (!text) return toast("اكتب شيئاً أولاً");
+  if (!currentUser) return toast("سجّل دخولك أولاً للنشر");
+  
+  const btn = document.getElementById("publish-btn"); btn.disabled = true; btn.textContent = "جاري النشر...";
+  try {
+    await db.collection("posts").add({
+      text, author: currentUser.displayName || currentUser.email, role: "أخصائي مساحة", 
+      uid: currentUser.uid, createdAt: firebase.firestore.FieldValue.serverTimestamp(), likes: 0, comments: 0
+    });
+    closeModal("composer"); document.getElementById("post-text").value = ""; toast("تم النشر بنجاح");
+    if (location.hash === "#home" || location.hash === "") renderFeed();
+  } catch (e) { console.error(e); toast("حدث خطأ في النشر"); }
+  btn.disabled = false; btn.textContent = "نشر";
+}
+
+// ============================================================
+// 5. واجهات التطبيق
+// ============================================================
+function renderNav(active) {
+  document.getElementById("nav").innerHTML = `
+    <a href="#home" class="${active === 'home' ? 'on' : ''}"><svg viewBox="0 0 24 24"><path d="${IC.home}"/></svg><span>الرئيسية</span></a>
+    <a href="#notifications" class="${active === 'notifs' ? 'on' : ''}"><svg viewBox="0 0 24 24"><path d="${IC.bell}"/></svg><span>الإشعارات</span></a>
+    <a href="#compose" class="fab" onclick="openComposer()"><div class="c-fab"><svg viewBox="0 0 24 24"><path d="${IC.plus}"/></svg></div></a>
+    <a href="#messages" class="${active === 'msgs' ? 'on' : ''}"><svg viewBox="0 0 24 24"><path d="${IC.chat}"/></svg><span>الرسائل</span></a>
+    <a href="#profile" class="${active === 'profile' ? 'on' : ''}"><svg viewBox="0 0 24 24"><path d="${IC.user}"/></svg><span>حسابي</span></a>`;
+}
+
+function openComposer() {
+  document.getElementById("composer-user").innerHTML = `<img id="composer-avatar" src="https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser ? (currentUser.displayName || currentUser.email) : "G")}&background=1677F2&color=fff" style="width:40px;height:40px;border-radius:50%;"><div><b id="composer-name" style="color:var(--navy);">${currentUser ? (currentUser.displayName || currentUser.email) : "زائر"}</b><div style="font-size:0.78rem; color:var(--mut);">${currentUser ? "أخصائي مساحة" : "سجّل دخولك للنشر"}</div></div>`;
+  document.getElementById("composer").classList.add("show");
+  document.getElementById("publish-btn").onclick = publishPost;
+}
+
+async function renderFeed() {
+  const feed = document.getElementById("feed-container");
+  if (!feed) return;
+  feed.innerHTML = `<div class="empty">جاري التحميل...</div>`;
+  const posts = await loadPosts();
+  feed.innerHTML = "";
+  
+  posts.forEach(post => {
+    const card = el("article", { class: "post-card" });
+    card.innerHTML = `
+      <div class="post-header">
+        <img class="post-avatar" src="https://ui-avatars.com/api/?name=${encodeURIComponent(post.author)}&background=102A56&color=fff">
+        <div class="post-meta"><h4>${post.author} ${post.verified ? `<svg viewBox="0 0 24 24"><path d="${IC.check}"/></svg>` : ''}</h4><p>${post.role}</p></div>
+        <div class="post-time">${post.time}</div>
+      </div>
+      <div class="post-content"><p>${post.content}</p></div>
+      ${post.image ? `<img class="post-media" src="${post.image}">` : ''}
+      <div class="post-stats"><span>👍 ${post.likes} إعجاب</span><span>💬 ${post.comments} تعليق</span></div>
+      <div class="post-actions">
+        <button class="action-btn like-btn" onclick="doLike('${post.id}', this)"><svg viewBox="0 0 24 24"><path d="${IC.like}"/></svg> إعجاب</button>
+        <button class="action-btn" onclick="addComment('${post.id}')"><svg viewBox="0 0 24 24"><path d="${IC.comment}"/></svg> تعليق</button>
+      </div>`;
+    feed.append(card);
+  });
+}
+
+function homeView() {
+  app.className = ""; renderNav('home');
+  app.innerHTML = `
+    <header class="top-header"><div class="brand-logo"><div class="g-icon"><svg viewBox="0 0 24 24"><path d="${IC.globe}"/></svg></div><div class="brand-text">Geo<span>Link</span></div></div><div class="search-bar"><svg viewBox="0 0 24 24"><path d="${IC.search}"/></svg><span>بحث...</span></div></header>
+    <div class="composer-bar" onclick="openComposer()"><img src="https://ui-avatars.com/api/?name=${currentUser ? 'U' : 'G'}&background=1677F2&color=fff"><div class="fake-input">شارك إنجازاً، مشروعاً، أو استشارة...</div><button class="media-btn">📷</button></div>
+    <div class="section-head">أدواتك السريعة <a href="#tools">عرض الكل</a></div>
+    <div class="quick-tools">
+      <a class="tool-card" href="#ai"><i><svg viewBox="0 0 24 24"><path d="${IC.wand}"/></svg></i><b>GeoAI</b></a>
+      <a class="tool-card" href="#tool:coord"><i><svg viewBox="0 0 24 24"><path d="${IC.map}"/></svg></i><b>إحداثيات</b></a>
+    </div>
+    <div id="feed-container" class="feed"></div>`;
+  renderFeed();
+}
+
 function notificationsView() {
-  app.className = "page"; renderNav('home');
+  app.className = "page"; renderNav('notifs');
   app.innerHTML = `<h2>الإشعارات</h2><div id="notif-list" class="card">جاري التحميل...</div>`;
   if (!currentUser) return (document.getElementById("notif-list").innerHTML = "سجّل دخولك لعرض الإشعارات.");
+  
   db.collection("notifications").where("to", "==", currentUser.uid).orderBy("createdAt", "desc").limit(20).get()
     .then(snap => {
       if (snap.empty) return (document.getElementById("notif-list").innerHTML = "لا توجد إشعارات.");
@@ -478,56 +398,47 @@ function notificationsView() {
         const x = d.data();
         return `<div style="padding:10px 0;border-bottom:1px solid var(--line);"><b>${x.from}</b> ${x.type === "like" ? "أعجب بمنشورك" : "علّق على منشورك"} <span style="font-size:0.75rem;color:gray;">${x.text || ""}</span></div>`;
       }).join("");
-    });
+    }).catch(() => document.getElementById("notif-list").innerHTML = "خطأ في جلب البيانات.");
 }
 
 function messagesView() {
-  app.className = "page"; renderNav('home');
-  app.innerHTML = `<h2>الرسائل</h2><div class="card">صفحة الرسائل قيد التطوير.</div>`;
+  app.className = "page"; renderNav('msgs');
+  app.innerHTML = `<h2>الرسائل</h2><div class="card">هذه الواجهة قيد التطوير. سيتم ربطها بـ Firebase قريباً.</div>`;
 }
 
-// ج. تحديث دالة عرض المنشورات لتشمل الإعجاب والتعليق الحقيقي
-async function renderFeed() {
-  const feed = document.getElementById("feed-container");
-  if (!feed) return;
-  feed.innerHTML = `<div class="empty">جاري التحميل...</div>`;
-  const posts = await loadPosts();
-  feed.innerHTML = "";
-  posts.forEach(post => {
-    feed.append(el("article", { class: "post-card", innerHTML: `
-      <div class="post-header"><img class="post-avatar" src="https://ui-avatars.com/api/?name=${encodeURIComponent(post.author)}&background=102A56&color=fff"><div class="post-meta"><h4>${post.author} ${post.verified ? `<svg viewBox="0 0 24 24"><path d="${IC.check}"/></svg>` : ''}</h4><p>${post.role}</p></div><div class="post-time">${post.time}</div></div>
-      <div class="post-content"><p>${post.content}</p></div>${post.image ? `<img class="post-media" src="${post.image}">` : ''}
-      <div class="post-stats"><span>👍 ${post.likes} إعجاب</span><span>💬 ${post.comments} تعليق</span></div>
-      <div class="post-actions">
-        <button class="action-btn like-btn" onclick="doLike('${post.id}', this)"><svg viewBox="0 0 24 24"><path d="${IC.like}"/></svg> إعجاب</button>
-        <button class="action-btn" onclick="openComments('${post.id}')"><svg viewBox="0 0 24 24"><path d="${IC.comment}"/></svg> تعليق</button>
-        <button class="action-btn"><svg viewBox="0 0 24 24"><path d="${IC.share}"/></svg> مشاركة</button>
-      </div>` }));
-  });
+function profileView() {
+  app.className = "page"; renderNav('profile');
+  const name = currentUser ? (currentUser.displayName || currentUser.email.split("@")[0]) : "زائر";
+  app.innerHTML = `<div class="card" style="padding:0; overflow:hidden;"><div class="profile-cover"><img src="https://images.unsplash.com/photo-1541888078693-019d16e6d5e1?auto=format&fit=crop&q=80&w=800"></div><div class="profile-avatar-wrap"><img class="profile-avatar" src="https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=1677F2&color=fff&size=120"></div><div class="profile-info"><div class="profile-name">${name} ${currentUser ? `<svg class="verified" viewBox="0 0 24 24"><path d="${IC.check}"/></svg>` : ''}</div><div class="profile-title">${currentUser ? "أخصائي مساحة" : "سجّل دخولك لاستكمال ملفك"}</div><div class="profile-actions">${currentUser ? `<button class="primary" onclick="location.hash='#pro'">تعديل</button>` : `<button class="primary" onclick="location.hash='#pro'">تسجيل الدخول</button><button class="secondary" onclick="location.hash='#surveyor'">إنشاء حساب</button>`}</div></div></div>`;
 }
 
-// د. ربط الواجهات الجديدة بالأزرار
-const originalRenderNav = renderNav;
-renderNav = function(active) {
-  originalRenderNav(active);
-  // إضافة زر الإشعارات في الهيدر
-  const headerActions = document.querySelector(".header-actions");
-  if (headerActions && !document.getElementById("notif-btn")) {
-    const btn = el("button", { class: "icon-btn", id: "notif-btn", onclick: "location.hash='#notifications'" });
-    btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="${IC.bell}"/></svg><span class="dot"></span>`;
-    headerActions.prepend(btn);
-  }
-};
+function loginView() {
+  app.className = "page"; renderNav('profile');
+  app.innerHTML = `<h2>تسجيل الدخول</h2><form class="card" id="lf"><label>الإيميل</label><input name="email" type="email" required><label>الباسورد</label><input name="pw" type="password" required><button class="go">دخول</button><div id="lo"></div></form>`;
+  document.getElementById("lf").onsubmit = async (e) => {
+    e.preventDefault(); const f = new FormData(e.target), lo = document.getElementById("lo");
+    try { await auth.signInWithEmailAndPassword(f.get("email"), f.get("pw")); location.hash = "#home"; }
+    catch (err) { lo.style.color = "red"; lo.textContent = "خطأ في الإيميل أو الباسورد"; }
+  };
+}
 
-// هـ. إضافة الإشعارات والرسائل للراوتر
-const originalRoute = route;
-route = function() {
-  const h = location.hash.slice(1);
-  if (h === "notifications") { notificationsView(); return; }
-  if (h === "messages") { messagesView(); return; }
-  originalRoute();
-};
+// ============================================================
+// 6. الراوتر
+// ============================================================
+function route() {
+  const h = location.hash.slice(1) || "home";
+  document.getElementById("nav").style.display = "flex";
+  if (h === "home") homeView();
+  else if (h === "notifications") notificationsView();
+  else if (h === "messages") messagesView();
+  else if (h === "profile") profileView();
+  else if (h === "pro") loginView();
+  else if (h === "ai") { /* AI View code */ }
+  else homeView();
+  window.scrollTo(0, 0);
+}
 
+auth.onAuthStateChanged(u => { currentUser = u; });
 window.onhashchange = route;
 route();
 </script>
