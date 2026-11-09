@@ -1,7 +1,7 @@
 // ============================================================
 // GeoLink App - Main Logic (Part 1/2)
 // ============================================================
-const { IC, num, f3, fmt, dms, ang, rad, deg, toUTM, fromUTM, vincenty, pts, feddan, polyArea, azim, quad, SH, UN, zoneOf, bandOf, FED } = window.GL;
+const { num, f3, fmt, dms, ang, rad, deg, toUTM, fromUTM, vincenty, pts, feddan, polyArea, azim, quad, SH, UN, zoneOf, bandOf, FED } = window.GL;
 
 // ---- Firebase Init ----
 const WA_NUMBER = "201020259546";
