@@ -2,188 +2,700 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>GeoLink | أكبر منصة لربط العملاء بأخصائيي المساحة</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GeoLink | أخصائيو المساحة</title>
+<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#102A56">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#102A56;--blue:#1677F2;--blue-hover:#0f5fcc;--bg:#F5F8FC;--card:#FFF;--text:#172B4D;--mut:#64748B;--line:#E2E8F0;--red:#b24020;--radius:16px;--shadow:0 4px 20px rgba(16,42,86,0.06);}
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-body { margin: 0; font-family: 'IBM Plex Sans Arabic', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-svg { flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-a { text-decoration: none; color: inherit; }
-main { max-width: 650px; margin: 0 auto; padding-bottom: 90px; }
-.page { padding: 16px; }
-.top-header { background: var(--card); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--line); box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
-.brand-logo { display: flex; align-items: center; gap: 8px; }
-.g-icon { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: linear-gradient(135deg, #102A56, #1677F2); }
-.g-icon svg { width: 24px; height: 24px; stroke: #fff; stroke-width: 2.2; }
-.brand-text { font-size: 1.25rem; font-weight: 700; color: var(--navy); letter-spacing: -0.5px; }
-.brand-text span { color: var(--blue); }
-.search-bar { flex: 1; max-width: 280px; background: var(--bg); border-radius: 24px; padding: 8px 14px; display: flex; align-items: center; gap: 8px; color: var(--mut); font-size: 0.85rem; margin: 0 10px; }
-.search-bar svg { width: 18px; height: 18px; }
-.header-actions { display: flex; gap: 8px; }
-.icon-btn { background: none; border: none; padding: 6px; color: var(--navy); cursor: pointer; position: relative; }
-.icon-btn svg { width: 24px; height: 24px; }
-.dot { position: absolute; top: 4px; right: 6px; width: 8px; height: 8px; background: var(--red); border-radius: 50%; border: 2px solid var(--card); }
-.feed-tabs { display: flex; background: var(--card); border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; padding: 0 8px; }
-.feed-tabs::-webkit-scrollbar { display: none; }
-.feed-tabs button { flex: none; background: none; border: none; padding: 14px 16px; font: inherit; font-size: 0.9rem; font-weight: 600; color: var(--mut); cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; }
-.feed-tabs button.on { color: var(--blue); border-bottom-color: var(--blue); }
-.stories-wrap { display: flex; gap: 12px; overflow-x: auto; padding: 16px; background: var(--card); border-bottom: 1px solid var(--line); scrollbar-width: none; }
-.stories-wrap::-webkit-scrollbar { display: none; }
-.story { flex: none; width: 70px; text-align: center; cursor: pointer; }
-.story-img { width: 64px; height: 64px; border-radius: 50%; border: 2.5px solid var(--blue); padding: 2px; margin: 0 auto; position: relative; }
-.story-img img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-.story-img.add { border: 2px dashed var(--line); display: grid; place-items: center; background: var(--bg); color: var(--blue); }
-.story-img.add svg { width: 26px; height: 26px; }
-.story span { font-size: 0.72rem; display: block; margin-top: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--mut); }
-.composer-bar { background: var(--card); padding: 12px 16px; display: flex; gap: 10px; align-items: center; border-bottom: 8px solid var(--bg); }
-.composer-bar img { width: 40px; height: 40px; border-radius: 50%; }
-.composer-bar .fake-input { flex: 1; background: var(--bg); border-radius: 24px; padding: 10px 18px; color: var(--mut); font-size: 0.9rem; cursor: pointer; }
-.composer-bar .fake-input:hover { background: #eaf1ff; }
-.composer-bar .media-btn { background: none; border: none; padding: 8px; color: var(--blue); cursor: pointer; }
-.feed { padding: 8px 0; display: flex; flex-direction: column; gap: 8px; }
-.post-card { background: var(--card); box-shadow: var(--shadow); overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.post-header { padding: 12px 16px; display: flex; gap: 12px; align-items: center; }
-.post-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
-.post-meta { flex: 1; min-width: 0; }
-.post-meta h4 { margin: 0; font-size: 0.92rem; display: flex; align-items: center; gap: 4px; color: var(--navy); font-weight: 700; }
-.post-meta h4 svg { width: 16px; height: 16px; color: var(--blue); }
-.post-meta p { margin: 0; font-size: 0.75rem; color: var(--mut); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.post-time { font-size: 0.72rem; color: var(--mut); align-self: flex-start; }
-.post-content { padding: 0 16px 12px; font-size: 0.94rem; }
-.post-media { width: 100%; max-height: 400px; object-fit: cover; display: block; background: #eee; }
-.post-stats { padding: 8px 16px; display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--mut); border-bottom: 1px solid var(--line); }
-.post-actions { display: flex; padding: 4px 8px; }
-.action-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; background: none; border: none; padding: 10px; font: inherit; font-size: 0.85rem; color: var(--mut); font-weight: 600; cursor: pointer; border-radius: 8px; transition: background 0.2s; }
-.action-btn:hover { background: var(--bg); }
-.action-btn svg { width: 20px; height: 20px; }
-.action-btn.liked { color: var(--blue); }
-.action-btn.liked svg { fill: var(--blue); stroke: var(--blue); }
-.section-head { padding: 16px 16px 8px; font-size: 1.05rem; font-weight: 700; color: var(--navy); display: flex; justify-content: space-between; align-items: center; background: var(--card); margin-top: 8px; }
-.section-head a { font-size: 0.85rem; color: var(--blue); font-weight: 600; }
-.quick-tools { display: flex; overflow-x: auto; gap: 12px; padding: 12px 16px 16px; scrollbar-width: none; background: var(--card); border-bottom: 8px solid var(--bg); }
-.quick-tools::-webkit-scrollbar { display: none; }
-.tool-card { flex: none; width: 120px; background: var(--bg); padding: 14px; border-radius: 12px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px; border: 1px solid var(--line); cursor: pointer; transition: transform 0.2s; }
-.tool-card:active { transform: scale(0.97); }
-.tool-card i { width: 42px; height: 42px; background: #eaf1ff; color: var(--blue); border-radius: 12px; display: grid; place-items: center; }
-.tool-card i svg { width: 22px; height: 22px; }
-.tool-card b { font-size: 0.8rem; color: var(--navy); }
-.tool-card span { font-size: 0.7rem; color: var(--mut); line-height: 1.3; }
-nav#nav { position: fixed; bottom: 0; left: 0; right: 0; height: 64px; background: var(--card); border-top: 1px solid var(--line); display: flex; justify-content: space-around; align-items: center; z-index: 100; padding-bottom: env(safe-area-inset-bottom, 0px); }
-nav a { display: flex; flex-direction: column; align-items: center; gap: 3px; color: var(--mut); font-size: 0.68rem; font-weight: 500; flex: 1; padding: 8px 0; }
-nav a svg { width: 24px; height: 24px; }
-nav a.on { color: var(--blue); }
-nav a.fab { position: relative; top: -18px; }
-nav .c-fab { width: 54px; height: 54px; background: linear-gradient(135deg, #1677F2, #368FEF); border-radius: 50%; display: grid; place-items: center; color: white; box-shadow: 0 4px 14px rgba(22, 119, 242, 0.45); border: 4px solid var(--bg); }
-nav .c-fab svg { width: 26px; height: 26px; stroke-width: 2.5; }
-.card { background: var(--card); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); margin-bottom: 16px; border: 1px solid var(--line); }
-h2 { font-size: 1.4rem; margin: 0 0 16px; font-weight: 700; color: var(--navy); }
-label { display: block; font-weight: 600; margin: 12px 0 6px; font-size: 0.9rem; color: var(--navy); }
-input, select, textarea { width: 100%; font: inherit; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--text); transition: border-color 0.2s; }
-input:focus, select:focus, textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(22, 119, 242, 0.1); }
-button.go { width: 100%; font: inherit; font-weight: 600; font-size: 1rem; padding: 14px; border: none; border-radius: 24px; background: var(--blue); color: #fff; cursor: pointer; margin-top: 16px; transition: background 0.2s; }
-button.go:hover { background: var(--blue-hover); }
-.profile-cover { height: 180px; background: linear-gradient(135deg, #102A56, #1677F2); position: relative; overflow: hidden; }
-.profile-cover img { width: 100%; height: 100%; object-fit: cover; opacity: 0.4; }
-.profile-avatar-wrap { position: absolute; bottom: -50px; right: 24px; border: 4px solid var(--card); border-radius: 50%; background: var(--card); box-shadow: 0 4px 14px rgba(0,0,0,0.1); }
-.profile-avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; }
-.profile-info { padding: 60px 24px 24px; }
-.profile-name { font-size: 1.4rem; font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 6px; }
-.verified { color: var(--blue); width: 22px; height: 22px; }
-.profile-title { color: var(--text); font-size: 0.95rem; margin-top: 4px; font-weight: 500; }
-.profile-loc { color: var(--mut); font-size: 0.85rem; margin-top: 4px; }
-.profile-stats { display: flex; gap: 20px; margin-top: 14px; font-size: 0.85rem; color: var(--mut); padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.profile-stats b { color: var(--navy); font-size: 0.95rem; }
-.profile-actions { display: flex; gap: 8px; margin-top: 16px; }
-.profile-actions button { flex: 1; padding: 10px; border-radius: 24px; border: none; font: inherit; font-weight: 600; font-size: 0.9rem; cursor: pointer; }
-.profile-actions .primary { background: var(--blue); color: #fff; }
-.profile-actions .secondary { background: var(--bg); color: var(--navy); border: 1px solid var(--line); }
-.modal { display: none; position: fixed; inset: 0; background: rgba(16, 42, 86, 0.6); z-index: 200; align-items: flex-end; }
-.modal.show { display: flex; }
-.modal-content { background: var(--card); width: 100%; max-width: 650px; margin: 0 auto; border-radius: 20px 20px 0 0; padding: 20px; animation: slideUp 0.3s ease; max-height: 85vh; overflow-y: auto; }
-@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-.toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: var(--navy); color: #fff; padding: 10px 20px; border-radius: 99px; z-index: 999; font-size: 0.9rem; box-shadow: 0 4px 14px rgba(0,0,0,0.2); animation: rise 0.3s ease; }
-@keyframes rise { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
-.empty { text-align: center; padding: 40px 20px; color: var(--mut); }
-.empty svg { width: 60px; height: 60px; color: var(--line); margin-bottom: 12px; }
+:root{--bg:#f7f9fc;--card:#fff;--line:#e8edf5;--ink:#0f172a;--mut:#64748b;--blue:#1677F2;--teal:#368FEF;--acc:#1677F2;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;font-family:'IBM Plex Sans Arabic',Tajawal,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;-webkit-tap-highlight-color:transparent}
+svg{flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+main{max-width:560px;margin:0 auto;padding-bottom:104px}
+main.page{padding:calc(18px + env(safe-area-inset-top,0px)) 18px 120px}
+h2{font-size:1.2rem;margin:0 0 12px;font-weight:700}
+p{margin:.4em 0;color:var(--mut)}
+a.back{display:inline-block;color:var(--mut);text-decoration:none;margin-bottom:10px;font-weight:500}
+.head{padding:calc(16px + env(safe-area-inset-top,0px)) 18px 24px;background:radial-gradient(#c5d1e6 1.1px,transparent 1.2px) 0 0/24px 24px,linear-gradient(#eef3ff,#fbfcff);border-radius:0 0 38px 38px;box-shadow:0 10px 30px rgba(45,91,227,.07)}
+.bar{display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;gap:12px}
+.lg{width:56px;height:56px;border-radius:16px;box-shadow:0 8px 18px rgba(9,22,44,.3);display:block}
+.lg svg{width:28px;height:28px}
+.brand b{font-size:1.5rem;font-weight:700;display:block;line-height:1.15}
+.brand small{color:var(--blue);font-weight:600;font-size:.7rem;letter-spacing:.6px}
+.ibs{display:flex;gap:10px}
+.ib{width:46px;height:46px;border-radius:50%;border:0;background:#eaf0f8;display:grid;place-items:center;cursor:pointer;color:#334155}
+.ib svg{width:22px;height:22px}
+.center{text-align:center}
+.badge{display:inline-flex;gap:8px;align-items:center;margin-top:22px;background:#f4f7ff;border:1px solid #dbe5fb;color:var(--blue);padding:8px 16px;border-radius:99px;font-size:.88rem;font-weight:500}
+.badge svg{width:18px;height:18px}
+h1{text-align:center;font-size:2.1rem;font-weight:700;margin:16px 0 6px;line-height:1.3}
+.sub{text-align:center;color:#475569;margin:0 0 22px}
+.cta{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(90deg,#1677F2,#368FEF);color:#fff;text-decoration:none;font-weight:700;font-size:1.05rem;padding:16px;border-radius:20px;box-shadow:0 12px 24px rgba(45,91,227,.28)}
+.cta svg{width:22px;height:22px}
+.inst{display:none;margin:12px auto 0;background:none;border:0;color:var(--blue);font:inherit;font-weight:600;cursor:pointer}
+.sh{display:flex;justify-content:space-between;align-items:center;margin:26px 18px 12px}
+.sh h2{margin:0;display:flex;gap:8px;align-items:center}
+.sh h2 svg{width:24px;height:24px;color:var(--blue)}
+.sh span,.sh .more{color:var(--mut);font-size:.85rem;text-decoration:none}.sh .more{color:var(--blue);font-weight:500}
+.rc2{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:0 18px}
+.rc{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:16px;text-decoration:none;color:var(--ink);box-shadow:0 6px 18px rgba(15,23,42,.05)}
+.chip{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:#eaf1ff;color:var(--blue)}
+.chip svg{width:26px;height:26px}
+.rc.t .chip{background:#EAF3FF;color:var(--teal)}
+.rc b{display:block;margin-top:22px;font-size:1.1rem;font-weight:700}
+.rc p{font-size:.84rem;margin:4px 0 12px;line-height:1.6}
+.rc em{font-style:normal;font-weight:600;color:var(--blue);font-size:.92rem}.rc.t em{color:var(--teal)}
+.adm{margin:14px 18px 0;display:flex;align-items:center;gap:14px;background:#102A56;color:#fff;border-radius:24px;padding:18px;text-decoration:none;box-shadow:0 12px 24px rgba(15,23,42,.2)}
+.adm .chip{background:#1f2937;color:#4cc3e0;width:56px;height:56px}
+.adm .tx{flex:1}.adm b{display:block;font-size:1.08rem}.adm p{color:#9ca3af;font-size:.82rem;margin:2px 0 0}
+.adm .go2{width:44px;height:44px;border-radius:50%;background:#1f2937;display:grid;place-items:center}
+.aib{margin:16px 18px 0;display:flex;align-items:center;gap:14px;background:linear-gradient(90deg,#102A56,#1677F2 55%,#368FEF);color:#fff;border-radius:24px;padding:18px;text-decoration:none;box-shadow:0 12px 24px rgba(47,98,224,.25)}
+.aib .chip{background:rgba(255,255,255,.18);color:#fcd34d}
+.aib .tx{flex:1}.aib .tt{display:flex;align-items:center;gap:8px;font-weight:700}
+.aib em{font-style:normal;background:#f6c945;color:#102A56;border-radius:8px;padding:0 10px;font-size:.78rem}
+.aib p{color:#dbe4ff;font-size:.84rem;margin:2px 0 0}
+.aib .try{background:#fff;color:var(--blue);font-weight:700;padding:9px 18px;border-radius:14px}
+.sv{display:flex;gap:12px;overflow-x:auto;padding:0 18px 8px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.sv::-webkit-scrollbar{display:none}
+.sc{flex:none;width:152px;scroll-snap-align:start;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px 10px;text-align:center;text-decoration:none;color:var(--ink);box-shadow:0 6px 18px rgba(15,23,42,.04)}
+.sc i{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;margin:0 auto 10px}
+.sc i svg{width:28px;height:28px}
+.sc b{display:block;font-size:.98rem}.sc span{color:var(--mut);font-size:.78rem;line-height:1.4;display:block}
+.st{margin:18px;background:#eff3f9;border:1px solid var(--line);border-radius:22px;padding:16px 0}
+.st div{flex:1;text-align:center}.st div+div{border-right:1px solid var(--line)}
+.st b{display:block;font-size:1.35rem;font-weight:700}.st span{color:var(--mut);font-size:.85rem}
+.faq{padding:0 18px}
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:0 14px;margin-bottom:10px}
+summary{cursor:pointer;padding:13px 0;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--blue);font-size:1.3rem;line-height:1}
+details[open] summary::after{content:"\2212"}
+details p{margin:0 0 14px;font-size:.92rem}
+.foot{margin:26px 18px 0;padding:18px 0 4px;border-top:1px solid var(--line);text-align:center;color:var(--mut);font-size:.85rem}
+.foot a{color:var(--blue);text-decoration:none;font-weight:600}
+nav#nav{position:fixed;bottom:0;left:0;right:0;height:80px;background:#fff;border-top:1px solid var(--line);display:flex;align-items:flex-end;padding:0 6px calc(8px + env(safe-area-inset-bottom,0px));z-index:9;box-shadow:0 -8px 24px rgba(15,23,42,.06)}
+nav a{flex:1;min-width:0;text-align:center;text-decoration:none;color:#94a3b8;font-size:.7rem;font-weight:500;white-space:nowrap}
+nav a svg{display:block;margin:0 auto 3px;width:26px;height:26px}
+nav a.on,nav a.ai{color:var(--blue)}
+nav a.fab{margin-top:-34px;color:var(--ink)}
+nav .c{display:grid;place-items:center;width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#1677F2,#368FEF);margin:0 auto 4px;border:5px solid #fff;box-shadow:0 8px 20px rgba(45,91,227,.4);color:#fff}
+nav .c svg{width:30px;height:30px;margin:0}
+.toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%);background:#102A56;color:#fff;padding:10px 18px;border-radius:99px;font-size:.9rem;z-index:20}
+.btn{text-align:center;text-decoration:none;font-weight:600;padding:14px 12px;border-radius:14px;display:block}
+.btn.p{background:linear-gradient(90deg,#1677F2,#368FEF);color:#fff}
+.btn.g{border:1.5px solid var(--line);color:var(--ink);background:#fff}
+.btn.wide{margin-top:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;margin:14px 0;box-shadow:0 6px 18px rgba(15,23,42,.04)}
+label{display:block;font-weight:600;margin:14px 0 6px;font-size:.9rem}
+input,select,textarea{width:100%;font:inherit;padding:13px;border:1.5px solid var(--line);border-radius:14px;background:#f8fafd;color:var(--ink)}
+textarea{min-height:90px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);background:#fff}
+a:focus-visible,button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+button.go{margin-top:20px;width:100%;font:inherit;font-weight:700;font-size:1.02rem;padding:14px;border:0;border-radius:16px;background:linear-gradient(90deg,#1677F2,#368FEF);color:#fff;cursor:pointer}
+button.go:disabled{opacity:.6}
+.msg{padding:12px;border-radius:12px;margin-top:14px;font-weight:600}
+.msg.ok{background:#e6f4ea;color:#1e6b2f}.msg.err{background:#fde8e8;color:#a61e1e}
+.row{border-top:1px dashed var(--line);padding:12px 0}.row:first-child{border-top:0}
+.tag{display:inline-block;background:var(--blue);color:#fff;border-radius:99px;padding:0 10px;font-size:.8rem}
+.warn{background:#eef3ff;color:#1e3a8a;border:1px solid #cfdcfb;border-radius:10px;padding:10px;font-size:.88rem}
+.tabs{display:flex;gap:8px;margin:6px 0}
+.tabs button{flex:1;font:inherit;font-weight:600;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);cursor:pointer}
+.tabs button.on{background:var(--ink);color:#fff}
+.cnt{margin-top:8px;padding:10px 12px;border-radius:12px;background:#f1f5f9;color:var(--mut);font-size:.86rem}
+.cnt.ok{background:#e6edfb;color:#1260C9;font-weight:600}
+.done{text-align:center;padding:30px 20px}
+.tick{width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,#1677F2,#368FEF);margin:0 auto 14px;display:grid;place-items:center;color:#fff}
+.tick svg{width:38px;height:38px;stroke-width:3}
+.chat{display:flex;flex-direction:column;min-height:calc(100vh - 150px)}
+.chat-h{display:flex;align-items:center;gap:12px;padding:6px 0 14px}
+.chat-h i{width:46px;height:46px;border-radius:15px;background:linear-gradient(135deg,#102A56,#1677F2);display:grid;place-items:center;color:#fff}
+.chat-h svg{width:24px;height:24px}
+.chat-h b{display:block}.chat-h span{color:var(--mut);font-size:.82rem}
+.msgs{flex:1;display:flex;flex-direction:column;gap:10px;padding-bottom:10px}
+.m{max-width:86%;padding:11px 14px;border-radius:18px;line-height:1.7;font-size:.95rem;white-space:pre-wrap}
+.m.bot{background:var(--card);border:1px solid var(--line);align-self:flex-start;border-bottom-right-radius:6px}
+.m.me{background:var(--blue);color:#fff;align-self:flex-end;border-bottom-left-radius:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.chips button{font:inherit;font-size:.84rem;padding:7px 12px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.cform{position:sticky;bottom:calc(86px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;background:var(--bg);padding:8px 0}
+.cform input{flex:1}
+.cform button{width:50px;border:0;border-radius:14px;background:var(--blue);cursor:pointer;display:grid;place-items:center;color:#fff}
+.cform svg{width:22px;height:22px;transform:scaleX(-1)}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+main>*{animation:rise .4s ease both}
+@media (prefers-reduced-motion:reduce){main>*{animation:none}}
+.asst{margin:14px 18px 0;display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#ecfdf5,#eefbfd);border:1px solid #cfeee6;border-radius:24px;padding:16px;text-decoration:none;color:var(--ink);box-shadow:0 6px 18px rgba(15,23,42,.04)}
+.asst .tx{flex:1}.asst b{display:block;font-size:1.12rem;font-weight:700}
+.asst p{font-size:.84rem;margin:4px 0 8px;line-height:1.6}
+.asst em{font-style:normal;font-weight:600;color:#0f9d8a;font-size:.92rem}
+.asst .ill{width:96px;height:96px;flex:none;border-radius:22px;object-fit:cover}
+.tl-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 6px}
+.tl{display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:12px;font:inherit;font-weight:600;font-size:.88rem;color:var(--ink);cursor:pointer;text-align:right}
+.tl svg{width:24px;height:24px;color:var(--blue)}
+.tl.on{border-color:var(--blue);background:#f1f5ff;color:var(--blue)}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
+.seg button{flex:1 0 auto;white-space:nowrap;font:inherit;font-size:.84rem;font-weight:600;padding:9px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
+.seg button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rs{display:flex;align-items:center;gap:8px;padding:10px 0;border-top:1px dashed var(--line)}
+.rs:first-child{border-top:0}
+.rs span{color:var(--mut);font-size:.84rem;flex:0 0 36%}
+.rs b{flex:1;font-weight:600;word-break:break-word;min-width:0}
+.cp{font:inherit;font-size:.78rem;padding:5px 10px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--blue);cursor:pointer}
+.cp.all{width:100%;margin-top:10px;padding:10px;font-size:.9rem;font-weight:600}
+.lnk{background:none;border:0;color:var(--blue);font:inherit;font-weight:600;cursor:pointer;padding:6px 0}
+.hint{color:var(--mut);font-size:.86rem;margin:10px 0 0}
+#rs{margin-top:10px}
+nav#nav{padding:0 2px calc(8px + env(safe-area-inset-bottom,0px))}
+nav .g{flex:1;display:flex;min-width:0}
+nav a.fab{flex:none;width:72px}
+.mk{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:0 18px}
+.mc{display:block;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:16px;text-decoration:none;color:var(--ink);box-shadow:0 6px 18px rgba(15,23,42,.05)}
+.mc i{width:50px;height:50px;border-radius:16px;display:grid;place-items:center}.mc i svg{width:26px;height:26px}
+.mc b{display:block;margin-top:16px;font-size:1.02rem;font-weight:700}.mc p{font-size:.8rem;margin:4px 0 0;line-height:1.6}
+.m1 i{background:#eaf1ff;color:#1677F2}.m2 i{background:#EAF3FF;color:#368FEF}.m3 i{background:#EAF3FF;color:#1677F2}.m4 i{background:#EAF3FF;color:#1677F2}
+.sp{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:14px;margin:12px 0;text-decoration:none;color:var(--ink);box-shadow:0 6px 18px rgba(15,23,42,.04)}
+.av{flex:none;width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg,#1677F2,#368FEF);color:#fff;display:grid;place-items:center;font-weight:700;font-size:1.1rem}.av.big{width:72px;height:72px;font-size:1.4rem;margin-bottom:10px}
+.si{flex:1;min-width:0}.sn{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.sn small{color:var(--mut);font-size:.72rem;background:#f1f5f9;border-radius:99px;padding:0 8px}
+.vb{display:inline-grid;place-items:center;color:var(--blue)}.vb svg{width:20px;height:20px}
+.sh2{color:#334155;font-size:.9rem}.sm{color:var(--mut);font-size:.82rem}
+.cx{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.cx span,.pick button{font:inherit;font-size:.76rem;background:#eef3ff;color:#2446b8;border-radius:99px;padding:3px 10px;border:0}
+.pick button{cursor:pointer;background:#f1f5f9;color:var(--mut);font-size:.82rem;padding:6px 12px}.pick button.on{background:var(--blue);color:#fff}
+.sf{display:flex;gap:12px;flex-wrap:wrap;font-size:.82rem;color:var(--mut)}.sf .ok{color:#15803d;font-weight:600}.sf .no{color:#b45309}
+.tg{background:#EAF3FF;color:#0f766e;border-radius:99px;padding:0 10px;font-size:.78rem}
+.kv{display:flex;justify-content:space-between;padding:8px 0;border-top:1px dashed var(--line)}.kv:first-child{border-top:0}.kv span{color:var(--mut)}
+.pct{display:flex;align-items:center;gap:12px;font-weight:600}.pct .bar{flex:1;height:8px;background:#e8edf5;border-radius:9px;overflow:hidden;display:block}.pct .bar i{display:block;height:100%;background:linear-gradient(90deg,#1677F2,#368FEF);width:0}
+.chk{display:flex;gap:10px;align-items:center}.chk input{width:auto}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tgh{font-size:1rem;font-weight:700;margin:18px 0 10px;color:#334155}
+a.tl{text-decoration:none;color:inherit;min-height:72px}
+.bt{display:flex;gap:12px;align-items:center;margin:12px 0}.bt .go{flex:1;margin-top:0;width:auto}
+[dir=ltr] .cta svg,[dir=ltr] .adm .go2 svg{transform:scaleX(-1)}
+[dir=ltr] .cform svg{transform:none}
+[dir=ltr] .rr b,[dir=ltr] .rs b{text-align:left}
+[dir=ltr] .st div+div{border-right:0;border-left:1px solid var(--line)}
+[dir=ltr] .m.bot{border-bottom-right-radius:18px;border-bottom-left-radius:6px}
+[dir=ltr] .m.me{border-bottom-left-radius:18px;border-bottom-right-radius:6px}
+[dir=ltr] .tl,[dir=ltr] .tbtn{text-align:left}
+[dir=ltr] .rr b,[dir=ltr] .rs b{text-align:left}
+.wm{font-family:'Poppins','IBM Plex Sans Arabic',sans-serif;font-weight:700;font-size:1.9rem;letter-spacing:-.6px;line-height:1.05;direction:ltr;display:block}
+.wm .wg,.wm .wl{display:inline}.wm .wg{color:#102A56}.wm .wl{color:#1677F2}
+.gm{width:62px;height:64px;flex:none;filter:drop-shadow(0 6px 10px rgba(16,42,86,.18))}
+.tag2{text-align:center;color:var(--mut);font-weight:600;margin:10px 0 0;font-size:.95rem}
+.badge{white-space:normal;text-align:center;line-height:1.5}
+:root{--navy:#102A56;--navy2:#1a3f7a;--acc:#1677F2;--blue:#1677F2;--bg:#F5F8FC;--ink:#172B4D;--mut:#64748B;--line:#E3EAF3}
+body{background:var(--bg);color:var(--ink)}
 </style>
 </head>
 <body>
 <main id="app"></main>
 <nav id="nav"></nav>
 
-<div class="modal" id="composer">
-  <div class="modal-content">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-      <h3 style="margin:0; color:var(--navy);">إنشاء منشور</h3>
-      <button onclick="closeModal('composer')" style="background:none;border:none;font-size:1.6rem;cursor:pointer;color:var(--mut);line-height:1;">&times;</button>
-    </div>
-    <div id="composer-user" style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-      <img id="composer-avatar" src="https://ui-avatars.com/api/?name=G&background=1677F2&color=fff" style="width:40px;height:40px;border-radius:50%;">
-      <div>
-        <b id="composer-name" style="color:var(--navy);">زائر</b>
-        <div style="font-size:0.78rem; color:var(--mut);" id="composer-role">سجّل دخولك للنشر باسمك</div>
-      </div>
-    </div>
-    <textarea id="post-text" placeholder="ماذا تريد أن تشارك؟ (مشروع، استشارة، إنجاز...)" style="min-height:120px; border:1px solid var(--line); background:var(--bg); resize:none; border-radius:12px; padding:12px;"></textarea>
-    <div style="display:flex; gap:12px; margin-top:16px;">
-      <button class="go" style="background:var(--bg); color:var(--navy); margin-top:0;" onclick="closeModal('composer')">إلغاء</button>
-      <button class="go" id="publish-btn" style="margin-top:0;">نشر</button>
-    </div>
-  </div>
-</div>
-
-<!-- Firebase SDKs -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.12.2/firebase-app-compat.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.12.2/firebase-firestore-compat.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.12.2/firebase-auth-compat.min.js"></script>
-
 <script>
-// ============================================================
-// 1. مكتبة الأيقونات
-// ============================================================
+// رقم الواتساب بتاعك بصيغة دولية بدون + (مثال: 201012345678). سيبه فاضي لو مش عايز واتساب.
+const WA_NUMBER = "201020259546";
+
+firebase.initializeApp({
+  apiKey: "AIzaSyApICmCU5DVg_-ttahelh3xPuGbDELhcNA",
+  authDomain: "geolink-e80b4.firebaseapp.com",
+  projectId: "geolink-e80b4",
+  storageBucket: "geolink-e80b4.firebasestorage.app",
+  messagingSenderId: "611615414436",
+  appId: "1:611615414436:web:771c18e2dd31ebe5606e31"
+});
+const db = firebase.firestore();
+const auth = firebase.auth();
+const ADMIN_UID = "gPceivu7FAa1YkRP5mdjrksFJmm2";
+const app = document.getElementById("app");
+let dip;
+addEventListener("beforeinstallprompt", e => { e.preventDefault(); dip = e; const b = document.getElementById("inst"); if (b) b.style.display = "block"; });
+const GOVS = ["القاهرة","الجيزة","الإسكندرية","القليوبية","الشرقية","الدقهلية","الغربية","كفر الشيخ","المنوفية","البحيرة","مطروح","الإسماعيلية","بورسعيد","السويس","شمال سيناء","جنوب سيناء","دمياط","الفيوم","بني سويف","المنيا","أسيوط","سوهاج","قنا","الأقصر","أسوان","البحر الأحمر","الوادي الجديد","أخرى"];
+const SERVICES = ["رفع مساحي لأرض","توقيع وتحديد مناسيب (إنشاءات)","حساب كميات","رفع مساحي لمبنى قائم","تقسيم أراضي","استشارة مساحية","تقرير كروكي","خدمة أخرى"];
+
+const el = (tag, attrs = {}, ...kids) => {
+  const e = document.createElement(tag);
+  for (const k in attrs) k === "class" ? e.className = attrs[k] : e.setAttribute(k, attrs[k]);
+  kids.forEach(c => e.append(c));
+  return e;
+};
+const opts = list => list.map(x => `<option value="${String(x).replace(/"/g, "&quot;")}">${x}</option>`).join("");
+
 const IC = {
-  home: "M3 11l9-8 9 8v10h-6v-6H9v6H3z", brief: "M3 8h18v12H3zM8 8V5h8v3M3 13h18",
-  user: "M12 12a4 4 0 100-8 4 4 0 000 8zM4 21c0-4 4-6 8-6s8 2 8 6",
   search: "M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.3-4.3",
+  brief: "M3 8h18v12H3zM8 8V5h8v3M3 13h18",
   bell: "M18 16v-5a6 6 0 10-12 0v5l-2 2h16zM10 20a2 2 0 004 0",
   chat: "M21 12a8 8 0 01-11.5 7.2L4 20l1-4.6A8 8 0 1121 12z",
-  check: "M12 21a9 9 0 100-18 9 9 0 000 18zM8.5 12l2.5 2.5 4.5-5",
-  like: "M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3",
-  comment: "M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z",
-  share: "M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13",
-  tools: "M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z",
-  globe: "M12 21a9 9 0 100-18 9 9 0 000 18zM3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18",
-  map: "M9 4L3 6v14l6-2 6 2 6-2V4l-6 2zM9 4v14M15 6v14",
-  poly: "M5 5h8l6 4-3 10H5z", plus: "M12 5v14M5 12h14", ruler: "M3 17L17 3l4 4L7 21zM8 12l2 2M11 9l2 2M14 6l2 2",
-  arrow: "M19 12H5M11 6l-6 6 6 6", 
-  wand: "M5 19L17 7M14 4l1 2 2 1-2 1-1 2-1-2-2-1 2-1zM19 12l.7 1.3L21 14l-1.3.7L19 16l-.7-1.3L17 14l1.3-.7z",
-  doc: "M7 3h7l5 5v13H7zM14 3v5h5M10 15l2-2 2 2 2-2", 
-  network: "M9 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM2 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5M16 5a3.5 3.5 0 010 7M18 14.5c2.5.6 4 2.2 4 5", 
+  pin: "M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11zM12 7.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z",
+  bot: "M12 3v3M8 6h8a3 3 0 013 3v7a3 3 0 01-3 3H8a3 3 0 01-3-3V9a3 3 0 013-3zM9 12h.01M15 12h.01M9.5 16h5",
+  wallet: "M4 7a2 2 0 012-2h11v3M4 7v10a2 2 0 002 2h13V8H6a2 2 0 01-2-2M16 13h.01",
+  star: "M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z",
+  helmet: "M4 17h16M5 17v-2a7 7 0 0114 0v2M10 8V5h4v3",
+  user: "M12 12a4 4 0 100-8 4 4 0 000 8zM4 21c0-4 4-6 8-6s8 2 8 6",
   shield: "M12 3l8 3v6c0 4.5-3.2 7.6-8 9-4.8-1.4-8-4.5-8-9V6zM9 12l2 2 4-4",
-  calc: "M6 3h12v18H6zM9 7h6M9 11h.01M12 11h.01M15 11h.01M9 15h.01M12 15h.01M15 15h.01", 
-  pin: "M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11zM12 7.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"
+  send: "M4 12l16-8-6 16-3-7z",
+  map: "M9 4L3 6v14l6-2 6 2 6-2V4l-6 2zM9 4v14M15 6v14",
+  globe: "M12 21a9 9 0 100-18 9 9 0 000 18zM3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18",
+  check: "M12 21a9 9 0 100-18 9 9 0 000 18zM8.5 12l2.5 2.5 4.5-5",
+  users: "M9 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM2 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5M16 5a3.5 3.5 0 010 7M18 14.5c2.5.6 4 2.2 4 5",
+  arrow: "M19 12H5M11 6l-6 6 6 6",
+  wand: "M5 19L17 7M14 4l1 2 2 1-2 1-1 2-1-2-2-1 2-1zM19 12l.7 1.3L21 14l-1.3.7L19 16l-.7-1.3L17 14l1.3-.7z",
+  layers: "M12 3l9 5-9 5-9-5zM3 13l9 5 9-5",
+  chip: "M7 7h10v10H7zM9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4",
+  clip: "M9 4h6v3H9zM7 5H5v16h14V5h-2M8 12h8M8 16h5",
+  plus: "M12 5v14M5 12h14",
+  home: "M3 11l9-8 9 8v10h-6v-6H9v6H3z",
+  poly: "M5 5h8l6 4-3 10H5z",
+  calc: "M6 3h12v18H6zM9 7h6M9 11h.01M12 11h.01M15 11h.01M9 15h.01M12 15h.01M15 15h.01",
+  doc: "M7 3h7l5 5v13H7zM14 3v5h5M10 15l2-2 2 2 2-2",
+  ruler: "M3 17L17 3l4 4L7 21zM8 12l2 2M11 9l2 2M14 6l2 2",
+  tools: "M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"
 };
+let statsP;
+const statsOnce = () => statsP || (statsP = db.collection("stats").doc("active").get().then(d => d.exists ? d.data() : {}).catch(() => ({})));
 
-// ============================================================
-// 2. دوال المساعدة والرياضيات
-// ============================================================
-const num = s => { const t = String(s).trim().replace(",", "."); return t === "" ? NaN : Number(t); };
-const f3 = x => x.toFixed(3);
-const fmt = x => String(+x.toPrecision(10));
+const SKILLS = ["مساعد مساحة", "رودمان", "مشغّل أجهزة", "مساعد أعمال إنشاءات"];
+function assistantForm() {
+  app.innerHTML = `<a class="back" href="#">رجوع</a><h2>انضم كمساعد مساحة</h2>
+    <form class="card" id="af">
+      <label>الاسم</label><input name="name" required>
+      <label>رقم الموبايل</label><input name="phone" type="tel" inputmode="tel" required placeholder="01xxxxxxxxx">
+      <label>المحافظة</label><select name="gov">${opts(GOVS)}</select>
+      <label>التخصص</label><select name="skill">${opts(SKILLS)}</select>
+      <label>سنين الخبرة</label><input name="years" type="number" min="0" max="50" inputmode="numeric" required>
+      <label>نبذة عن خبرتك</label><textarea name="notes"></textarea>
+      <button class="go" type="submit">سجّل بياناتي</button><div id="ao"></div>
+    </form>`;
+  document.getElementById("af").onsubmit = async ev => {
+    ev.preventDefault();
+    const btn = ev.target.querySelector("button"), out = document.getElementById("ao");
+    const data = Object.fromEntries(new FormData(ev.target));
+    btn.disabled = true; btn.textContent = "جاري الإرسال...";
+    try {
+      await db.collection("assistants").add({ ...data, status: "new", createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+      ev.target.outerHTML = `<div class="card done"><div class="tick"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h2>تم تسجيلك</h2><p>هنتواصل معاك لما تتوفر فرصة عمل مناسبة في محافظتك.</p><a class="btn g wide" href="#">رجوع للرئيسية</a></div>`;
+    } catch (e) {
+      out.className = "msg err"; out.textContent = "حصلت مشكلة في الإرسال. تأكد من النت وجرب تاني."; console.error(e);
+      btn.disabled = false; btn.textContent = "سجّل بياناتي";
+    }
+  };
+}
+
+function toast(t) { const e = el("div", { class: "toast" }, t); document.body.append(e); setTimeout(() => e.remove(), 1800); }
+
+const GLMARK = `<svg class="gm" viewBox="0 0 124 128" aria-hidden="true"><defs><clipPath id="glb"><rect x="-10" y="-10" width="150" height="80"/></clipPath><clipPath id="glf"><rect x="-10" y="70" width="150" height="80"/></clipPath></defs><g transform="rotate(-24 62 74)" fill="none" stroke="#1677F2" stroke-width="6" stroke-linecap="round"><ellipse cx="62" cy="74" rx="58" ry="19" clip-path="url(#glb)"/></g><path d="M62 126C62 126 20 90 20 52a42 42 0 0 1 84 0C104 90 62 126 62 126z" fill="#102A56"/><path d="M80 37A23 23 0 1 0 85 53H64" fill="none" stroke="#fff" stroke-width="11.5" stroke-linejoin="round"/><g transform="rotate(-24 62 74)" fill="none" stroke="#1677F2" stroke-width="6" stroke-linecap="round"><ellipse cx="62" cy="74" rx="58" ry="19" clip-path="url(#glf)"/></g></svg>`;
+function home() {
+  const ic = d => `<svg viewBox="0 0 24 24"><path d="${d}"/></svg>`;
+  const sv = (d, bg, fg, t, sub) => `<a class="sc" href="#client"><i style="background:${bg};color:${fg}">${ic(d)}</i><b>${t}</b><span>${sub}</span></a>`;
+  app.innerHTML = `
+  <div class="head">
+    <div class="bar">
+      <div class="brand">${GLMARK}<div><span class="wm"><span class="wg">Geo</span><span class="wl">Link</span></span><small>GEOSPATIAL PLATFORM</small></div></div>
+      <div class="ibs"><button class="ib" id="b1" aria-label="اللغة">${ic(IC.globe)}</button><button class="ib" id="b2" aria-label="الإشعارات">${ic(IC.bell)}</button></div>
+    </div>
+    <div class="center"><span class="badge">${ic(IC.check)}أكبر منصة لربط العملاء بأخصائيي المساحة</span></div>
+    <div class="tag2">احترافية وسهولة وثقة</div>
+    <h1>منصة خدمات المساحة</h1>
+    <p class="sub">اربط مشروعك بأخصائي مساحة بكل سهولة، أو انضم كأخصائي لاستقبال الطلبات.</p>
+    <a class="cta" href="#client">${ic(IC.arrow)}اطلب أخصائي مساحة الآن</a>
+    <button id="inst" class="inst">ثبّت التطبيق على موبايلك</button>
+  </div>
+  <div class="sh"><h2>${ic(IC.users)}سوق خدمات المساحة</h2><span>4 مسارات</span></div>
+  <div class="mk">
+    <a class="mc m1" href="#client"><i>${ic(IC.doc)}</i><b>انشر طلب عمل</b><p>اطلب خدمة مساحة وحدد تفاصيل مشروعك</p></a>
+    <a class="mc m2" href="#specialists"><i>${ic(IC.search)}</i><b>اكتشف الأخصائيين</b><p>تصفح الملفات المهنية وقارن بينها</p></a>
+    <a class="mc m3" href="#jobs"><i>${ic(IC.brief)}</i><b>تصفح فرص العمل</b><p>للأخصائيين: الطلبات المتاحة الآن</p></a>
+    <a class="mc m4" href="#profile"><i>${ic(IC.star)}</i><b>اعرض خدماتك</b><p>أنشئ ملفك المهني وخدماتك</p></a>
+  </div>
+  <a class="asst" href="#assistant"><div class="tx"><b>مساعد المساحة</b><p>سجّل بياناتك وخبراتك واستقبل فرص عمل في مجال المساحة.</p><em>انضم كمساعد مساحة ‹</em></div><img class="ill" src="assistant.png" alt=""></a>
+  <a class="adm" href="#admin"><div class="chip">${ic(IC.shield)}</div><div class="tx"><b>الإدارة</b><p>إدارة الطلبات والأخصائيين والاعتمادات</p></div><span class="go2">${ic(IC.arrow)}</span></a>
+  <a class="aib" href="#ai"><div class="chip">${ic(IC.wand)}</div><div class="tx"><div class="tt"><span>GeoLink AI Assistant</span><em>جديد</em></div><p>اسأل عن أي حاجة في المساحة</p></div><span class="try">تجربة</span></a>
+  <div class="sh"><h2>${ic(IC.layers)}خدماتنا السريعة</h2><a class="more" href="#client">عرض الكل</a></div>
+  <div class="sv">
+    ${sv(IC.map, "#eaf1ff", "#1677F2", "رفع مساحي", "تحديد حدود وإحداثيات")}
+    ${sv(IC.poly, "#EAF3FF", "#1677F2", "تخطيط أراضي", "تقسيم وتصاميم أراضي")}
+    ${sv(IC.calc, "#EAF3FF", "#1677F2", "استشارات", "حلول مساحية")}
+    ${sv(IC.doc, "#EAF3FF", "#1677F2", "تقارير كروكي", "كروكي للأراضي")}
+  </div>
+  <div id="stats" class="st" style="display:none"></div>
+  <div class="sh"><h2>الأسئلة الشائعة</h2></div>
+  <div class="faq">
+    <details><summary>ازاي أطلب أخصائي مساحة؟</summary><p>اضغط على "اطلب أخصائي مساحة"، املا نوع الخدمة وموقع الأرض، وهنتواصل معاك على واتساب.</p></details>
+    <details><summary>هل التسجيل للأخصائيين مجاني؟</summary><p>أيوه، التسجيل مجاني. وبعد اعتماد حسابك بتشوف الطلبات المتاحة.</p></details>
+    <details><summary>بتغطوا أنهي محافظات؟</summary><p>بنستقبل طلبات من كل المحافظات، والتنفيذ بيكون حسب توفر الأخصائيين في منطقتك.</p></details>
+    <details><summary>إمتى هتتواصلوا معايا؟</summary><p>بنتواصل معاك على الرقم اللي كتبته في الطلب في أقرب وقت.</p></details>
+  </div>
+  <div class="foot">${WA_NUMBER ? `<a href="https://wa.me/${WA_NUMBER}" target="_blank" rel="noopener">كلّمنا على واتساب</a><br>` : ""}© 2026 GeoLink</div>`;
+  document.getElementById("b1").onclick = () => setLang(LANG === "ar" ? "en" : "ar");
+  document.getElementById("b2").onclick = () => toast("الإشعارات قريباً");
+  const ib = document.getElementById("inst");
+  if (dip) ib.style.display = "block";
+  ib.onclick = async () => { dip.prompt(); dip = null; ib.style.display = "none"; };
+  statsOnce().then(st => {
+    const v = Object.values(st).map(x => Math.max(0, +x || 0)), n = v.reduce((a, b) => a + b, 0), g = v.filter(x => x > 0).length, box = document.getElementById("stats");
+    if (box && n > 0) { box.style.display = "flex"; box.innerHTML = `<div><b>${n}</b><span>أخصائي نشط</span></div><div><b>${g}</b><span>محافظة مغطاة</span></div>`; }
+  });
+}
+
+function form(kind) {
+  const client = kind === "client";
+  app.innerHTML = `
+    <a class="back" href="#">رجوع</a>
+    <h2>${client ? "طلب أخصائي مساحة" : "تسجيل أخصائي مساحة"}</h2>
+    <form class="card" id="f">
+      <label>الاسم</label><input name="name" required>
+      <label>رقم الموبايل</label><input name="phone" type="tel" inputmode="tel" required placeholder="01xxxxxxxxx">
+      <label>المحافظة</label><select name="gov">${opts(GOVS)}</select>${client ? '<div id="cnt" class="cnt"></div>' : ""}
+      ${client ? `
+      <label>نوع الخدمة</label><select name="service">${opts(SERVICES)}</select>
+      <label>موقع الأرض أو المشروع (المنطقة أو لينك الخريطة)</label><input name="location" required>
+      <label>ملاحظات</label><textarea name="notes"></textarea>` : `
+      <label>الإيميل (لدخولك بعد الاعتماد)</label><input name="email" type="email" autocomplete="username" required>
+      <label>الباسورد (6 حروف أو أكتر)</label><input name="pw" type="password" autocomplete="new-password" minlength="6" required>
+      <label>التخصص</label><select name="spec">${opts(["مساحة عامة","مساحة إنشاءات","مساحة أراضي","مساحة طرق"])}</select>
+      <label>سنين الخبرة</label><input name="years" type="number" min="0" max="50" inputmode="numeric" required>
+      <label>الأجهزة المتاحة (توتال ستيشن، GPS، ليزر...)</label><input name="gear">
+      <label>نبذة عن أعمالك</label><textarea name="notes"></textarea>`}
+      <button class="go" type="submit">${client ? "ابعت الطلب" : "سجّل بياناتي"}</button>
+      <div id="out"></div>
+    </form>`;
+  if (client) {
+    const gs = app.querySelector('select[name="gov"]'), box = document.getElementById("cnt");
+    const upd = async () => {
+      const st = await statsOnce(), n = +st[gs.value] || 0;
+      box.textContent = n > 0 ? `${n} أخصائي مساحة نشط في ${gs.value}` : `لسه مفيش أخصائيين معتمدين في ${gs.value}، وهنتواصل معاك لما يتوفر أخصائي.`;
+      box.className = "cnt" + (n > 0 ? " ok" : "");
+    };
+    gs.onchange = upd; upd();
+  }
+  document.getElementById("f").onsubmit = async ev => {
+    ev.preventDefault();
+    const btn = ev.target.querySelector("button"), out = document.getElementById("out");
+    const data = Object.fromEntries(new FormData(ev.target));
+    btn.disabled = true; btn.textContent = "جاري الإرسال...";
+    try {
+      await save(client, data);
+      done(client, data);
+    } catch (e) {
+      out.className = "msg err";
+      out.textContent = e.code === "auth/email-already-in-use" ? "الإيميل ده مسجّل قبل كده. ادخل من صفحة دخول الأخصائيين." : e.code === "auth/weak-password" ? "الباسورد ضعيف، لازم 6 حروف على الأقل." : e.code === "auth/invalid-email" ? "الإيميل مش مكتوب صح." : "حصلت مشكلة في الإرسال. تأكد من النت وجرب تاني.";
+      console.error(e);
+    }
+    btn.disabled = false; btn.textContent = client ? "ابعت الطلب" : "سجّل بياناتي";
+  };
+}
+
+async function save(client, data) {
+  const ts = firebase.firestore.FieldValue.serverTimestamp();
+  if (client) {
+    const ref = db.collection("requests").doc(), b = db.batch();
+    b.set(ref, { ...data, status: "new", createdAt: ts });
+    b.set(db.collection("board").doc(ref.id), { service: data.service, gov: data.gov, status: "open", createdAt: ts });
+    await b.commit();
+  } else {
+    const { email, pw, ...rest } = data;
+    const cred = await auth.createUserWithEmailAndPassword(email, pw);
+    await db.collection("surveyors").doc(cred.user.uid).set({ ...rest, status: "new", createdAt: ts });
+  }
+}
+
+function done(client, data) {
+  const tr1 = x => LANG === "ar" ? x : (EN[x] || x);
+  const t = LANG === "ar" ? (client ? `طلب أخصائي مساحة جديد من ${data.name} - ${data.service} - ${data.gov}` : `تسجيل أخصائي مساحة جديد: ${data.name} - ${data.spec} - ${data.gov}`) : (client ? `New survey specialist request from ${data.name} - ${tr1(data.service)} - ${tr1(data.gov)}` : `New survey specialist registration: ${data.name} - ${tr1(data.spec)} - ${tr1(data.gov)}`);
+  document.getElementById("f").outerHTML = `<div class="card done">
+    <div class="tick"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <h2>${client ? "وصل طلبك" : "تم تسجيلك"}</h2>
+    <p>${client ? "هنتواصل معاك على رقم الموبايل اللي كتبته." : "تم إنشاء حسابك. هنراجع بياناتك ونعتمد الحساب، وبعدها تقدر تشوف الطلبات."}</p>
+    ${WA_NUMBER ? `<a class="btn p wide" href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t)}" target="_blank" rel="noopener">كمّل على واتساب</a>` : ""}
+    ${client ? "" : `<a class="btn p wide" href="#pro">دخول الأخصائيين</a>`}
+    <a class="btn g wide" href="#">رجوع للرئيسية</a></div>`;
+}
+
+async function adminPanel(user) {
+  app.innerHTML = `<a class="back" href="#">رجوع</a><h2>لوحة التحكم</h2>
+    <p>مسجّل دخول: <span id="who"></span> <button id="out" class="go" style="width:auto;margin:0 8px;padding:4px 14px;font-size:.9rem">خروج</button></p>
+    <div class="tabs"><button id="t1" class="on">الطلبات</button><button id="t2">الأخصائيين</button><button id="t3">المساعدين</button></div>
+    <div class="card" id="list">جاري التحميل...</div>`;
+  document.getElementById("who").textContent = user.email;
+  document.getElementById("out").onclick = () => auth.signOut();
+  const list = document.getElementById("list");
+  async function show(col) {
+    list.textContent = "جاري التحميل...";
+    try {
+      const snap = await db.collection(col).orderBy("createdAt", "desc").get();
+      const ap = col === "surveyors" ? new Set((await db.collection("approved").get()).docs.map(a => a.id)) : null;
+      list.textContent = "";
+      if (snap.empty) { list.textContent = "لسه مفيش بيانات."; return; }
+      snap.forEach(d => {
+        const x = d.data(), r = el("div", { class: "row" });
+        const line = col === "requests"
+          ? [x.service, x.gov, x.location] : col === "assistants" ? [x.skill, x.gov, `${x.years || 0} سنة خبرة`] : [x.spec, x.gov, `${x.years || 0} سنة خبرة`, x.gear];
+        r.append(el("b", {}, x.name || "-"), " ", el("span", { class: "tag" }, (ap && ap.has(d.id)) ? "معتمد" : (x.status || "new")),
+          el("div", {}, x.phone || ""), el("div", {}, line.filter(Boolean).join(" | ")));
+        if (x.notes) r.append(el("p", {}, x.notes));
+        const sel = el("select", {});
+        sel.innerHTML = opts(["new","contacted","deposit-paid","done","rejected"]);
+        sel.value = x.status || "new";
+        sel.onchange = () => { d.ref.update({ status: sel.value }); if (col === "requests") db.collection("board").doc(d.id).update({ status: ["new", "contacted"].includes(sel.value) ? "open" : "closed" }).catch(() => {}); };
+        r.append(sel);
+        if (ap) {
+          const ab = el("button", { class: "go", style: "margin-top:8px;padding:8px" }, ap.has(d.id) ? "إلغاء الاعتماد" : "اعتماد");
+          ab.onclick = async () => {
+            ab.disabled = true;
+            try {
+              const was = ap.has(d.id);
+              if (was) await db.collection("approved").doc(d.id).delete();
+              else await db.collection("approved").doc(d.id).set({ name: x.name || "", at: firebase.firestore.FieldValue.serverTimestamp() });
+              if (x.gov) await db.collection("stats").doc("active").set({ [x.gov]: firebase.firestore.FieldValue.increment(was ? -1 : 1) }, { merge: true });
+              statsP = null;
+              show(col);
+            } catch (e) { ab.textContent = "فشل، جرّب تاني"; }
+          };
+          r.append(ab);
+        }
+        list.append(r);
+      });
+    } catch (e) { list.textContent = "تعذر تحميل البيانات."; console.error(e); }
+  }
+  const tabsB = ["t1", "t2", "t3"].map(i => document.getElementById(i)), cols = ["requests", "surveyors", "assistants"];
+  tabsB.forEach((b, i) => b.onclick = () => { tabsB.forEach(x => x.className = ""); b.className = "on"; show(cols[i]); });
+  show("requests");
+}
+
+let unsub;
+function admin() {
+  if (unsub) unsub();
+  unsub = auth.onAuthStateChanged(u => {
+    if (location.hash !== "#admin") return;
+    u ? (u.uid === ADMIN_UID ? adminPanel(u) : denied()) : loginView();
+  });
+}
+function denied() {
+  app.innerHTML = `<div class="card done"><h2>الصفحة دي للأدمن فقط</h2><button id="so" class="go">خروج</button><a class="btn g wide" href="#pro">دخول الأخصائيين</a></div>`;
+  document.getElementById("so").onclick = () => auth.signOut();
+}
+
+function pro() {
+  if (unsub) unsub();
+  unsub = auth.onAuthStateChanged(u => {
+    if (location.hash !== "#pro") return;
+    u ? proBoard(u) : loginView("دخول الأخصائيين", `<p style="text-align:center">لسه ما سجلتش؟ <a href="#surveyor" style="color:var(--acc);font-weight:600">سجّل كأخصائي مساحة</a></p>`);
+  });
+}
+
+async function proBoard(u) {
+  if (u.uid === ADMIN_UID) { app.innerHTML = `<div class="card done"><h2>أنت مسجّل كأدمن</h2><a class="btn p wide" href="#admin">لوحة التحكم</a></div>`; return; }
+  app.innerHTML = `<h2>الطلبات المتاحة</h2><p>مسجّل دخول: <span id="who"></span> <button id="out" class="go" style="width:auto;margin:0 8px;padding:4px 14px;font-size:.9rem">خروج</button></p><div id="pl">جاري التحميل...</div>`;
+  document.getElementById("who").textContent = u.email;
+  document.getElementById("out").onclick = () => auth.signOut();
+  const pl = document.getElementById("pl");
+  try {
+    const ok = await db.collection("approved").doc(u.uid).get();
+    if (!ok.exists) { pl.innerHTML = `<div class="card done"><h2>حسابك قيد المراجعة</h2><p>هنراجع بياناتك ونعتمد حسابك، وهتقدر تشوف الطلبات بعدها.</p></div>`; return; }
+    const snap = await db.collection("board").orderBy("createdAt", "desc").limit(100).get();
+    const open = snap.docs.filter(d => d.data().status === "open");
+    pl.textContent = "";
+    if (!open.length) { pl.innerHTML = `<div class="card">مفيش طلبات متاحة دلوقتي. ارجع شوف بعد شوية.</div>`; return; }
+    pl.append(el("p", {}, "بيانات العميل بتتشارك بعد الاتفاق مع GeoLink."));
+    open.forEach(d => {
+      const x = d.data(), t = x.createdAt ? x.createdAt.toDate().toLocaleDateString(LANG === "ar" ? "ar-EG" : "en-GB") : "";
+      const card = el("div", { class: "card" });
+      card.append(el("b", {}, x["service"] || "-"), " ", el("span", { class: "tag" }, "متاح"), el("div", {}, x.gov || ""), el("p", {}, t));
+      pl.append(card);
+    });
+  } catch (e) { pl.textContent = "تعذر تحميل الطلبات."; console.error(e); }
+}
+
+function loginView(title = "دخول الأدمن", extra = "") {
+  app.innerHTML = `<a class="back" href="#">رجوع</a><h2>${title}</h2>
+    <form class="card" id="lf">
+      <label>الإيميل</label><input name="email" type="email" autocomplete="username" required>
+      <label>الباسورد</label><input name="pw" type="password" autocomplete="current-password" required>
+      <button class="go" type="submit">دخول</button><div id="lo"></div>
+    </form>${extra}`;
+  document.getElementById("lf").onsubmit = async ev => {
+    ev.preventDefault();
+    const f = new FormData(ev.target), lo = document.getElementById("lo");
+    try { await auth.signInWithEmailAndPassword(f.get("email"), f.get("pw")); }
+    catch (e) { lo.className = "msg err"; lo.textContent = "الإيميل أو الباسورد غلط."; }
+  };
+}
+
+// رابط خدمة الذكاء الاصطناعي (فاضي دلوقتي، وبعد ربط الخدمة بنحط هنا الرابط)
+const AI_ENDPOINT = "";
+const KB = [
+  [["اطلب", "طلب", "ازاي", "request", "order", "how to", "how do i"], "اضغط على «اطلب أخصائي مساحة»، املا نوع الخدمة وموقع الأرض، وهنتواصل معاك على واتساب."],
+  [["سعر", "تكلفة", "كام", "price", "cost", "how much", "fee"], "السعر بيتحدد حسب نوع الخدمة والمساحة والموقع. اطلب أخصائي مساحة وهنتفق على التفاصيل قبل بداية الشغل."],
+  [["توتال", "total"], "التوتال ستيشن جهاز يقيس الزوايا والمسافات إلكترونياً ويحسب إحداثيات النقاط، ويُستخدم في الرفع المساحي والتوقيع."],
+  [["منسوب", "مناسيب", "ميزان", "level", "elevation"], "المنسوب هو ارتفاع نقطة عن مستوى مرجعي. بيتقاس بجهاز الميزان (Level) أو التوتال ستيشن، وبيُستخدم في الحفر والردم وتحديد الميول."],
+  [["توقيع", "setting out", "set out", "stake"], "التوقيع هو نقل نقاط المشروع من المخطط إلى الأرض باستخدام إحداثياتها، زي المحاور والأعمدة والحدود."],
+  [["رفع", "survey", "topograph"], "الرفع المساحي هو قياس مواضع الأرض والمعالم ورسمها على خريطة بإحداثيات ومناسيب."],
+  [["gps", "rtk", "gnss", "جي بي"], "أجهزة GPS/RTK بتدّي دقة بالسنتيمترات في الظروف الجيدة، بس بتحتاج سماء مفتوحة وتصحيحات من قاعدة أو شبكة."],
+  [["كميات", "حفر", "ردم", "quantit", "volume", "earthwork", "cut", "fill"], "حساب الكميات بيعتمد على مناسيب الأرض الطبيعية ومناسيب التصميم، وحجم الحفر والردم بيطلع من الفرق بينهم."],
+  [["تقسيم", "subdivi", "split"], "تقسيم الأراضي بيشمل تحديد حدود كل قطعة وتوقيع نقاطها على الأرض حسب المخطط المعتمد."]
+];
+async function aiAnswer(q) {
+  if (AI_ENDPOINT) {
+    const r = await fetch(AI_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question: q }) });
+    const j = await r.json(); return j.answer || "ممكن تعيد صياغة السؤال؟";
+  }
+  const t = q.toLowerCase();
+  const hit = KB.find(([ks]) => ks.some(k => t.includes(k)));
+  return hit ? hit[1] : "سؤال كويس. للتفاصيل الفنية الأعمق اطلب أخصائي مساحة من المنصة" + (WA_NUMBER ? "، أو كلّمنا على واتساب." : ".");
+}
+function ai() {
+  const ic = d => `<svg viewBox="0 0 24 24"><path d="${d}"/></svg>`;
+  app.innerHTML = `<div class="chat">
+    <div class="chat-h"><i>${ic(IC.bot)}</i><div><b>GeoLink AI</b><span>مساعدك في مجال المساحة</span></div></div>
+    <div id="msgs" class="msgs"></div><div id="chips" class="chips"></div>
+    <form id="cf" class="cform"><input id="ci" placeholder="اكتب سؤالك عن المساحة..." autocomplete="off" aria-label="سؤالك"><button aria-label="إرسال">${ic(IC.send)}</button></form></div>`;
+  const msgs = document.getElementById("msgs"), ci = document.getElementById("ci");
+  const add = (who, t) => { const m = el("div", { class: "m " + who }, t); msgs.append(m); scrollTo(0, document.body.scrollHeight); return m; };
+  add("bot", "أنا مساعدك الذكي في مجال المساحة. كيف يمكنني مساعدتك اليوم؟");
+  const ask = async q => {
+    if (!q.trim()) return;
+    document.getElementById("chips").textContent = "";
+    add("me", q); const w = add("bot", "...");
+    try { w.textContent = await aiAnswer(q); } catch (e) { w.textContent = "حصلت مشكلة، جرّب تاني بعد شوية."; }
+    scrollTo(0, document.body.scrollHeight);
+  };
+  ["إيه هو التوتال ستيشن؟", "يعني إيه مناسيب؟", "الفرق بين الرفع والتوقيع", "ازاي أطلب أخصائي مساحة؟"].forEach(t => {
+    const b = el("button", { type: "button" }, t); b.onclick = () => ask(t); document.getElementById("chips").append(b);
+  });
+  document.getElementById("cf").onsubmit = ev => { ev.preventDefault(); const q = ci.value; ci.value = ""; ask(q); };
+}
+
+function my() {
+  app.innerHTML = `<h2>طلباتي</h2><div class="card done"><div class="tick"><svg viewBox="0 0 24 24"><path d="${IC.clip}"/></svg></div><h2>متابعة طلباتك قريباً</h2><p>هتقدر تتابع حالة كل طلب من هنا. دلوقتي بنتواصل معاك على واتساب بعد ما تبعت الطلب.</p><a class="btn p wide" href="#client">اطلب أخصائي مساحة</a></div>`;
+}
+
+function account() {
+  if (unsub) unsub();
+  unsub = auth.onAuthStateChanged(u => {
+    if (location.hash !== "#account") return;
+    const adm = u && u.uid === ADMIN_UID;
+    app.innerHTML = `<h2>حسابي</h2><div class="card"><h3 class="tgh" style="margin-top:0">اللغة</h3><div class="seg" id="lg"><button type="button" data-lang="ar" class="${LANG === "ar" ? "on" : ""}">العربية</button><button type="button" data-lang="en" class="${LANG === "en" ? "on" : ""}">English</button></div></div><div class="card">` + (u
+      ? `<p>مسجّل دخول: <b id="who"></b></p><a class="btn p wide" href="${adm ? "#admin" : "#pro"}">${adm ? "لوحة التحكم" : "صفحة الأخصائي"}</a><button id="so" class="go">خروج</button>`
+      : `<p>سجّل دخولك كأخصائي مساحة لتشوف الطلبات المتاحة.</p><a class="btn p wide" href="#pro">دخول الأخصائيين</a><a class="btn g wide" href="#surveyor">تسجيل أخصائي جديد</a>`) + `</div>`;
+    app.querySelectorAll("[data-lang]").forEach(b => b.onclick = () => setLang(b.dataset.lang));
+    trTree(app);
+    if (u) { document.getElementById("who").textContent = u.email; document.getElementById("so").onclick = () => auth.signOut(); }
+  });
+}
+
+const SPEC_LIST = ["رفع مساحي طبوغرافي", "مساحة حدود وملكيات", "توقيع (Setting out)", "مساحة As-Built", "مساحة GNSS", "خدمات Total Station", "مراقبة جودة المساحة QC", "حساب كميات", "استشارات مساحية"];
+const M_esc = x => String(x ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const M_svg = d => `<svg viewBox="0 0 24 24"><path d="${d}"/></svg>`;
+const M_ini = n => String(n || "?").trim().split(/\s+/).slice(0, 2).map(w => w[0]).join("");
+const M_rate = p => p.ratingCount > 0 ? `★ ${(+p.ratingAvg).toFixed(1)} (${p.ratingCount})` : "جديد";
+const M_when = t => t && t.toDate ? t.toDate().toLocaleDateString(LANG === "ar" ? "ar-EG" : "en-GB") : "";
+const M_empty = (t, a = "") => `<div class="card done"><p>${t}</p>${a}</div>`;
+const M_v = id => document.getElementById(id).value;
+const M_card = (id, p) => `<a class="sp" href="#sp:${id}"><div class="av">${M_esc(M_ini(p.name))}</div><div class="si"><div class="sn"><b>${M_esc(p.name)}</b>${p.verified ? `<span class="vb" title="موثّق">${M_svg(IC.check)}</span>` : "<small>غير موثّق</small>"}</div><div class="sh2">${M_esc(p.headline)}</div><div class="sm">${M_esc(p.gov)} · ${+p.years} سنة خبرة</div><div class="cx">${(p.specs || []).slice(0, 3).map(x => `<span>${M_esc(x)}</span>`).join("")}</div><div class="sf"><span>${M_rate(p)}</span><span>${+p.completed || 0} مشروع</span><span class="${p.available ? "ok" : "no"}">${p.available ? "متاح" : "غير متاح"}</span></div></div></a>`;
+function M_pager(col, order, render, filters, listId, moreId, emptyMsg) {
+  let items = [], last = null;
+  const list = document.getElementById(listId), more = document.getElementById(moreId);
+  const draw = () => { const L = render(items); list.innerHTML = L || M_empty(items.length ? "مفيش نتائج بالفلاتر دي." : emptyMsg); };
+  const load = async () => {
+    try {
+      let q = db.collection(col).orderBy(order, "desc").limit(20); if (last) q = q.startAfter(last);
+      const snap = await q.get(); snap.forEach(d => items.push({ id: d.id, d: d.data() }));
+      last = snap.docs[snap.docs.length - 1] || last; more.style.display = snap.size === 20 ? "block" : "none"; draw();
+    } catch (e) { list.textContent = "تعذر تحميل البيانات. اتأكد إن قواعد Firebase محدّثة."; console.error(e); }
+  };
+  app.querySelectorAll("input,select").forEach(e => e.oninput = draw); more.onclick = load; load();
+}
+function specialistsPage() {
+  const sel = (id, l, o) => `<div><label>${l}</label><select id="${id}">${o}</select></div>`;
+  app.innerHTML = `<h2>اكتشف الأخصائيين</h2><div class="card"><input id="q" placeholder="ابحث بالاسم أو التخصص أو الجهاز..." aria-label="بحث">
+    <div class="f2">${sel("fg", "المحافظة", `<option value="">الكل</option>${opts(GOVS)}`)}${sel("fs", "التخصص", `<option value="">الكل</option>${opts(SPEC_LIST)}`)}</div>
+    <div class="f2">${sel("fy", "سنين الخبرة", '<option value="0">أي خبرة</option><option value="3">3+</option><option value="5">5+</option><option value="10">10+</option>')}${sel("fr", "التقييم", '<option value="0">الكل</option><option value="3">3+</option><option value="4">4+</option><option value="4.5">4.5+</option>')}</div>
+    <div class="f2">${sel("fa", "التوفر", '<option value="">الكل</option><option value="1">متاح فقط</option>')}${sel("fo", "الترتيب", '<option value="new">الأحدث</option><option value="rate">الأعلى تقييماً</option><option value="exp">الأكثر خبرة</option>')}</div></div>
+    <div id="sl">جاري التحميل...</div><button id="sm" class="btn g wide" style="display:none">عرض المزيد</button>`;
+  M_pager("specialistProfiles", "updatedAt", items => {
+    const q = M_v("q").trim().toLowerCase(), g = M_v("fg"), s = M_v("fs"), y = +M_v("fy"), r = +M_v("fr"), a = M_v("fa"), o = M_v("fo");
+    const L = items.filter(({ d: p }) => (!g || p.gov === g) && (!s || (p.specs || []).includes(s)) && p.years >= y && (+p.ratingAvg || 0) >= r && (!a || p.available) && (!q || [p.name, p.headline, p.equipment, ...(p.specs || [])].join(" ").toLowerCase().includes(q)));
+    L.sort((x, z) => o === "rate" ? (+z.d.ratingAvg || 0) - (+x.d.ratingAvg || 0) : o === "exp" ? z.d.years - x.d.years : 0);
+    return L.map(({ id, d }) => M_card(id, d)).join("");
+  }, 0, "sl", "sm", `لسه مفيش أخصائيين نشروا ملفاتهم.</p><a class="btn p wide" href="#profile">اعرض خدماتك</a><p>`);
+}
+async function specialistDetail(id) {
+  app.innerHTML = `<a class="back" href="#specialists">رجوع</a><div id="sd">جاري التحميل...</div>`;
+  const box = document.getElementById("sd");
+  try {
+    const d = await db.collection("specialistProfiles").doc(id).get();
+    if (!d.exists) { box.innerHTML = M_empty("الملف ده مش موجود."); return; }
+    const p = d.data(), card = (t, b) => b ? `<div class="card"><h2>${t}</h2><p>${b}</p></div>` : "";
+    box.innerHTML = `<div class="card"><div class="av big">${M_esc(M_ini(p.name))}</div><h2>${M_esc(p.name)} ${p.verified ? `<span class="vb">${M_svg(IC.check)}</span>` : ""}</h2><p>${M_esc(p.headline)}</p><div class="sf"><span>${M_rate(p)}</span><span>${+p.completed || 0} مشروع</span><span class="${p.available ? "ok" : "no"}">${p.available ? "متاح" : "غير متاح"}</span></div></div>
+      <div class="card"><div class="kv"><span>المحافظة</span><b>${M_esc(p.gov)}</b></div><div class="kv"><span>سنين الخبرة</span><b>${+p.years}</b></div><div class="kv"><span>التوثيق</span><b>${p.verified ? "موثّق" : "غير موثّق بعد"}</b></div></div>
+      ${(p.specs || []).length ? `<div class="card"><h2>التخصصات</h2><div class="cx">${p.specs.map(x => `<span>${M_esc(x)}</span>`).join("")}</div></div>` : ""}${card("الأجهزة والمهارات", M_esc(p.equipment))}${card("نبذة", M_esc(p.bio))}
+      <div class="card"><p>التواصل مع الأخصائي هيتم من خلال طلب تعاون جوّه المنصة (لسه مش مفعّل). بيانات التواصل الشخصية مش بتظهر علناً.</p></div>`;
+  } catch (e) { box.textContent = "تعذر تحميل الملف."; console.error(e); }
+}
+function jobsPage() {
+  app.innerHTML = `<h2>فرص العمل</h2><div class="card"><div class="f2"><div><label>المحافظة</label><select id="jg"><option value="">الكل</option>${opts(GOVS)}</select></div><div><label>نوع الخدمة</label><select id="js"><option value="">الكل</option>${opts(SERVICES)}</select></div></div></div>
+    <div id="jl">جاري التحميل...</div><button id="jm" class="btn g wide" style="display:none">عرض المزيد</button>
+    <p>تقديم العروض على الطلبات لسه مش مفعّل، وبيتضاف في مرحلة العروض.</p>`;
+  M_pager("board", "createdAt", items => items.filter(({ d: x }) => x.status === "open" && (!M_v("jg") || x.gov === M_v("jg")) && (!M_v("js") || x["service"] === M_v("js")))
+    .map(({ d: x }) => `<div class="card"><div class="sn"><b>${M_esc(x["service"])}</b><span class="tg">مفتوح</span></div><div class="sm">${M_esc(x.gov)} · ${M_when(x.createdAt)}</div></div>`).join(""), 0, "jl", "jm",
+    `مفيش طلبات متاحة دلوقتي.</p><a class="btn p wide" href="#client">انشر طلب عمل</a><p>`);
+}
+function profilePage() {
+  if (unsub) unsub();
+  unsub = auth.onAuthStateChanged(u => {
+    if (location.hash !== "#profile") return;
+    u ? profileForm(u) : loginView("دخول الأخصائيين", `<p style="text-align:center">لسه ما سجلتش؟ <a href="#surveyor" style="color:var(--blue);font-weight:600">أنشئ حساب أخصائي</a></p>`);
+  });
+}
+async function profileForm(u) {
+  app.innerHTML = `<h2>ملفي المهني</h2><div id="pf">جاري التحميل...</div>`;
+  let o = {};
+  try { const d = await db.collection("specialistProfiles").doc(u.uid).get(); if (d.exists) o = d.data(); }
+  catch (e) { document.getElementById("pf").textContent = "تعذر تحميل ملفك. اتأكد إن قواعد Firebase محدّثة."; console.error(e); return; }
+  const sel = new Set(o.specs || []);
+  document.getElementById("pf").innerHTML = `<div class="card"><div class="pct"><span id="pc"></span><div class="bar"><i id="pb"></i></div></div></div>
+    <form class="card" id="pform"><label>الاسم الكامل</label><input name="name" value="${M_esc(o.name)}" required maxlength="100">
+    <label>المسمى المهني</label><input name="headline" value="${M_esc(o.headline)}" required maxlength="120" placeholder="مثال: أخصائي مساحة إنشائية - Total Station وGNSS">
+    <div class="f2"><div><label>سنين الخبرة</label><input name="years" type="number" min="0" max="60" value="${o.years ?? ""}" required></div><div><label>المحافظة</label><select name="gov">${opts(GOVS)}</select></div></div>
+    <label>التخصصات</label><div class="cx pick">${SPEC_LIST.map(x => `<button type="button" class="${sel.has(x) ? "on" : ""}">${M_esc(x)}</button>`).join("")}</div>
+    <label>الأجهزة والمهارات الفنية</label><textarea name="equipment" maxlength="300">${M_esc(o.equipment)}</textarea>
+    <label>نبذة عنك</label><textarea name="bio" maxlength="1500">${M_esc(o.bio)}</textarea>
+    <label class="chk"><input type="checkbox" name="available" ${o.available !== false ? "checked" : ""}> متاح لاستقبال أعمال جديدة</label>
+    <button class="go" type="submit">حفظ ونشر ملفي</button><div id="po"></div>${o.name ? `<a class="btn g wide" href="#sp:${u.uid}">عرض ملفي العام</a>` : ""}</form>
+    <p>صورة الملف والأعمال السابقة بتتفعّل لما نفعّل Firebase Storage.</p>`;
+  const f = document.getElementById("pform"); f.gov.value = o.gov || GOVS[0];
+  const pct = () => { const c = [f.name.value.trim(), f.headline.value.trim(), f.years.value !== "", f.querySelector(".pick .on"), f.equipment.value.trim(), f.bio.value.trim(), f.gov.value].filter(Boolean).length, p = Math.round(c / 7 * 100);
+    document.getElementById("pc").textContent = `اكتمال الملف ${p}%`; document.getElementById("pb").style.width = p + "%"; };
+  f.querySelectorAll(".pick button").forEach(b => b.onclick = () => { b.classList.toggle("on"); pct(); }); f.oninput = pct; pct();
+  f.onsubmit = async ev => {
+    ev.preventDefault(); const btn = f.querySelector(".go"), out = document.getElementById("po"); btn.disabled = true; btn.textContent = "جاري الحفظ...";
+    try {
+      await db.collection("specialistProfiles").doc(u.uid).set({ name: f.name.value.trim(), headline: f.headline.value.trim(), years: +f.years.value, gov: f.gov.value, specs: [...f.querySelectorAll(".pick .on")].map(b => b.textContent),
+        equipment: f.equipment.value.trim(), bio: f.bio.value.trim(), available: f.available.checked, verified: o.verified === true, ratingAvg: o.ratingAvg || 0, ratingCount: o.ratingCount || 0, completed: o.completed || 0, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+      out.className = "msg ok"; out.textContent = "تم حفظ ملفك ونشره في دليل الأخصائيين.";
+    } catch (e) { out.className = "msg err"; out.textContent = "تعذر الحفظ. اتأكد من القواعد والاتصال."; console.error(e); }
+    btn.disabled = false; btn.textContent = "حفظ ونشر ملفي";
+  };
+}
+
+function setNav(h) {
+  const nav = document.getElementById("nav");
+  nav.style.display = h === "admin" ? "none" : "flex";
+  const it = (k, t, d, cls = "") => `<a href="#${k}" class="${cls} ${(h === k || (k === "account" && h === "pro") || (k === "tools" && h.startsWith("tool:"))) ? "on" : ""}"><svg viewBox="0 0 24 24"><path d="${d}"/></svg>${t}</a>`;
+  nav.innerHTML = `<div class="g">${it("", "الرئيسية", IC.home) + it("ai", "GeoAI", IC.chip, "ai") + it("tools", "الأدوات", IC.tools)}</div>`
+    + `<a href="#client" class="fab"><span class="c"><svg viewBox="0 0 24 24"><path d="${IC.plus}"/></svg></span>طلب جديد</a>`
+    + `<div class="g">${it("my", "طلباتي", IC.clip) + it("account", "حسابي", IC.user)}</div>`;
+}
+
+// ===== GeoLink tools: math =====
+const WGS = { a: 6378137, f: 1 / 298.257223563 };
+WGS.e2 = WGS.f * (2 - WGS.f); WGS.ep2 = WGS.e2 / (1 - WGS.e2);
 const rad = d => d * Math.PI / 180, deg = r => r * 180 / Math.PI;
-const ang = s => { const n = (String(s).match(/\d+(?:[.,]\d+)?/g) || []).map(x => parseFloat(x.replace(",", "."))); return n.length ? n[0] + (n[1] || 0) / 60 + (n[2] || 0) / 3600 : NaN; };
-function dms(d, p = 2) { const sg = d < 0 ? "-" : ""; d = Math.abs(d); let g = Math.floor(d), m = Math.floor((d - g) * 60), s = ((d - g) * 60 - m) * 60; if (+s.toFixed(p) >= 60) { s = 0; m++; } if (m >= 60) { m = 0; g++; } return `${sg}${g}°${String(m).padStart(2, "0")}′${s.toFixed(p).padStart(p ? p + 3 : 2, "0")}″`; }
-const azim = (dx, dy) => (deg(Math.atan2(dx, dy)) + 360) % 360;
-function quad(az) { const ns = (az > 90 && az < 270) ? "S" : "N", ew = az < 180 ? "E" : "W"; const a = az <= 90 ? az : az <= 180 ? 180 - az : az <= 270 ? az - 180 : 360 - az; return `${ns} ${dms(a, 0)} ${ew}`; }
-const pts = (t, n = 2) => String(t).split(/\n+/).map(l => l.trim()).filter(Boolean).map(l => l.split(/[\s,;]+/).filter(Boolean).map(Number)).filter(r => r.length >= n && r.slice(0, n).every(isFinite));
-const FED = 4200.833333333333;
-function feddan(a) { let t = Math.round(a / (FED / 576) * 100); const f = Math.floor(t / 57600); t -= f * 57600; const k = Math.floor(t / 2400); t -= k * 2400; return `${f} فدان ${k} قيراط ${(t / 100).toFixed(2)} سهم`; }
-function polyArea(P) { const [ox, oy] = P[0]; let s = 0, cx = 0, cy = 0, per = 0; for (let i = 0; i < P.length; i++) { const x1 = P[i][0] - ox, y1 = P[i][1] - oy, x2 = P[(i + 1) % P.length][0] - ox, y2 = P[(i + 1) % P.length][1] - oy, c = x1 * y2 - x2 * y1; s += c; cx += (x1 + x2) * c; cy += (y1 + y2) * c; per += Math.hypot(x2 - x1, y2 - y1); } const A = s / 2; return { area: Math.abs(A), per, cx: A ? cx / (6 * A) + ox : ox, cy: A ? cy / (6 * A) + oy : oy }; }
-
-const WGS = { a: 6378137, f: 1 / 298.257223563 }; WGS.e2 = WGS.f * (2 - WGS.f); WGS.ep2 = WGS.e2 / (1 - WGS.e2);
 const zoneOf = lon => Math.min(60, Math.max(1, Math.floor((lon + 180) / 6) + 1));
 const bandOf = lat => (lat < -80 || lat > 84) ? "" : "CDEFGHJKLMNPQRSTUVWXX"[Math.floor((lat + 80) / 8)];
 function toUTM(lat, lon, zone) {
@@ -211,235 +723,786 @@ function vincenty(la1, lo1, la2, lo2) {
   const U1 = Math.atan((1 - f) * Math.tan(rad(la1))), U2 = Math.atan((1 - f) * Math.tan(rad(la2)));
   const sU1 = Math.sin(U1), cU1 = Math.cos(U1), sU2 = Math.sin(U2), cU2 = Math.cos(U2);
   let lam = L, it = 0, sS, cS, sig, sA, c2A, c2SM, sL, cL;
-  do { sL = Math.sin(lam); cL = Math.cos(lam); sS = Math.hypot(cU2 * sL, cU1 * sU2 - sU1 * cU2 * cL); if (sS === 0) return { s: 0, a1: 0, a2: 0 }; cS = sU1 * sU2 + cU1 * cU2 * cL; sig = Math.atan2(sS, cS); sA = cU1 * cU2 * sL / sS; c2A = 1 - sA * sA; c2SM = c2A !== 0 ? cS - 2 * sU1 * sU2 / c2A : 0; const C = f / 16 * c2A * (4 + f * (4 - 3 * c2A)), prev = lam; lam = L + (1 - C) * f * sA * (sig + C * sS * (c2SM + C * cS * (-1 + 2 * c2SM * c2SM))); if (Math.abs(lam - prev) < 1e-12) break; } while (++it < 200);
+  do {
+    sL = Math.sin(lam); cL = Math.cos(lam);
+    sS = Math.hypot(cU2 * sL, cU1 * sU2 - sU1 * cU2 * cL);
+    if (sS === 0) return { s: 0, a1: 0, a2: 0 };
+    cS = sU1 * sU2 + cU1 * cU2 * cL; sig = Math.atan2(sS, cS);
+    sA = cU1 * cU2 * sL / sS; c2A = 1 - sA * sA;
+    c2SM = c2A !== 0 ? cS - 2 * sU1 * sU2 / c2A : 0;
+    const C = f / 16 * c2A * (4 + f * (4 - 3 * c2A)), prev = lam;
+    lam = L + (1 - C) * f * sA * (sig + C * sS * (c2SM + C * cS * (-1 + 2 * c2SM * c2SM)));
+    if (Math.abs(lam - prev) < 1e-12) break;
+  } while (++it < 200);
   const u2 = c2A * (a * a - b * b) / (b * b), A = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2))), B = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)));
   const dS = B * sS * (c2SM + B / 4 * (cS * (-1 + 2 * c2SM * c2SM) - B / 6 * c2SM * (-3 + 4 * sS * sS) * (-3 + 4 * c2SM * c2SM)));
   return { s: b * A * (sig - dS), a1: (deg(Math.atan2(cU2 * sL, cU1 * sU2 - sU1 * cU2 * cL)) + 360) % 360, a2: (deg(Math.atan2(cU1 * sL, -sU1 * cU2 + cU1 * sU2 * cL)) + 360) % 360 };
 }
-function calcCurve(R, D) {
-  const h = D * rad(1) / 2, T = R * Math.tan(h), Lc = R * D * rad(1), LC = 2 * R * Math.sin(h), Ex = R * (1 / Math.cos(h) - 1), M = R * (1 - Math.cos(h));
-  return [["نصف القطر R (م)", f3(R)], ["زاوية الانحراف Δ °", D.toFixed(5)], ["طول المماس T (م)", f3(T)], ["طول المنحنى L (م)", f3(Lc)], ["الوتر الطويل LC (م)", f3(LC)], ["المسافة الخارجية E (م)", f3(Ex)], ["السهم الأوسط M (م)", f3(M)]];
-} // ============================================================
-// ============================================================
-// 3. إعدادات Firebase والمتغيرات
-// ============================================================
-const WA_NUMBER = "201020259546";
-firebase.initializeApp({
-  apiKey: "AIzaSyApICmCU5DVg_-ttahelh3xPuGbDELhcNA", authDomain: "geolink-e80b4.firebaseapp.com",
-  projectId: "geolink-e80b4", storageBucket: "geolink-e80b4.firebasestorage.app",
-  messagingSenderId: "611615414436", appId: "1:611615414436:web:771c18e2dd31ebe5606e31"
-});
-const db = firebase.firestore(); const auth = firebase.auth();
-const ADMIN_UID = "gPceivu7FAa1YkRP5mdjrksFJmm2";
-const app = document.getElementById("app");
-let currentUser = null;
-const GOVS = ["القاهرة","الجيزة","الإسكندرية","القليوبية","الشرقية","الدقهلية","الغربية","كفر الشيخ","المنوفية","البحيرة","مطروح","الإسماعيلية","بورسعيد","السويس","شمال سيناء","جنوب سيناء","دمياط","الفيوم","بني سويف","المنيا","أسيوط","سوهاج","قنا","الأقصر","أسوان","البحر الأحمر","الوادي الجديد","أخرى"];
-const SERVICES = ["رفع مساحي لأرض","توقيع وتحديد مناسيب (إنشاءات)","حساب كميات","رفع مساحي لمبنى قائم","تقسيم أراضي","استشارة مساحية","تقرير كروكي","خدمة أخرى"];
-
-// --- المساعدات (Helpers) ---
-const el = (tag, attrs = {}, ...kids) => { const e = document.createElement(tag); for (const k in attrs) k === "class" ? e.className = attrs[k] : e.setAttribute(k, attrs[k]); kids.forEach(c => e.append(c)); return e; };
-function toast(t) { const e = el("div", { class: "toast" }, t); document.body.append(e); setTimeout(() => e.remove(), 2200); }
-function closeModal(id) { document.getElementById(id).classList.remove("show"); }
-
-const MOCK_POSTS = [
-  { id: 1, author: "مكتب AL Helwey", role: "Surveyor / QC Team Leader", time: "منذ ساعتين", content: "تم بحمد الله الانتهاء من أعمال الرفع المساحي لمشروع O&M Complex.", image: "https://images.unsplash.com/photo-1541888078693-019d16e6d5e1?auto=format&fit=crop&q=80&w=600", likes: 124, comments: 12, verified: true }
-];
-
-// ============================================================
-// 4. دوال المنشورات الحقيقية (Reading & Interacting)
-// ============================================================
-async function loadPosts() {
-  let posts = [];
-  try {
-    const snap = await db.collection("posts").orderBy("createdAt", "desc").limit(20).get();
-    snap.forEach(d => {
-      const x = d.data();
-      posts.push({ id: d.id, author: x.author || "مستخدم", role: x.role || "أخصائي", time: x.createdAt ? x.createdAt.toDate().toLocaleDateString("ar-EG") : "الآن", content: x.text, image: x.image || null, likes: x.likes || 0, comments: x.comments || 0, verified: x.verified || false });
-    });
-  } catch (e) { console.warn("خطأ في جلب المنشورات:", e); }
-  return posts.length ? posts : MOCK_POSTS; 
+function dms(d, p = 2) {
+  const sg = d < 0 ? "-" : ""; d = Math.abs(d);
+  let g = Math.floor(d), m = Math.floor((d - g) * 60), s = ((d - g) * 60 - m) * 60;
+  if (+s.toFixed(p) >= 60) { s = 0; m++; } if (m >= 60) { m = 0; g++; }
+  return `${sg}${g}°${String(m).padStart(2, "0")}′${s.toFixed(p).padStart(p ? p + 3 : 2, "0")}″`;
+}
+const nz = s => String(s).replace(/[٠-٩]/g, c => "٠١٢٣٤٥٦٧٨٩".indexOf(c)).replace(/[۰-۹]/g, c => "۰۱۲۳۴۵۶۷۸۹".indexOf(c)).replace(/٫/g, ".").replace(/−/g, "-");
+const num = s => { const t = nz(s).trim().replace(",", "."); return t === "" ? NaN : Number(t); };
+function ang(s) {
+  s = nz(s).trim(); if (!s) return NaN;
+  const neg = /^-/.test(s) || /^[SWsw]/.test(s) || /[SWsw]\s*$/.test(s);
+  const n = (s.match(/\d+(?:[.,]\d+)?/g) || []).map(x => parseFloat(x.replace(",", ".")));
+  if (!n.length || n.length > 3) return NaN;
+  const v = n[0] + (n[1] || 0) / 60 + (n[2] || 0) / 3600; return neg ? -v : v;
+}
+const pts = (t, n = 2) => nz(t).split(/\n+/).map(l => l.trim()).filter(Boolean).map(l => l.split(/[\s,;]+/).filter(Boolean).map(Number)).filter(r => r.length >= n && r.slice(0, n).every(isFinite));
+function polyArea(P) {
+  const [ox, oy] = P[0]; let s = 0, cx = 0, cy = 0, per = 0;
+  for (let i = 0; i < P.length; i++) {
+    const x1 = P[i][0] - ox, y1 = P[i][1] - oy, x2 = P[(i + 1) % P.length][0] - ox, y2 = P[(i + 1) % P.length][1] - oy, c = x1 * y2 - x2 * y1;
+    s += c; cx += (x1 + x2) * c; cy += (y1 + y2) * c; per += Math.hypot(x2 - x1, y2 - y1);
+  }
+  const A = s / 2; return { area: Math.abs(A), per, cx: A ? cx / (6 * A) + ox : ox, cy: A ? cy / (6 * A) + oy : oy };
+}
+const azim = (dx, dy) => (deg(Math.atan2(dx, dy)) + 360) % 360;
+function quad(az) {
+  const ns = (az > 90 && az < 270) ? "S" : "N", ew = az < 180 ? "E" : "W";
+  const a = az <= 90 ? az : az <= 180 ? 180 - az : az <= 270 ? az - 180 : 360 - az;
+  return `${ns} ${dms(a, 0)} ${ew}`;
+}
+const FED = 4200.833333333333;
+function feddan(a) {
+  let t = Math.round(a / (FED / 576) * 100); const f = Math.floor(t / 57600); t -= f * 57600; const k = Math.floor(t / 2400); t -= k * 2400;
+  return `${f} فدان ${k} قيراط ${(t / 100).toFixed(2)} سهم`;
 }
 
-async function doLike(postId, btn) {
-  if (!currentUser) return toast("سجّل دخولك أولاً للإعجاب");
-  try {
-    const postRef = db.collection("posts").doc(postId);
-    const likeRef = postRef.collection("likes").doc(currentUser.uid);
-    const doc = await likeRef.get();
-    
-    if (doc.exists) {
-      await likeRef.delete();
-      await postRef.update({ likes: firebase.firestore.FieldValue.increment(-1) });
-      btn.classList.remove("liked");
-    } else {
-      await likeRef.set({ createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-      await postRef.update({ likes: firebase.firestore.FieldValue.increment(1) });
-      btn.classList.add("liked");
-      
-      const postSnap = await postRef.get();
-      if (postSnap.data().uid && postSnap.data().uid !== currentUser.uid) {
-        await db.collection("notifications").add({
-          to: postSnap.data().uid, from: currentUser.displayName || currentUser.email, type: "like",
-          postId: postId, read: false, createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-      }
-    }
-  } catch (e) { console.error(e); toast("حدث خطأ، حاول لاحقاً"); }
+// ===== GeoLink tools: calculators (pure, testable) =====
+const f3 = x => x.toFixed(3);
+const fmt = x => String(+x.toPrecision(10));
+const SH = {
+  rect: ["مستطيل", [["a", "الطول (م)"], ["b", "العرض (م)"]]],
+  tri: ["مثلث (قاعدة وارتفاع)", [["a", "القاعدة (م)"], ["h", "الارتفاع (م)"]]],
+  heron: ["مثلث (3 أضلاع)", [["a", "الضلع الأول (م)"], ["b", "الضلع الثاني (م)"], ["c", "الضلع الثالث (م)"]]],
+  circle: ["دائرة", [["r", "نصف القطر (م)"]]],
+  trap: ["شبه منحرف", [["a", "القاعدة الأولى (م)"], ["b", "القاعدة الثانية (م)"], ["h", "الارتفاع (م)"]]]
+};
+const UN = {
+  len: ["الطول", [["متر (م)", 1], ["كيلومتر (كم)", 1000], ["سنتيمتر (سم)", .01], ["مليمتر (مم)", .001], ["بوصة (in)", .0254], ["قدم (ft)", .3048], ["ياردة (yd)", .9144], ["ميل (mi)", 1609.344], ["قدم مساحي أمريكي", 1200 / 3937], ["ميل بحري", 1852], ["شين (Chain)", 20.1168], ["قصبة", 3.55]]],
+  area: ["المساحة", [["متر مربع (م²)", 1], ["كيلومتر مربع (كم²)", 1e6], ["هكتار", 1e4], ["فدان", FED], ["قيراط", FED / 24], ["سهم", FED / 576], ["قصبة مربعة", 12.6025], ["أكر (acre)", 4046.8564224], ["قدم مربع (ft²)", .09290304], ["ياردة مربعة (yd²)", .83612736], ["ميل مربع (mi²)", 2589988.110336]]],
+  ang: ["الزوايا", [["درجة (°)", 1], ["راديان (rad)", 180 / Math.PI], ["جراد (gon)", .9], ["دقيقة قوسية (′)", 1 / 60], ["ثانية قوسية (″)", 1 / 3600]]],
+  vol: ["الحجم", [["متر مكعب (م³)", 1], ["لتر", .001], ["سنتيمتر مكعب (سم³)", 1e-6], ["قدم مكعب (ft³)", .028316846592], ["ياردة مكعبة (yd³)", .764554857984], ["جالون أمريكي", .003785411784]]],
+  slope: ["الميل", []]
+};
+function areaRows(A, extra = []) {
+  return [["المساحة (م²)", f3(A)], ["فدان / قيراط / سهم", feddan(A)], ["فدان", (A / FED).toFixed(4)], ["هكتار", (A / 1e4).toFixed(5)], ["كم²", (A / 1e6).toFixed(6)], ["أكر (acre)", (A / 4046.8564224).toFixed(4)], ["قدم² (ft²)", (A / .09290304).toFixed(2)], ...extra];
+}
+function coordCompute(m, v) {
+  if (m === "w2u") {
+    const la = ang(v.a1), lo = ang(v.a2), zr = String(v.a3 || "").trim(), z = zr ? Math.round(num(zr)) : 0;
+    if (isNaN(la) || isNaN(lo)) return null;
+    if (la < -80 || la > 84 || Math.abs(lo) > 180) return "خط العرض يجب أن يكون بين -80 و84، وخط الطول بين -180 و180.";
+    if (zr && !(z >= 1 && z <= 60)) return "رقم المنطقة يجب أن يكون بين 1 و60.";
+    if (z && Math.abs(z - zoneOf(lo)) > 1 && Math.abs(z - zoneOf(lo)) < 59) return "المنطقة المحددة بعيدة عن موقع النقطة. اترك الخانة فارغة للحساب التلقائي.";
+    const u = toUTM(la, lo, z);
+    return [["المنطقة (Zone)", `${u.zone}${u.band}`], ["نصف الكرة", u.south ? "جنوب (S)" : "شمال (N)"], ["Easting (م)", f3(u.E)], ["Northing (م)", f3(u.N)], ["UTM كنص", `${u.zone}${u.band} ${f3(u.E)} ${f3(u.N)}`]];
+  }
+  const E = num(v.a1), N = num(v.a2), z = Math.round(num(v.a3)), south = v.a4 === "S";
+  if ([E, N, z].some(isNaN)) return null;
+  if (!(z >= 1 && z <= 60)) return "رقم المنطقة يجب أن يكون بين 1 و60.";
+  if (E < 100000 || E > 900000 || N < 0 || N > 10001000) return "قيم Easting/Northing خارج المدى المعقول لنظام UTM.";
+  const r = fromUTM(E, N, z, south), la = r.lat.toFixed(8), lo = r.lon.toFixed(8);
+  return [["خط العرض", la], ["خط الطول", lo], ["العرض DMS", dms(Math.abs(r.lat)) + (r.lat >= 0 ? " N" : " S")], ["الطول DMS", dms(Math.abs(r.lon)) + (r.lon >= 0 ? " E" : " W")], ["Lat, Lon", `${la}, ${lo}`]];
+}
+function areaCompute(m, v) {
+  if (m === "shape") {
+    const q = {}; SH[v.sh][1].forEach(([k]) => q[k] = num(v[k]));
+    const vals = Object.values(q); if (vals.some(isNaN)) return null;
+    if (vals.some(x => x <= 0)) return "كل القيم يجب أن تكون أكبر من صفر.";
+    let A, per = null;
+    if (v.sh === "rect") { A = q.a * q.b; per = 2 * (q.a + q.b); }
+    else if (v.sh === "tri") A = q.a * q.h / 2;
+    else if (v.sh === "heron") { const s = (q.a + q.b + q.c) / 2, t = s * (s - q.a) * (s - q.b) * (s - q.c); if (t <= 0) return "الأضلاع لا تكوّن مثلثاً."; A = Math.sqrt(t); per = 2 * s; }
+    else if (v.sh === "circle") { A = Math.PI * q.r * q.r; per = 2 * Math.PI * q.r; }
+    else A = (q.a + q.b) / 2 * q.h;
+    return areaRows(A, per ? [["المحيط (م)", f3(per)]] : []);
+  }
+  const P = pts(v.t); if (!P.length) return null;
+  if (P.length < 3) return "أدخل 3 نقاط على الأقل.";
+  if (m === "en") { const r = polyArea(P); return areaRows(r.area, [["المحيط (م)", f3(r.per)], ["عدد النقاط", String(P.length)], ["مركز E", f3(r.cx)], ["مركز N", f3(r.cy)]]); }
+  if (P.some(p => Math.abs(p[0]) > 84 || Math.abs(p[1]) > 180)) return "الصيغة: خط العرض ثم خط الطول بالدرجات العشرية.";
+  const z = zoneOf(P[0][1]);
+  if (P.some(p => Math.abs(zoneOf(p[1]) - z) > 1)) return "النقاط تمتد على أكثر من منطقة UTM، قسّم الحدود.";
+  const U = P.map(p => { const u = toUTM(p[0], p[1], z); return [u.E, u.N]; }), r = polyArea(U);
+  return areaRows(r.area, [["المحيط (م)", f3(r.per)], ["عدد النقاط", String(P.length)], ["المنطقة (UTM)", `${z}${bandOf(P[0][0])}`]]);
+}
+function distCompute(m, v) {
+  if (m === "pp") {
+    const [e1, n1, e2, n2] = ["e1", "n1", "e2", "n2"].map(k => num(v[k])); if ([e1, n1, e2, n2].some(isNaN)) return null;
+    const dx = e2 - e1, dy = n2 - n1, d = Math.hypot(dx, dy); if (d === 0) return "النقطتان متطابقتان.";
+    const az = azim(dx, dy), bk = (az + 180) % 360;
+    const rows = [["ΔE (م)", f3(dx)], ["ΔN (م)", f3(dy)], ["المسافة الأفقية (م)", f3(d)], ["الاتجاه (Azimuth)", `${dms(az)} (${az.toFixed(6)}°)`], ["الاتجاه العكسي", `${dms(bk)} (${bk.toFixed(6)}°)`], ["الاتجاه الربعي", quad(az)]];
+    const z1 = num(v.z1), z2 = num(v.z2);
+    if (!isNaN(z1) && !isNaN(z2)) { const dz = z2 - z1; rows.push(["ΔZ (م)", f3(dz)], ["المسافة المائلة (م)", f3(Math.hypot(d, dz))], ["الميل (%)", (dz / d * 100).toFixed(3)], ["الزاوية الرأسية", dms(deg(Math.atan2(dz, d)))]); }
+    return rows;
+  }
+  if (m === "pf") {
+    const e1 = num(v.e1), n1 = num(v.n1), az = ang(v.az), d = num(v.d); if ([e1, n1, az, d].some(isNaN)) return null;
+    if (d < 0) return "المسافة يجب ألا تكون سالبة.";
+    const e2 = e1 + d * Math.sin(rad(az)), n2 = n1 + d * Math.cos(rad(az));
+    return [["Easting (م)", f3(e2)], ["Northing (م)", f3(n2)], ["E, N", `${f3(e2)}, ${f3(n2)}`]];
+  }
+  const [la1, lo1, la2, lo2] = ["la1", "lo1", "la2", "lo2"].map(k => ang(v[k])); if ([la1, lo1, la2, lo2].some(isNaN)) return null;
+  if ([la1, la2].some(x => Math.abs(x) > 90) || [lo1, lo2].some(x => Math.abs(x) > 180)) return "العرض بين -90 و90، والطول بين -180 و180.";
+  const r = vincenty(la1, lo1, la2, lo2); if (r.s === 0) return "النقطتان متطابقتان.";
+  if (!isFinite(r.s)) return "تعذر الحساب (نقطتان متقابلتان تقريباً على الكرة).";
+  const bk = (r.a2 + 180) % 360;
+  return [["المسافة (م)", f3(r.s)], ["المسافة (كم)", (r.s / 1000).toFixed(6)], ["الاتجاه الأمامي", `${dms(r.a1)} (${r.a1.toFixed(6)}°)`], ["الاتجاه العكسي", `${dms(bk)} (${bk.toFixed(6)}°)`]];
+}
+function unitCompute(cat, v) {
+  const x = num(v.val); if (isNaN(x)) return null;
+  if (cat === "slope") {
+    let t;
+    if (v.st === "pct") t = x / 100;
+    else if (v.st === "deg") { if (Math.abs(x) >= 90) return "الزاوية يجب أن تكون أقل من 90°."; t = Math.tan(rad(x)); }
+    else { if (x === 0) return "نسبة الميل لا يمكن أن تكون صفراً."; t = 1 / x; }
+    const d = deg(Math.atan(t));
+    return [["نسبة مئوية (%)", fmt(t * 100)], ["درجات (°)", fmt(d)], ["د°ق′ث″", dms(d)], ["نسبة (1 : n)", t === 0 ? "∞" : "1 : " + fmt(Math.abs(1 / t))]];
+  }
+  const L = UN[cat][1], fi = Math.min(Math.max(+v.from || 0, 0), L.length - 1), base = x * L[fi][1];
+  const rows = L.map(([n, f], i) => i === fi ? null : [n, fmt(base / f)]).filter(Boolean);
+  if (cat === "area" && base >= 0) rows.push(["فدان / قيراط / سهم", feddan(base)]);
+  if (cat === "ang") rows.push(["د°ق′ث″ (DMS)", dms(base)]);
+  return rows;
 }
 
-async function addComment(postId) {
-  if (!currentUser) return toast("سجّل دخولك أولاً للتعليق");
-  const txt = prompt("اكتب تعليقك:");
-  if (!txt) return;
-  try {
-    await db.collection("comments").add({
-      postId: postId, text: txt, author: currentUser.displayName || currentUser.email,
-      uid: currentUser.uid, createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    
-    const postSnap = await db.collection("posts").doc(postId).get();
-    await db.collection("posts").doc(postId).update({ comments: firebase.firestore.FieldValue.increment(1) });
-    
-    if (postSnap.data().uid && postSnap.data().uid !== currentUser.uid) {
-      await db.collection("notifications").add({
-        to: postSnap.data().uid, from: currentUser.displayName || currentUser.email, type: "comment",
-        postId: postId, text: txt, read: false, createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-    }
-    toast("تم إضافة التعليق");
-    renderFeed();
-  } catch (e) { console.error(e); toast("حدث خطأ، حاول لاحقاً"); }
+/* ===== GeoLink tools 2: advanced calculators (pure) ===== */
+const XR = Math.PI / 180;
+const XAZ = (dx, dy) => (Math.atan2(dx, dy) / XR + 360) % 360;
+const xLines = s => String(s ?? "").split(/\n+/).map(l => l.trim()).filter(Boolean);
+const xEmpty = s => String(s ?? "").trim() === "";
+const xMod = a => ((a % 360) + 360) % 360;
+function calcCC(m, v) {
+  const e1 = num(v.e1), n1 = num(v.n1);
+  if (m === "fwd") {
+    const az = ang(v.az), d = num(v.d);
+    if ([e1, n1, az, d].some(isNaN)) return null;
+    if (d < 0) return "المسافة يجب ألا تكون سالبة.";
+    const dE = d * Math.sin(az * XR), dN = d * Math.cos(az * XR), a = xMod(az);
+    return [["E2 (Easting)", f3(e1 + dE)], ["N2 (Northing)", f3(n1 + dN)], ["ΔE (م)", f3(dE)], ["ΔN (م)", f3(dN)], ["Azimuth °", a.toFixed(6)], ["Bearing", quad(a)]];
+  }
+  const e2 = num(v.e2), n2 = num(v.n2);
+  if ([e1, n1, e2, n2].some(isNaN)) return null;
+  const dE = e2 - e1, dN = n2 - n1, d = Math.hypot(dE, dN);
+  if (d === 0) return "النقطتان متطابقتان.";
+  const az = XAZ(dE, dN);
+  return [["المسافة (م)", f3(d)], ["ΔE (م)", f3(dE)], ["ΔN (م)", f3(dN)], ["Azimuth °", az.toFixed(6)], ["Azimuth (د°ق′ث″)", dms(az)], ["Bearing", quad(az)], ["Back Azimuth °", xMod(az + 180).toFixed(6)]];
 }
-
-async function publishPost() {
-  const text = document.getElementById("post-text").value.trim();
-  if (!text) return toast("اكتب شيئاً أولاً");
-  if (!currentUser) return toast("سجّل دخولك أولاً للنشر");
-  
-  const btn = document.getElementById("publish-btn"); btn.disabled = true; btn.textContent = "جاري النشر...";
-  try {
-    await db.collection("posts").add({
-      text, author: currentUser.displayName || currentUser.email, role: "أخصائي مساحة", 
-      uid: currentUser.uid, createdAt: firebase.firestore.FieldValue.serverTimestamp(), likes: 0, comments: 0
-    });
-    closeModal("composer"); document.getElementById("post-text").value = ""; toast("تم النشر بنجاح");
-    if (location.hash === "#home" || location.hash === "") renderFeed();
-  } catch (e) { console.error(e); toast("حدث خطأ في النشر"); }
-  btn.disabled = false; btn.textContent = "نشر";
-}
-
-// ============================================================
-// 5. واجهات التطبيق
-// ============================================================
-function renderNav(active) {
-  document.getElementById("nav").innerHTML = `
-    <a href="#home" class="${active === 'home' ? 'on' : ''}"><svg viewBox="0 0 24 24"><path d="${IC.home}"/></svg><span>الرئيسية</span></a>
-    <a href="#notifications" class="${active === 'notifs' ? 'on' : ''}"><svg viewBox="0 0 24 24"><path d="${IC.bell}"/></svg><span>الإشعارات</span></a>
-    <a href="#compose" class="fab" onclick="openComposer()"><div class="c-fab"><svg viewBox="0 0 24 24"><path d="${IC.plus}"/></svg></div></a>
-    <a href="#messages" class="${active === 'msgs' ? 'on' : ''}"><svg viewBox="0 0 24 24"><path d="${IC.chat}"/></svg><span>الرسائل</span></a>
-    <a href="#profile" class="${active === 'profile' ? 'on' : ''}"><svg viewBox="0 0 24 24"><path d="${IC.user}"/></svg><span>حسابي</span></a>`;
-}
-
-function openComposer() {
-  document.getElementById("composer-user").innerHTML = `<img id="composer-avatar" src="https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser ? (currentUser.displayName || currentUser.email) : "G")}&background=1677F2&color=fff" style="width:40px;height:40px;border-radius:50%;"><div><b id="composer-name" style="color:var(--navy);">${currentUser ? (currentUser.displayName || currentUser.email) : "زائر"}</b><div style="font-size:0.78rem; color:var(--mut);">${currentUser ? "أخصائي مساحة" : "سجّل دخولك للنشر"}</div></div>`;
-  document.getElementById("composer").classList.add("show");
-  document.getElementById("publish-btn").onclick = publishPost;
-}
-
-async function renderFeed() {
-  const feed = document.getElementById("feed-container");
-  if (!feed) return;
-  feed.innerHTML = `<div class="empty">جاري التحميل...</div>`;
-  const posts = await loadPosts();
-  feed.innerHTML = "";
-  
-  posts.forEach(post => {
-    const card = el("article", { class: "post-card" });
-    card.innerHTML = `
-      <div class="post-header">
-        <img class="post-avatar" src="https://ui-avatars.com/api/?name=${encodeURIComponent(post.author)}&background=102A56&color=fff">
-        <div class="post-meta"><h4>${post.author} ${post.verified ? `<svg viewBox="0 0 24 24"><path d="${IC.check}"/></svg>` : ''}</h4><p>${post.role}</p></div>
-        <div class="post-time">${post.time}</div>
-      </div>
-      <div class="post-content"><p>${post.content}</p></div>
-      ${post.image ? `<img class="post-media" src="${post.image}">` : ''}
-      <div class="post-stats"><span>👍 ${post.likes} إعجاب</span><span>💬 ${post.comments} تعليق</span></div>
-      <div class="post-actions">
-        <button class="action-btn like-btn" onclick="doLike('${post.id}', this)"><svg viewBox="0 0 24 24"><path d="${IC.like}"/></svg> إعجاب</button>
-        <button class="action-btn" onclick="addComment('${post.id}')"><svg viewBox="0 0 24 24"><path d="${IC.comment}"/></svg> تعليق</button>
-      </div>`;
-    feed.append(card);
+function calcLevel(m, v) {
+  const rl0 = num(v.rl0), rl1 = xEmpty(v.rl1) ? null : num(v.rl1);
+  if (isNaN(rl0) || (rl1 !== null && isNaN(rl1))) return null;
+  const L = xLines(v.t); if (L.length < 2) return null;
+  const rd = [];
+  for (const l of L) {
+    const q = l.match(/^(BS|IS|FS)\s*[:=,]?\s*(.+)$/i), x = q ? num(q[2]) : NaN;
+    if (!q || isNaN(x)) return `سطر غير صالح: "${l}". اكتب مثلاً: BS 1.525`;
+    if (x < 0) return "القراءات لا يمكن أن تكون سالبة.";
+    rd.push([q[1].toUpperCase(), x]);
+  }
+  let st = "fs";
+  for (const [t] of rd) {
+    if (st === "fs") { if (t !== "BS") return "كل ميزانية (وما بعد FS) تبدأ بقراءة BS."; st = "bs"; }
+    else if (t === "BS") return "لا تضع BS بعد BS أو IS مباشرة؛ ضع FS قبله.";
+    else st = t === "FS" ? "fs" : "is";
+  }
+  if (st !== "fs") return "آخر قراءة يجب أن تكون FS.";
+  let rl = rl0, hi = 0, pr = 0, prl = 0, sBS = 0, sFS = 0, sRise = 0, sFall = 0; const out = [];
+  rd.forEach(([t, x], i) => {
+    const tag = `#${i + 1} ${t} ${x}`;
+    if (t === "BS") { sBS += x; hi = rl + x; pr = x; prl = rl; out.push([tag, m === "hi" ? `HI ${f3(hi)} | RL ${f3(rl)}` : `RL ${f3(rl)}`]); return; }
+    if (t === "FS") sFS += x;
+    if (m === "hi") { rl = hi - x; out.push([tag, `RL ${f3(rl)}`]); return; }
+    const d = pr - x; if (d > 0) sRise += d; else sFall -= d;
+    rl = prl + d; pr = x; prl = rl; out.push([tag, `${d >= 0 ? "Rise " + f3(d) : "Fall " + f3(-d)} | RL ${f3(rl)}`]);
   });
+  const ok = Math.abs((sBS - sFS) - (rl - rl0)) < 1e-9 && (m === "hi" || Math.abs((sRise - sFall) - (rl - rl0)) < 1e-9);
+  out.push(["Σ BS", f3(sBS)], ["Σ FS", f3(sFS)], ["Σ BS − Σ FS", f3(sBS - sFS)]);
+  if (m !== "hi") out.push(["Σ Rise − Σ Fall", f3(sRise - sFall)]);
+  out.push(["آخر RL − أول RL", f3(rl - rl0)], ["التحقق الحسابي", ok ? "✓ سليم" : "✗ يوجد خطأ حسابي"]);
+  if (rl1 !== null) out.push(["خطأ الإقفال (م)", f3(rl - rl1)], ["خطأ الإقفال (مم)", ((rl - rl1) * 1000).toFixed(1)]);
+  return out;
 }
-
-function homeView() {
-  app.className = ""; renderNav('home');
-  app.innerHTML = `
-    <header class="top-header"><div class="brand-logo"><div class="g-icon"><svg viewBox="0 0 24 24"><path d="${IC.globe}"/></svg></div><div class="brand-text">Geo<span>Link</span></div></div><div class="search-bar"><svg viewBox="0 0 24 24"><path d="${IC.search}"/></svg><span>بحث...</span></div></header>
-    <div class="composer-bar" onclick="openComposer()"><img src="https://ui-avatars.com/api/?name=${currentUser ? 'U' : 'G'}&background=1677F2&color=fff"><div class="fake-input">شارك إنجازاً، مشروعاً، أو استشارة...</div><button class="media-btn">📷</button></div>
-    <div class="section-head">أدواتك السريعة <a href="#tools">عرض الكل</a></div>
-    <div class="quick-tools">
-      <a class="tool-card" href="#ai"><i><svg viewBox="0 0 24 24"><path d="${IC.wand}"/></svg></i><b>GeoAI</b></a>
-      <a class="tool-card" href="#tool:coord"><i><svg viewBox="0 0 24 24"><path d="${IC.map}"/></svg></i><b>إحداثيات</b></a>
-    </div>
-    <div id="feed-container" class="feed"></div>`;
-  renderFeed();
+function calcSlope(m, v) {
+  if (m === "lt") {
+    const a = num(v.sl), b = num(v.sc); if (isNaN(a) || isNaN(b)) return null;
+    const r = Math.hypot(a, b);
+    return [["الميل المحصّل (%)", r.toFixed(4)], ["زاوية الميل المحصّل °", (Math.atan(r / 100) / XR).toFixed(4)], ["زاوية الاتجاه عن المحور الطولي °", (Math.atan2(Math.abs(b), Math.abs(a)) / XR).toFixed(3)]];
+  }
+  const NM = { d: "المسافة الأفقية", h: "فرق المنسوب", p: "الميل %", a: "زاوية الميل", r: "النسبة 1:n", s: "المسافة المائلة" }, P = {};
+  for (const k of Object.keys(NM)) if (!xEmpty(v[k])) { P[k] = k === "a" ? ang(v[k]) : num(v[k]); if (isNaN(P[k])) return "قيمة غير صالحة في: " + NM[k]; }
+  if (("d" in P && P.d <= 0) || ("s" in P && P.s <= 0)) return "المسافات يجب أن تكون أكبر من صفر.";
+  const ts = [];
+  if ("p" in P) ts.push(P.p / 100);
+  if ("a" in P) { if (Math.abs(P.a) >= 90) return "الزاوية يجب أن تكون أقل من 90°."; ts.push(Math.tan(P.a * XR)); }
+  if ("r" in P) { if (P.r === 0) return "نسبة الميل لا يمكن أن تكون صفراً."; ts.push(1 / P.r); }
+  if (ts.some(x => Math.abs(x - ts[0]) > 1e-9 * Math.max(1, Math.abs(ts[0])))) return "قيم الميل المدخلة متعارضة.";
+  let D = P.d, H = P.h, S = P.s, t = ts.length ? ts[0] : null;
+  if (t === null) {
+    if (D !== undefined && H !== undefined) t = H / D;
+    else if (S !== undefined && D !== undefined) { if (S < D) return "المسافة المائلة لا يمكن أن تقل عن الأفقية."; H = Math.sqrt(S * S - D * D); t = H / D; }
+    else if (S !== undefined && H !== undefined) { if (S < Math.abs(H)) return "المسافة المائلة لا يمكن أن تقل عن فرق المنسوب."; D = Math.sqrt(S * S - H * H); t = H / D; }
+    else return null;
+  }
+  if (D === undefined && H !== undefined && t !== 0) D = H / t;
+  else if (D === undefined && S !== undefined) D = S / Math.sqrt(1 + t * t);
+  if (D !== undefined && H === undefined) H = D * t;
+  if (D !== undefined && S === undefined) S = D * Math.sqrt(1 + t * t);
+  const tol = 1e-6;
+  if (D !== undefined && ((P.h !== undefined && Math.abs(P.h - D * t) > tol * Math.max(1, Math.abs(P.h))) || (P.s !== undefined && Math.abs(P.s - D * Math.sqrt(1 + t * t)) > tol * Math.max(1, P.s)))) return "القيم المدخلة متعارضة مع بعضها.";
+  const A = Math.atan(t) / XR, rows = [["الميل (%)", (t * 100).toFixed(4)], ["زاوية الميل °", A.toFixed(5)], ["زاوية الميل (د°ق′ث″)", dms(A)], ["النسبة 1:n", t === 0 ? "∞" : (1 / Math.abs(t)).toFixed(3)]];
+  if (D !== undefined) rows.push(["المسافة الأفقية (م)", f3(D)], ["فرق المنسوب (م)", f3(H)], ["المسافة المائلة (م)", f3(S)]);
+  return rows;
 }
-
-function notificationsView() {
-  app.className = "page"; renderNav('notifs');
-  app.innerHTML = `<h2>الإشعارات</h2><div id="notif-list" class="card">جاري التحميل...</div>`;
-  if (!currentUser) return (document.getElementById("notif-list").innerHTML = "سجّل دخولك لعرض الإشعارات.");
-  
-  db.collection("notifications").where("to", "==", currentUser.uid).orderBy("createdAt", "desc").limit(20).get()
-    .then(snap => {
-      if (snap.empty) return (document.getElementById("notif-list").innerHTML = "لا توجد إشعارات.");
-      document.getElementById("notif-list").innerHTML = snap.docs.map(d => {
-        const x = d.data();
-        return `<div style="padding:10px 0;border-bottom:1px solid var(--line);"><b>${x.from}</b> ${x.type === "like" ? "أعجب بمنشورك" : "علّق على منشورك"} <span style="font-size:0.75rem;color:gray;">${x.text || ""}</span></div>`;
-      }).join("");
-    }).catch(() => document.getElementById("notif-list").innerHTML = "خطأ في جلب البيانات.");
+function calcEarth(m, v) {
+  if (m === "vol") {
+    const L = xLines(v.t).map(l => l.split(/[\s,;]+/).map(num)); if (L.length < 2) return null;
+    if (L.some(r => r.length !== 3 || r.some(isNaN))) return "كل سطر: المحطة ثم مساحة الحفر ثم مساحة الردم.";
+    if (L.some(r => r[1] < 0 || r[2] < 0)) return "المساحات لا يمكن أن تكون سالبة.";
+    let c = 0, f = 0; const out = [];
+    for (let i = 1; i < L.length; i++) {
+      const l = L[i][0] - L[i - 1][0]; if (l <= 0) return "المحطات يجب أن تكون تصاعدية.";
+      const vc = (L[i][1] + L[i - 1][1]) / 2 * l, vf = (L[i][2] + L[i - 1][2]) / 2 * l; c += vc; f += vf;
+      out.push([`${L[i - 1][0]} → ${L[i][0]}`, `حفر ${f3(vc)} | ردم ${f3(vf)}`]);
+    }
+    return out.concat([["إجمالي الحفر (م³)", f3(c)], ["إجمالي الردم (م³)", f3(f)], ["الصافي: حفر − ردم (م³)", f3(c - f)]]);
+  }
+  const dz = num(v.dz), L = xLines(v.t).map(l => l.split(/[\s,;]+/).map(num));
+  if (isNaN(dz) || L.length < 2) return null;
+  if (L.some(r => r.length !== 2 || r.some(isNaN))) return "كل سطر: المسافة الأفقية من المحور ثم منسوب الأرض.";
+  let cut = 0, fill = 0;
+  for (let i = 1; i < L.length; i++) {
+    const w = L[i][0] - L[i - 1][0]; if (w <= 0) return "المسافات يجب أن تكون تصاعدية.";
+    const d1 = L[i - 1][1] - dz, d2 = L[i][1] - dz;
+    if (d1 >= 0 && d2 >= 0) cut += (d1 + d2) / 2 * w;
+    else if (d1 <= 0 && d2 <= 0) fill += (-d1 - d2) / 2 * w;
+    else { const xc = w * d1 / (d1 - d2), a1 = Math.abs(d1) * xc / 2, a2 = Math.abs(d2) * (w - xc) / 2; if (d1 > 0) { cut += a1; fill += a2; } else { fill += a1; cut += a2; } }
+  }
+  return [["مساحة الحفر (م²)", f3(cut)], ["مساحة الردم (م²)", f3(fill)], ["عرض المقطع (م)", f3(L[L.length - 1][0] - L[0][0])]];
 }
-
-function messagesView() {
-  app.className = "page"; renderNav('msgs');
-  app.innerHTML = `<h2>الرسائل</h2><div class="card">هذه الواجهة قيد التطوير. سيتم ربطها بـ Firebase قريباً.</div>`;
+function calcTrav(m, v) {
+  const e0 = num(v.e0), n0 = num(v.n0); if (isNaN(e0) || isNaN(n0)) return null;
+  const L = xLines(v.t); if (L.length < 3) return "أدخل 3 أضلاع على الأقل.";
+  const parsed = L.map(l => { const p = l.split(/[\s,;]+/); return [num(p[0]), p.slice(1).join(" ")]; });
+  if (parsed.some(([d, r]) => isNaN(d) || d <= 0 || !r)) return "كل سطر: المسافة ثم الاتجاه (أو الزاوية).";
+  const legs = [], extra = [];
+  if (m === "az") { for (const [d, r] of parsed) { const a = ang(r); if (isNaN(a)) return "اتجاه غير صالح: " + r; legs.push([d, xMod(a)]); } }
+  else {
+    let az = ang(v.az0); if (isNaN(az)) return null;
+    const n = parsed.length, cw = v.dir !== "ccw"; let an = parsed.map(([, r]) => ang(r));
+    if (an.some(a => isNaN(a) || a <= 0 || a >= 360)) return "زاوية غير صالحة (يجب أن تكون بين 0° و360°).";
+    const mis = an.reduce((a, b) => a + b, 0) - (n - 2) * 180;
+    if (v.adj !== "no") an = an.map(a => a - mis / n);
+    extra.push(["خطأ إقفال الزوايا (°)", mis.toFixed(5)]);
+    az = xMod(az); const azs = [az];
+    for (let i = 0; i < n - 1; i++) { az = xMod(cw ? az + 180 - an[i] : az - 180 + an[i]); azs.push(az); }
+    parsed.forEach(([d], i) => legs.push([d, azs[i]]));
+  }
+  let P = 0, sE = 0, sN = 0; const dE = [], dN = [];
+  legs.forEach(([d, a]) => { dE.push(d * Math.sin(a * XR)); dN.push(d * Math.cos(a * XR)); sE += dE[dE.length - 1]; sN += dN[dN.length - 1]; P += d; });
+  const LM = Math.hypot(sE, sN), prec = LM < 1e-9 ? null : P / LM;
+  const rows = extra.concat([["المحيط (م)", f3(P)], ["ΣΔE = fE (م)", f3(sE)], ["ΣΔN = fN (م)", f3(sN)], ["خطأ الإقفال الخطي (م)", LM.toFixed(4)], ["الدقة النسبية", prec ? "1 : " + Math.round(prec) : "∞"]]);
+  let rE = e0, rN = n0, aE = e0, aN = n0;
+  legs.forEach(([d], i) => {
+    rE += dE[i]; rN += dN[i]; aE += dE[i] - sE * d / P; aN += dN[i] - sN * d / P;
+    const nm = i === legs.length - 1 ? "P1 (إغلاق)" : "P" + (i + 2);
+    rows.push([nm + " قبل التصحيح", `${f3(rE)} , ${f3(rN)}`], [nm + " بعد التصحيح", `${f3(aE)} , ${f3(aN)}`]);
+  });
+  return rows;
 }
-
-function profileView() {
-  app.className = "page"; renderNav('profile');
-  const name = currentUser ? (currentUser.displayName || currentUser.email.split("@")[0]) : "زائر";
-  app.innerHTML = `<div class="card" style="padding:0; overflow:hidden;"><div class="profile-cover"><img src="https://images.unsplash.com/photo-1541888078693-019d16e6d5e1?auto=format&fit=crop&q=80&w=800"></div><div class="profile-avatar-wrap"><img class="profile-avatar" src="https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=1677F2&color=fff&size=120"></div><div class="profile-info"><div class="profile-name">${name} ${currentUser ? `<svg class="verified" viewBox="0 0 24 24"><path d="${IC.check}"/></svg>` : ''}</div><div class="profile-title">${currentUser ? "أخصائي مساحة" : "سجّل دخولك لاستكمال ملفك"}</div><div class="profile-actions">${currentUser ? `<button class="primary" onclick="location.hash='#pro'">تعديل</button>` : `<button class="primary" onclick="location.hash='#pro'">تسجيل الدخول</button><button class="secondary" onclick="location.hash='#surveyor'">إنشاء حساب</button>`}</div></div></div>`;
+function calcCurve(v) {
+  const R = num(v.r), D = ang(v.da), pi = xEmpty(v.pi) ? null : num(v.pi), iv = xEmpty(v.iv) ? 20 : num(v.iv);
+  if (isNaN(R) || isNaN(D)) return null;
+  if (R <= 0) return "نصف القطر يجب أن يكون أكبر من صفر.";
+  if (!(D > 0 && D < 180)) return "زاوية الانحراف يجب أن تكون بين 0° و180°.";
+  if ((pi !== null && isNaN(pi)) || isNaN(iv) || iv <= 0) return "قيمة غير صالحة في الكيلومتراج أو الفاصل.";
+  const h = D * XR / 2, T = R * Math.tan(h), Lc = R * D * XR, LC = 2 * R * Math.sin(h), Ex = R * (1 / Math.cos(h) - 1), M = R * (1 - Math.cos(h));
+  const rows = [["نصف القطر R (م)", f3(R)], ["زاوية الانحراف Δ °", D.toFixed(5)], ["طول المماس T (م)", f3(T)], ["طول المنحنى L (م)", f3(Lc)], ["الوتر الطويل LC (م)", f3(LC)], ["المسافة الخارجية E (م)", f3(Ex)], ["السهم الأوسط M (م)", f3(M)]];
+  const PC = pi === null ? null : pi - T;
+  if (PC !== null) rows.push(["كيلومتراج PC", f3(PC)], ["كيلومتراج PT", f3(PC + Lc)]);
+  let ls = [];
+  if (!xEmpty(v.ls)) { ls = String(v.ls).split(/[\s,;]+/).filter(Boolean).map(num); if (ls.some(x => isNaN(x) || x <= 0 || x > Lc + 1e-9)) return "مسافات التوقيع يجب أن تكون بين 0 وطول المنحنى.";}
+  else { if (Lc / iv > 200) return "الفاصل صغير جداً (أكثر من 200 نقطة)."; for (let l = iv; l < Lc - 1e-9; l += iv) ls.push(l); ls.push(Lc); }
+  ls.forEach(l => { const th = l / R, de = th / 2; rows.push([`l = ${f3(l)} م` + (PC !== null ? ` | CH ${f3(PC + l)}` : ""), `δ ${dms(de / XR)} | c ${f3(2 * R * Math.sin(de))} | x ${f3(R * Math.sin(th))} | y ${f3(R * (1 - Math.cos(th)))}`]); });
+  return rows;
 }
+/* ===== end tools 2 pure ===== */
 
-function loginView() {
-  app.className = "page"; renderNav('profile');
-  app.innerHTML = `<h2>تسجيل الدخول</h2><form class="card" id="lf"><label>الإيميل</label><input name="email" type="email" required><label>الباسورد</label><input name="pw" type="password" required><button class="go">دخول</button><div id="lo"></div></form>`;
-  document.getElementById("lf").onsubmit = async (e) => {
-    e.preventDefault(); const f = new FormData(e.target), lo = document.getElementById("lo");
-    try { await auth.signInWithEmailAndPassword(f.get("email"), f.get("pw")); location.hash = "#home"; }
-    catch (err) { lo.style.color = "red"; lo.textContent = "خطأ في الإيميل أو الباسورد"; }
+// ===== GeoLink tools: UI =====
+const TL = { coord: ["تحويل الإحداثيات", IC.globe], area: ["حساب المساحات", IC.poly], dist: ["المسافات والاتجاهات", IC.ruler], unit: ["تحويل الوحدات", IC.calc] };
+const fld = (id, label, ph = "", im = "decimal") => `<div><label for="${id}">${label}</label><input id="${id}" dir="ltr" inputmode="${im}" autocomplete="off" placeholder="${ph}"></div>`;
+const g2 = (...c) => `<div class="g2">${c.join("")}</div>`;
+const seg = (id, o, cur) => `<div class="seg" id="${id}">${o.map(([k, t]) => `<button type="button" data-k="${k}" class="${k === cur ? "on" : ""}">${t}</button>`).join("")}</div>`;
+const slc = (id, label, o, cur) => `<div><label for="${id}">${label}</label><select id="${id}">${o.map(([k, t]) => `<option value="${k}"${String(k) === String(cur) ? " selected" : ""}>${t}</option>`).join("")}</select></div>`;
+function wire(id, cb) {
+  const b = document.getElementById(id);
+  b.onclick = e => { const x = e.target.closest("button"); if (x) cb(x.dataset.k); };
+}
+function copyText(t) {
+  const ok = () => toast("تم النسخ");
+  const fb = () => { const a = document.createElement("textarea"); a.value = t; a.style.cssText = "position:fixed;opacity:0"; document.body.append(a); a.select(); try { document.execCommand("copy") ? ok() : toast("تعذر النسخ"); } catch (e) { toast("تعذر النسخ"); } a.remove(); };
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).then(ok, fb); else fb();
+}
+function showRes(box, items) {
+  if (items === null) { box.innerHTML = `<p class="hint">أدخل القيم لعرض النتائج.</p>`; box.onclick = null; return; }
+  if (typeof items === "string") { box.innerHTML = `<div class="msg err">${items}</div>`; box.onclick = null; return; }
+  box.innerHTML = items.map(([k, v], i) => `<div class="rs"><span>${k}</span><b dir="ltr">${v}</b><button type="button" class="cp" data-i="${i}">نسخ</button></div>`).join("")
+    + `<button type="button" class="cp all" data-i="all">نسخ كل النتائج</button>`;
+  box.onclick = e => {
+    const b = e.target.closest(".cp"); if (!b) return;
+    copyText(b.dataset.i === "all" ? items.map(([k, v]) => `${k}: ${v}`).join("\n") : String(items[+b.dataset.i][1]));
   };
 }
+function hook(ids, compute, box) {
+  const run = () => { const v = {}; ids.forEach(i => v[i] = document.getElementById(i).value); showRes(box, compute(v)); };
+  ids.forEach(i => { const e = document.getElementById(i); e.addEventListener("input", run); e.addEventListener("change", run); });
+  run();
+}
+function fillEx(vals) { Object.entries(vals).forEach(([k, v]) => { document.getElementById(k).value = v; }); document.getElementById(Object.keys(vals)[0]).dispatchEvent(new Event("input")); }
 
-// ============================================================
-// 6. الراوتر
-// ============================================================
-function route() {
-  const h = location.hash.slice(1) || "home";
-  document.getElementById("nav").style.display = "flex";
-  if (h === "home") homeView();
-  else if (h === "notifications") notificationsView();
-  else if (h === "messages") messagesView();
-  else if (h === "profile") profileView();
-  else if (h === "pro") loginView();
-  else if (h === "ai") { /* AI View code */ }
-  else homeView();
-  window.scrollTo(0, 0);
+function coordTool(p, m = "w2u") {
+  const w = m === "w2u";
+  p.innerHTML = `<div class="card">${seg("sg", [["w2u", "WGS84 إلى UTM"], ["u2w", "UTM إلى WGS84"]], m)}`
+    + (w ? g2(fld("a1", "خط العرض", "30.0444", "text"), fld("a2", "خط الطول", "31.2357", "text")) + fld("a3", "رقم المنطقة (اختياري)", "تلقائي")
+      : g2(fld("a1", "Easting (م)", "329899.643"), fld("a2", "Northing (م)", "3325016.736")) + g2(fld("a3", "رقم المنطقة", "36"), slc("a4", "نصف الكرة", [["N", "شمال"], ["S", "جنوب"]], "N")))
+    + `<p class="hint">${w ? "يقبل درجات عشرية أو درجات ودقائق وثوانٍ (مثال: 30 2 39.84 N)." : "النظام المرجعي: WGS84 / UTM."}</p><button type="button" class="lnk" id="ex">تعبئة مثال (القاهرة)</button><div id="rs"></div></div>`;
+  wire("sg", k => coordTool(p, k));
+  hook(w ? ["a1", "a2", "a3"] : ["a1", "a2", "a3", "a4"], v => coordCompute(m, v), document.getElementById("rs"));
+  document.getElementById("ex").onclick = () => {
+    if (w) fillEx({ a1: "30.0444", a2: "31.2357" });
+    else { const u = toUTM(30.0444, 31.2357); fillEx({ a1: u.E.toFixed(3), a2: u.N.toFixed(3), a3: String(u.zone) }); }
+  };
+}
+function areaTool(p, m = "shape", shp = "rect") {
+  let body, ids;
+  if (m === "shape") {
+    const F = SH[shp][1]; ids = ["sh", ...F.map(f => f[0])];
+    body = slc("sh", "الشكل", Object.entries(SH).map(([k, s]) => [k, s[0]]), shp) + g2(...F.map(([k, l]) => fld(k, l)));
+  } else {
+    ids = ["t"];
+    body = `<label for="t">${m === "en" ? "النقاط (E N)" : "النقاط (خط العرض، خط الطول)"}</label><textarea id="t" dir="ltr" placeholder="${m === "en" ? "500000 3000000&#10;500100 3000000&#10;500100 3000100&#10;500000 3000100" : "30.0000 31.0000&#10;30.0000 31.0010&#10;30.0010 31.0010&#10;30.0010 31.0000"}"></textarea>`
+      + `<p class="hint">${m === "en" ? "كل سطر نقطة، وافصل بين E وN بمسافة أو فاصلة. رتّب النقاط بالتسلسل حول الحدود." : "كل سطر نقطة بالدرجات العشرية. تُحسب المساحة على مسقط UTM."}</p>`;
+  }
+  p.innerHTML = `<div class="card">${seg("sg", [["shape", "شكل هندسي"], ["en", "إحداثيات E,N"], ["ll", "إحداثيات جغرافية"]], m)}${body}<div id="rs"></div></div>`;
+  wire("sg", k => areaTool(p, k));
+  hook(ids, v => areaCompute(m, v), document.getElementById("rs"));
+  if (m === "shape") document.getElementById("sh").onchange = e => areaTool(p, "shape", e.target.value);
+}
+function distTool(p, m = "pp") {
+  const M = {
+    pp: [["e1", "E1", "1000"], ["n1", "N1", "2000"], ["e2", "E2", "1100"], ["n2", "N2", "2100"], ["z1", "المنسوب 1 (اختياري)", "", "text"], ["z2", "المنسوب 2 (اختياري)", "", "text"]],
+    pf: [["e1", "E1", "1000"], ["n1", "N1", "2000"], ["az", "الاتجاه Azimuth", "45 أو 45 30 0", "text"], ["d", "المسافة (م)", "100"]],
+    geo: [["la1", "خط العرض 1", "30.0444", "text"], ["lo1", "خط الطول 1", "31.2357", "text"], ["la2", "خط العرض 2", "31.2001", "text"], ["lo2", "خط الطول 2", "29.9187", "text"]]
+  }[m];
+  const hints = { pp: "Azimuth = الزاوية من الشمال مع عقارب الساعة.", pf: "الاتجاه بالدرجات العشرية أو درجات ودقائق وثوانٍ.", geo: "المسافة على سطح الإهليلج WGS84 (طريقة Vincenty)." };
+  p.innerHTML = `<div class="card">${seg("sg", [["pp", "بين نقطتين"], ["pf", "نقطة من مسافة واتجاه"], ["geo", "جغرافي"]], m)}`
+    + M.map((f, i) => i % 2 ? "" : g2(fld(...f), M[i + 1] ? fld(...M[i + 1]) : "")).join("") + `<p class="hint">${hints[m]}</p><div id="rs"></div></div>`;
+  wire("sg", k => distTool(p, k));
+  hook(M.map(f => f[0]), v => distCompute(m, v), document.getElementById("rs"));
+}
+function unitTool(p, cat = "len") {
+  const sl = cat === "slope";
+  p.innerHTML = `<div class="card">${seg("sg", Object.entries(UN).map(([k, c]) => [k, c[0]]), cat)}`
+    + (sl ? g2(fld("val", "القيمة", "", "text"), slc("st", "نوع القيمة", [["pct", "نسبة مئوية %"], ["deg", "درجات °"], ["ratio", "نسبة 1 : n (أدخل n)"]], "pct"))
+      : g2(fld("val", "القيمة", "1"), slc("from", "من وحدة", UN[cat][1].map(([n], i) => [i, n]), 0)))
+    + `<div id="rs"></div></div>`;
+  wire("sg", k => unitTool(p, k));
+  hook(sl ? ["val", "st"] : ["val", "from"], v => unitCompute(cat, v), document.getElementById("rs"));
+}
+/* ===== واجهة الأدوات الجديدة ===== */
+function xTool(p, cfg, m) {
+  const mm = m || cfg.modes[0][0], F = cfg.f[mm];
+  p.innerHTML = `<div class="card">${cfg.modes.length > 1 ? seg("sg", cfg.modes, mm) : ""}${F.html}<p class="hint">${F.hint}</p><div class="bt"><button type="button" class="go" id="xc">احسب</button><button type="button" class="lnk" id="xe">تعبئة مثال</button><button type="button" class="lnk" id="xr">إعادة تعيين</button></div><div id="rs"><p class="hint">اضغط «احسب» لعرض النتائج.</p></div></div>`;
+  if (cfg.modes.length > 1) wire("sg", k => xTool(p, cfg, k));
+  const box = document.getElementById("rs"), ids = F.ids, val = () => Object.fromEntries(ids.map(i => [i, document.getElementById(i).value]));
+  const run = () => { const r = cfg.calc(mm, val()); showRes(box, r === null ? "أكمل كل الحقول المطلوبة بقيم صحيحة." : r); };
+  document.getElementById("xc").onclick = run;
+  document.getElementById("xe").onclick = () => { Object.entries(F.ex).forEach(([k, v]) => { document.getElementById(k).value = v; }); run(); };
+  document.getElementById("xr").onclick = () => { ids.forEach(i => { const e = document.getElementById(i); e.value = e.tagName === "SELECT" ? e.options[0].value : ""; }); box.innerHTML = `<p class="hint">اضغط «احسب» لعرض النتائج.</p>`; };
+}
+const xta = (id, label, ph) => `<label for="${id}">${label}</label><textarea id="${id}" dir="ltr" rows="5" placeholder="${ph}"></textarea>`;
+const CFG = {
+  cc: { modes: [["fwd", "حساب أمامي (Direct)"], ["inv", "حساب عكسي (Inverse)"]], calc: calcCC, f: {
+    fwd: { ids: ["e1", "n1", "az", "d"], html: g2(fld("e1", "E1 (Easting)", "1000"), fld("n1", "N1 (Northing)", "2000")) + g2(fld("az", "الاتجاه Azimuth", "45 أو 45 30 0", "text"), fld("d", "المسافة (م)", "100")), hint: "من نقطة البداية والاتجاه والمسافة نحسب نقطة النهاية. Azimuth من الشمال مع عقارب الساعة.", ex: { e1: "1000", n1: "2000", az: "45", d: "100" } },
+    inv: { ids: ["e1", "n1", "e2", "n2"], html: g2(fld("e1", "E1", "1000"), fld("n1", "N1", "2000")) + g2(fld("e2", "E2", "1070.711"), fld("n2", "N2", "2070.711")), hint: "من إحداثيات نقطتين نحسب المسافة وAzimuth وBearing وفروق الإحداثيات.", ex: { e1: "1000", n1: "2000", e2: "1070.711", n2: "2070.711" } } } },
+  level: { modes: [["hi", "ارتفاع الجهاز (HI)"], ["rf", "الصعود والهبوط (Rise & Fall)"]], calc: calcLevel, f: (() => { const o = { ids: ["rl0", "t", "rl1"], html: fld("rl0", "منسوب نقطة البداية RL (م)", "100.000") + xta("t", "القراءات (قراءة في كل سطر: BS أو IS أو FS ثم القيمة)", "BS 1.525&#10;IS 1.230&#10;FS 0.975&#10;BS 1.780&#10;FS 1.215") + fld("rl1", "منسوب نقطة الإقفال المعلومة (اختياري)", "101.110"), hint: "كل ميزانية تبدأ بـ BS وتنتهي بـ FS. بعد FS تبدأ ميزانية جديدة بـ BS.", ex: { rl0: "100", t: "BS 1.525\nIS 1.230\nFS 0.975\nBS 1.780\nFS 1.215", rl1: "101.110" } }; return { hi: o, rf: o }; })() },
+  slope: { modes: [["two", "من قيمتين"], ["lt", "طولي وعرضي"]], calc: calcSlope, f: {
+    two: { ids: ["d", "h", "p", "a", "r", "s"], html: g2(fld("d", "المسافة الأفقية (م)", "100"), fld("h", "فرق المنسوب (م)", "10")) + g2(fld("p", "الميل (%)", ""), fld("a", "زاوية الميل", "", "text")) + g2(fld("r", "النسبة 1 : n (أدخل n)", ""), fld("s", "المسافة المائلة (م)", "")), hint: "أدخل أي قيمتين متوافقتين (مثل المسافة وفرق المنسوب، أو الميل % ومسافة) والباقي يُحسب.", ex: { d: "100", h: "10", p: "", a: "", r: "", s: "" } },
+    lt: { ids: ["sl", "sc"], html: g2(fld("sl", "الميل الطولي (%)", "5"), fld("sc", "الميل العرضي (%)", "2")), hint: "الميل المحصّل = الجذر التربيعي لمجموع مربعي الميلين المتعامدين.", ex: { sl: "5", sc: "2" } } } },
+  earth: { modes: [["vol", "حجوم بين مقاطع"], ["sec", "مساحة مقطع"]], calc: calcEarth, f: {
+    vol: { ids: ["t"], html: xta("t", "المقاطع (كل سطر: المحطة، مساحة الحفر، مساحة الردم)", "0 0 12.5&#10;20 8.2 5&#10;40 15.4 0"), hint: "طريقة متوسط المساحات (Average End Area): الحجم = (A1 + A2) / 2 × المسافة.", ex: { t: "0 0 12.5\n20 8.2 5\n40 15.4 0\n60 20 0" } },
+    sec: { ids: ["dz", "t"], html: fld("dz", "منسوب التصميم (م)", "12.000") + xta("t", "نقاط الأرض (كل سطر: المسافة الأفقية من المحور، منسوب الأرض)", "-10 12.4&#10;0 11.8&#10;10 13.0"), hint: "تُحسب مساحة الحفر (الأرض فوق التصميم) ومساحة الردم (الأرض تحت التصميم).", ex: { dz: "12", t: "-10 12.4\n-5 12.1\n0 11.8\n5 12.6\n10 13.0" } } } },
+  trav: { modes: [["az", "مسافات واتجاهات"], ["ang", "مسافات وزوايا"]], calc: calcTrav, f: {
+    az: { ids: ["e0", "n0", "t"], html: g2(fld("e0", "E نقطة البداية", "1000"), fld("n0", "N نقطة البداية", "1000")) + xta("t", "الأضلاع (كل سطر: المسافة ثم Azimuth)", "100.03 90&#10;99.98 180 0 20&#10;100.04 270&#10;100.01 0 0 10"), hint: "ترافيرس مقفل. Azimuth بالدرجات العشرية أو درجات ودقائق وثوانٍ. التصحيح بطريقة Bowditch.", ex: { e0: "1000", n0: "1000", t: "100.03 90\n99.98 180 0 20\n100.04 270\n100.01 0 0 10" } },
+    ang: { ids: ["e0", "n0", "az0", "dir", "adj", "t"], html: g2(fld("e0", "E نقطة البداية", "1000"), fld("n0", "N نقطة البداية", "1000")) + fld("az0", "Azimuth الضلع الأول", "90", "text") + g2(slc("dir", "اتجاه المسير", [["cw", "مع عقارب الساعة"], ["ccw", "عكس عقارب الساعة"]], "cw"), slc("adj", "توزيع خطأ الزوايا", [["yes", "نعم"], ["no", "لا"]], "yes")) + xta("t", "الأضلاع (كل سطر: المسافة ثم الزاوية الداخلية عند نهاية الضلع)", "100.03 90 0 10&#10;99.98 89 59 40&#10;100.04 90 0 20&#10;100.01 89 59 50"), hint: "الزاوية في كل سطر هي الزاوية الداخلية عند المحطة التي ينتهي عندها الضلع (الأخيرة عند نقطة البداية).", ex: { e0: "1000", n0: "1000", az0: "90", dir: "cw", adj: "yes", t: "100.03 90 0 10\n99.98 89 59 40\n100.04 90 0 20\n100.01 89 59 50" } } } },
+  curve: { modes: [["c", "منحنى أفقي بسيط"]], calc: (m, v) => calcCurve(v), f: { c: { ids: ["r", "da", "pi", "iv", "ls"], html: g2(fld("r", "نصف القطر R (م)", "300"), fld("da", "زاوية الانحراف Δ", "40", "text")) + g2(fld("pi", "كيلومتراج PI (اختياري)", "1250"), fld("iv", "فاصل التوقيع (م)", "20")) + fld("ls", "أو مسافات محددة من PC (اختياري)", "30 55 80", "text"), hint: "نحسب T وL وLC وE وM، ونقاط التوقيع بزاوية الانحراف والوتر والإحداثيات من المماس عند PC.", ex: { r: "300", da: "40", pi: "1250", iv: "20", ls: "" } } } }
+};
+const TP = {
+  coord: ["تحويل الإحداثيات", "تحويل بين WGS84 وUTM في الاتجاهين.", IC.globe, p => coordTool(p)],
+  dist: ["المسافات والاتجاهات", "المسافة وAzimuth بين نقطتين، أو نقطة من مسافة واتجاه.", IC.ruler, p => distTool(p)],
+  area: ["حساب المساحات", "مساحة من إحداثيات أو من أشكال هندسية.", IC.poly, p => areaTool(p)],
+  cc: ["حساب الإحداثيات", "إحداثيات أمامية وعكسية: المسافة وAzimuth وBearing وΔE وΔN.", IC.pin, p => xTool(p, CFG.cc)],
+  level: ["حساب المناسيب", "ميزانية بطريقة HI أو Rise & Fall مع خطأ الإقفال.", "M3 7h18v6H3zM12 13v8M8 21h8M7 10h.01", p => xTool(p, CFG.level)],
+  slope: ["الميول والانحدارات", "الميل بالنسبة المئوية والدرجات والنسبة من أي قيمتين.", "M3 19h18M3 19L21 8M21 8v11", p => xTool(p, CFG.slope)],
+  earth: ["الحفر والردم", "حجوم الحفر والردم بين المقاطع ومساحة المقطع.", "M3 18h18M5 18l3-7 4 4 3-9 4 12", p => xTool(p, CFG.earth)],
+  trav: ["حساب الترافيرس", "خطأ الإقفال والدقة النسبية وتصحيح Bowditch.", "M4 17l4-10 9-3 3 9-7 8z", p => xTool(p, CFG.trav)],
+  curve: ["حساب المنحنيات", "عناصر المنحنى الأفقي ونقاط التوقيع.", "M4 20c0-9 7-16 16-16M4 20h.01M20 4h.01", p => xTool(p, CFG.curve)],
+  unit: ["تحويل الوحدات", "الطول والمساحة والزوايا والحجم والميل.", IC.calc, p => unitTool(p)]
+};
+const TG = [["الإحداثيات والقياسات", ["coord", "dist", "area", "cc"]], ["الحسابات الهندسية", ["level", "slope", "earth", "trav", "curve", "unit"]]];
+function tools() {
+  app.innerHTML = `<h2>الأدوات</h2><p style="margin:0 0 6px">حسابات مساحية وهندسية تعمل مباشرة على جهازك.</p>`
+    + TG.map(([g, ks]) => `<h3 class="tgh">${g}</h3><div class="tl-grid">${ks.map(k => `<a class="tl" href="#tool:${k}"><svg viewBox="0 0 24 24"><path d="${TP[k][2]}"/></svg><span>${TP[k][0]}</span></a>`).join("")}</div>`).join("");
+}
+function toolPage(k) {
+  const T = TP[k]; if (!T) { location.hash = "#tools"; return; }
+  app.innerHTML = `<a class="back" href="#tools">الأدوات ›</a><h2>${T[0]}</h2><p style="margin:0 0 6px">${T[1]}</p><div id="tp"></div>`;
+  const p = document.getElementById("tp"); T[3](p);
+  if (!["cc", "level", "slope", "earth", "trav", "curve"].includes(k)) {
+    p.insertAdjacentHTML("beforeend", `<div class="bt"><button type="button" class="lnk" id="xr2">إعادة تعيين</button></div>`);
+    document.getElementById("xr2").onclick = () => { p.querySelectorAll("input,textarea").forEach(e => { e.value = ""; e.dispatchEvent(new Event("input")); }); };
+  }
 }
 
-auth.onAuthStateChanged(u => { currentUser = u; });
-window.onhashchange = route;
+/* ===== i18n: Arabic / English =====
+   Arabic is the source language (msgid). The English dictionary below is looked up at render time.
+   Add new screens by adding their Arabic strings here. ENRX handles strings that contain numbers/values. */
+const LANG_AUTODETECT = true; // true = use the device language on first launch (enable after all screens are translated)
+let LANG = (() => { try { const s = localStorage.getItem("gl_lang"); if (s === "ar" || s === "en") return s; } catch (e) { } return LANG_AUTODETECT && /^en/i.test(navigator.language || "") ? "en" : "ar"; })();
+const EN = {
+  "أكبر منصة لربط العملاء بأخصائيي المساحة": "The largest platform connecting clients with survey specialists",
+  "احترافية وسهولة وثقة": "Professional, easy and trusted",
+  "رجوع": "Back",
+  "طلب أخصائي مساحة": "Request a survey specialist",
+  "الاسم": "Name",
+  "رقم الموبايل": "Mobile number",
+  "المحافظة": "Governorate",
+  "نوع الخدمة": "Service type",
+  "رفع مساحي لأرض": "Land survey",
+  "توقيع وتحديد مناسيب (إنشاءات)": "Setting out & levels (construction)",
+  "حساب كميات": "Quantity calculation",
+  "رفع مساحي لمبنى قائم": "Existing building survey",
+  "تقسيم أراضي": "Land subdivision",
+  "استشارة مساحية": "Surveying consultation",
+  "تقرير كروكي": "Sketch (kroki) report",
+  "خدمة أخرى": "Other service",
+  "موقع الأرض أو المشروع (المنطقة أو لينك الخريطة)": "Land or project location (area or map link)",
+  "ملاحظات": "Notes",
+  "ابعت الطلب": "Send request",
+  "تسجيل أخصائي مساحة": "Register as a survey specialist",
+  "الإيميل (لدخولك بعد الاعتماد)": "Email (to log in after approval)",
+  "الباسورد (6 حروف أو أكتر)": "Password (6+ characters)",
+  "التخصص": "Specialization",
+  "مساحة عامة": "General surveying",
+  "مساحة إنشاءات": "Construction surveying",
+  "مساحة أراضي": "Land surveying",
+  "مساحة طرق": "Road surveying",
+  "سنين الخبرة": "Years of experience",
+  "الأجهزة المتاحة (توتال ستيشن، GPS، ليزر...)": "Available equipment (total station, GPS, laser...)",
+  "نبذة عن أعمالك": "About your work",
+  "سجّل بياناتي": "Register my details",
+  "انضم كمساعد مساحة": "Join as a survey assistant",
+  "مساعد مساحة": "Survey assistant",
+  "رودمان": "Rodman (staff holder)",
+  "مشغّل أجهزة": "Instrument operator",
+  "مساعد أعمال إنشاءات": "Construction works assistant",
+  "نبذة عن خبرتك": "About your experience",
+  "الإيميل": "Email",
+  "الباسورد": "Password",
+  "دخول": "Log in",
+  "لسه ما سجلتش؟": "Not registered yet?",
+  "سجّل كأخصائي مساحة": "Register as a survey specialist",
+  "أنشئ حساب أخصائي": "Create a specialist account",
+  "ابحث بالاسم أو التخصص أو الجهاز...": "Search by name, specialization or equipment...",
+  "بحث": "Search",
+  "الكل": "All",
+  "رفع مساحي طبوغرافي": "Topographic survey",
+  "مساحة حدود وملكيات": "Boundary & property survey",
+  "توقيع (Setting out)": "Setting out",
+  "مساحة As-Built": "As-built survey",
+  "مساحة GNSS": "GNSS survey",
+  "خدمات Total Station": "Total Station services",
+  "مراقبة جودة المساحة QC": "Survey QC",
+  "استشارات مساحية": "Surveying consultancy",
+  "أي خبرة": "Any experience",
+  "التقييم": "Rating",
+  "التوفر": "Availability",
+  "متاح فقط": "Available only",
+  "الترتيب": "Sort by",
+  "الأحدث": "Newest",
+  "الأعلى تقييماً": "Highest rated",
+  "الأكثر خبرة": "Most experienced",
+  "موثّق": "Verified",
+  "متاح": "Available",
+  "غير متاح": "Unavailable",
+  "غير موثّق": "Not verified",
+  "غير موثّق بعد": "Not verified yet",
+  "عرض المزيد": "Show more",
+  "التوثيق": "Verification",
+  "التخصصات": "Specializations",
+  "الأجهزة والمهارات": "Equipment & skills",
+  "نبذة": "About",
+  "التواصل مع الأخصائي هيتم من خلال طلب تعاون جوّه المنصة (لسه مش مفعّل). بيانات التواصل الشخصية مش بتظهر علناً.": "Contacting the specialist will be done through a collaboration request inside the platform (not enabled yet). Personal contact details are never shown publicly.",
+  "فرص العمل": "Job opportunities",
+  "مفتوح": "Open",
+  "تقديم العروض على الطلبات لسه مش مفعّل، وبيتضاف في مرحلة العروض.": "Submitting proposals is not enabled yet; it will be added in the proposals phase.",
+  "مساعدك في مجال المساحة": "Your surveying assistant",
+  "أنا مساعدك الذكي في مجال المساحة. كيف يمكنني مساعدتك اليوم؟": "I'm your smart assistant for surveying. How can I help you today?",
+  "إيه هو التوتال ستيشن؟": "What is a total station?",
+  "يعني إيه مناسيب؟": "What are levels (elevations)?",
+  "الفرق بين الرفع والتوقيع": "Difference between surveying and setting out",
+  "اكتب سؤالك عن المساحة...": "Ask your surveying question...",
+  "سؤالك": "Your question",
+  "إرسال": "Send",
+  "وصل طلبك": "Your request was received",
+  "هنتواصل معاك على رقم الموبايل اللي كتبته.": "We'll contact you on the mobile number you entered.",
+  "كمّل على واتساب": "Continue on WhatsApp",
+  "رجوع للرئيسية": "Back to home",
+  "تم تسجيلك": "You're registered",
+  "هنتواصل معاك لما تتوفر فرصة عمل مناسبة في محافظتك.": "We'll contact you when a suitable job opportunity is available in your governorate.",
+  "الإيميل أو الباسورد غلط.": "Wrong email or password.",
+  "تم إنشاء حسابك. هنراجع بياناتك ونعتمد الحساب، وبعدها تقدر تشوف الطلبات.": "Your account was created. We'll review your details and approve it, then you can see the requests.",
+  "سؤال كويس. للتفاصيل الفنية الأعمق اطلب أخصائي مساحة من المنصة، أو كلّمنا على واتساب.": "Good question. For deeper technical details, request a survey specialist from the platform, or contact us on WhatsApp.",
+  "سؤال كويس. للتفاصيل الفنية الأعمق اطلب أخصائي مساحة من المنصة.": "Good question. For deeper technical details, request a survey specialist from the platform.",
+  "اضغط على \"اطلب أخصائي مساحة\"، املا نوع الخدمة وموقع الأرض، وهنتواصل معاك على واتساب.": "Tap \"Request a survey specialist\", fill in the service type and the land location, and we'll contact you on WhatsApp.",
+  "ممكن تعيد صياغة السؤال؟": "Could you rephrase the question?",
+  "حصلت مشكلة، جرّب تاني بعد شوية.": "Something went wrong. Please try again in a moment.",
+  "مفيش نتائج بالفلاتر دي.": "No results match these filters.",
+  "الطلبات المتاحة": "Available requests",
+  "بيانات العميل بتتشارك بعد الاتفاق مع GeoLink.": "Client details are shared after an agreement is made through GeoLink.",
+  "ملفي المهني": "My professional profile",
+  "الاسم الكامل": "Full name",
+  "المسمى المهني": "Professional title",
+  "مثال: أخصائي مساحة إنشائية - Total Station وGNSS": "Example: Construction survey specialist – Total Station & GNSS",
+  "الأجهزة والمهارات الفنية": "Equipment & technical skills",
+  "نبذة عنك": "About you",
+  "متاح لاستقبال أعمال جديدة": "Available for new work",
+  "حفظ ونشر ملفي": "Save & publish my profile",
+  "عرض ملفي العام": "View my public profile",
+  "صورة الملف والأعمال السابقة بتتفعّل لما نفعّل Firebase Storage.": "Profile photo and previous work will be available once Firebase Storage is enabled.",
+  "تم حفظ ملفك ونشره في دليل الأخصائيين.": "Your profile was saved and published in the specialist directory.",
+  "حسابك قيد المراجعة": "Your account is under review",
+  "هنراجع بياناتك ونعتمد حسابك، وهتقدر تشوف الطلبات بعدها.": "We'll review your details and approve your account; then you'll be able to see the requests.",
+  "الصفحة دي للأدمن فقط": "This page is for admins only",
+  "الطلبات": "Requests",
+  "الأخصائيين": "Specialists",
+  "المساعدين": "Assistants",
+  "اعتماد": "Approve",
+  "إلغاء الاعتماد": "Revoke approval",
+  "أنت مسجّل كأدمن": "You are signed in as admin",
+  "خروج": "Log out",
+  "دخول الأدمن": "Admin login",
+  "دخول الأخصائيين": "Specialist login",
+  "مسجّل دخول:": "Signed in as:",
+  "لوحة التحكم": "Dashboard",
+  "صفحة الأخصائي": "Specialist page",
+  "جاري التحميل...": "Loading...",
+  "جاري الإرسال...": "Sending...",
+  "جاري الحفظ...": "Saving...",
+  "تعذر تحميل البيانات.": "Couldn't load the data.",
+  "تعذر تحميل البيانات. اتأكد إن قواعد Firebase محدّثة.": "Couldn't load the data. Make sure the Firebase rules are up to date.",
+  "تعذر تحميل الطلبات.": "Couldn't load the requests.",
+  "تعذر تحميل الملف.": "Couldn't load the profile.",
+  "تعذر تحميل ملفك. اتأكد إن قواعد Firebase محدّثة.": "Couldn't load your profile. Make sure the Firebase rules are up to date.",
+  "تعذر الحفظ. اتأكد من القواعد والاتصال.": "Couldn't save. Check the rules and your connection.",
+  "الإيميل ده مسجّل قبل كده. ادخل من صفحة دخول الأخصائيين.": "This email is already registered. Log in from the specialist login page.",
+  "الإيميل مش مكتوب صح.": "The email isn't valid.",
+  "الباسورد ضعيف، لازم 6 حروف على الأقل.": "Weak password; it must be at least 6 characters.",
+  "الملف ده مش موجود.": "This profile doesn't exist.",
+  "حصلت مشكلة في الإرسال. تأكد من النت وجرب تاني.": "Sending failed. Check your connection and try again.",
+  "فشل، جرّب تاني": "Failed, try again",
+  "لسه مفيش أخصائيين نشروا ملفاتهم.": "No specialists have published their profiles yet.",
+  "لسه مفيش بيانات.": "No data yet.",
+  "مفيش طلبات متاحة دلوقتي.": "No requests available right now.",
+  "مفيش طلبات متاحة دلوقتي. ارجع شوف بعد شوية.": "No requests available right now. Check back in a bit.",
+  "المسافة الأفقية": "Horizontal distance",
+  "فرق المنسوب": "Elevation difference",
+  "المسافة المائلة": "Slope distance",
+  "زاوية الميل": "Slope angle",
+  "النسبة 1:n": "Ratio 1:n",
+  "التوتال ستيشن جهاز يقيس الزوايا والمسافات إلكترونياً ويحسب إحداثيات النقاط، ويُستخدم في الرفع المساحي والتوقيع.": "A total station is an instrument that electronically measures angles and distances and computes point coordinates. It is used for surveying and setting out.",
+  "المنسوب هو ارتفاع نقطة عن مستوى مرجعي. بيتقاس بجهاز الميزان (Level) أو التوتال ستيشن، وبيُستخدم في الحفر والردم وتحديد الميول.": "A level (elevation) is the height of a point above a reference datum. It is measured with a level instrument or a total station, and it is used for cut and fill and for defining slopes.",
+  "التوقيع هو نقل نقاط المشروع من المخطط إلى الأرض باستخدام إحداثياتها، زي المحاور والأعمدة والحدود.": "Setting out is transferring project points from the plan to the ground using their coordinates, such as axes, columns and boundaries.",
+  "الرفع المساحي هو قياس مواضع الأرض والمعالم ورسمها على خريطة بإحداثيات ومناسيب.": "A topographic survey measures the positions of the ground and its features and plots them on a map with coordinates and elevations.",
+  "أجهزة GPS/RTK بتدّي دقة بالسنتيمترات في الظروف الجيدة، بس بتحتاج سماء مفتوحة وتصحيحات من قاعدة أو شبكة.": "GPS/RTK receivers give centimeter-level accuracy in good conditions, but they need an open sky and corrections from a base station or network.",
+  "حساب الكميات بيعتمد على مناسيب الأرض الطبيعية ومناسيب التصميم، وحجم الحفر والردم بيطلع من الفرق بينهم.": "Quantity calculation depends on the natural ground levels and the design levels; the cut and fill volumes come from the difference between them.",
+  "تقسيم الأراضي بيشمل تحديد حدود كل قطعة وتوقيع نقاطها على الأرض حسب المخطط المعتمد.": "Land subdivision includes defining the boundaries of each plot and setting out its points on the ground according to the approved plan.",
+  "السعر بيتحدد حسب نوع الخدمة والمساحة والموقع. اطلب أخصائي مساحة وهنتفق على التفاصيل قبل بداية الشغل.": "The price depends on the service type, the area and the location. Request a survey specialist and we'll agree on the details before the work starts.",
+  "اضغط على «اطلب أخصائي مساحة»، املا نوع الخدمة وموقع الأرض، وهنتواصل معاك على واتساب.": "Tap \"Request a survey specialist\", fill in the service type and the land location, and we'll contact you on WhatsApp.",
+  /* shell + home */
+  "المنصة المساندة المعتمدة الأولى": "The First Accredited Supporting Platform", "منصة خدمات المساحة": "Surveying Services Platform",
+  "اربط مشروعك بأخصائي مساحة بكل سهولة، أو انضم كأخصائي لاستقبال الطلبات.": "Connect your project with a surveying specialist with ease, or join as a specialist to receive requests.",
+  "اطلب أخصائي مساحة الآن": "Request a surveying specialist now", "ثبّت التطبيق على موبايلك": "Install the app on your phone",
+  "سوق خدمات المساحة": "Surveying Services Marketplace", "4 مسارات": "4 paths", "انشر طلب عمل": "Post a job request",
+  "اطلب خدمة مساحة وحدد تفاصيل مشروعك": "Request a surveying service and define your project details", "اكتشف الأخصائيين": "Discover specialists",
+  "تصفح الملفات المهنية وقارن بينها": "Browse professional profiles and compare them", "تصفح فرص العمل": "Browse job opportunities",
+  "للأخصائيين: الطلبات المتاحة الآن": "For specialists: requests available now", "اعرض خدماتك": "Offer your services",
+  "أنشئ ملفك المهني وخدماتك": "Create your professional profile and services", "مساعد المساحة": "Survey Assistant",
+  "سجّل بياناتك وخبراتك واستقبل فرص عمل في مجال المساحة.": "Register your details and experience and receive job opportunities in surveying.",
+  "انضم كمساعد مساحة ‹": "Join as a survey assistant ›", "الإدارة": "Administration", "إدارة الطلبات والأخصائيين والاعتمادات": "Manage requests, specialists and approvals",
+  "جديد": "New", "تجربة": "Try", "اسأل عن أي حاجة في المساحة": "Ask anything about surveying", "خدماتنا السريعة": "Our quick services", "عرض الكل": "View all",
+  "رفع مساحي": "Surveying", "تحديد حدود وإحداثيات": "Boundaries and coordinates", "تخطيط أراضي": "Land planning", "تقسيم وتصاميم أراضي": "Land subdivision and layouts",
+  "استشارات": "Consultations", "حلول مساحية": "Surveying solutions", "تقارير كروكي": "Sketch reports", "كروكي للأراضي": "Land sketches",
+  "أخصائي نشط": "Active specialists", "محافظة مغطاة": "Governorates covered", "الأسئلة الشائعة": "FAQ", "كلّمنا على واتساب": "Chat with us on WhatsApp",
+  "ازاي أطلب أخصائي مساحة؟": "How do I request a surveying specialist?",
+  "اضغط على \"اطلب أخصائي مساحة\"، املا نوع الخدمة وموقع الأرض، وهنتواصل معاك على واتساب.": "Tap \"Request a surveying specialist\", fill in the service type and the land location, and we will contact you on WhatsApp.",
+  "هل التسجيل للأخصائيين مجاني؟": "Is registration free for specialists?", "أيوه، التسجيل مجاني. وبعد اعتماد حسابك بتشوف الطلبات المتاحة.": "Yes, registration is free. Once your account is approved you can see the available requests.",
+  "بتغطوا أنهي محافظات؟": "Which governorates do you cover?", "بنستقبل طلبات من كل المحافظات، والتنفيذ بيكون حسب توفر الأخصائيين في منطقتك.": "We accept requests from all governorates; execution depends on specialist availability in your area.",
+  "إمتى هتتواصلوا معايا؟": "When will you contact me?", "بنتواصل معاك على الرقم اللي كتبته في الطلب في أقرب وقت.": "We will contact you on the number you entered in your request as soon as possible.",
+  "الرئيسية": "Home", "الأدوات": "Tools", "طلب جديد": "New request", "طلباتي": "My requests", "حسابي": "Account", "اللغة": "Language", "الإشعارات": "Notifications",
+  "الإشعارات قريباً": "Notifications are coming soon", "تم النسخ": "Copied", "تعذر النسخ": "Copy failed",
+  "مسجّل دخول:": "Signed in:", "خروج": "Sign out", "لوحة التحكم": "Dashboard", "صفحة الأخصائي": "Specialist page", "دخول الأخصائيين": "Specialist sign-in", "تسجيل أخصائي جديد": "Register as a new specialist",
+  "سجّل دخولك كأخصائي مساحة لتشوف الطلبات المتاحة.": "Sign in as a surveying specialist to see the available requests.",
+  "متابعة طلباتك قريباً": "Request tracking is coming soon", "هتقدر تتابع حالة كل طلب من هنا. دلوقتي بنتواصل معاك على واتساب بعد ما تبعت الطلب.": "You will be able to track the status of each request here. For now we contact you on WhatsApp after you submit the request.",
+  "اطلب أخصائي مساحة": "Request a surveying specialist",
+  /* tools hub */
+  "حسابات مساحية وهندسية تعمل مباشرة على جهازك.": "Surveying and engineering calculations that run directly on your device.", "الإحداثيات والقياسات": "Coordinates & Measurements", "الحسابات الهندسية": "Engineering Calculations",
+  "الأدوات ›": "‹ Tools", "تحويل الإحداثيات": "Coordinate Converter", "المسافات والاتجاهات": "Distance & Direction", "حساب المساحات": "Area Calculator", "حساب الإحداثيات": "Coordinate Calculator",
+  "حساب المناسيب": "Level Calculator", "الميول والانحدارات": "Slope Calculator", "الحفر والردم": "Earthwork Calculator", "حساب الترافيرس": "Traverse Calculator", "حساب المنحنيات": "Curve Calculator", "تحويل الوحدات": "Unit Converter",
+  "تحويل بين WGS84 وUTM في الاتجاهين.": "Convert between WGS84 and UTM in both directions.", "المسافة وAzimuth بين نقطتين، أو نقطة من مسافة واتجاه.": "Distance and Azimuth between two points, or a point from a distance and direction.",
+  "مساحة من إحداثيات أو من أشكال هندسية.": "Area from coordinates or from geometric shapes.", "إحداثيات أمامية وعكسية: المسافة وAzimuth وBearing وΔE وΔN.": "Direct and inverse coordinates: distance, Azimuth, Bearing, ΔE and ΔN.",
+  "ميزانية بطريقة HI أو Rise & Fall مع خطأ الإقفال.": "Levelling by the HI or Rise & Fall method, with misclosure.", "الميل بالنسبة المئوية والدرجات والنسبة من أي قيمتين.": "Slope as a percentage, in degrees and as a ratio from any two values.",
+  "حجوم الحفر والردم بين المقاطع ومساحة المقطع.": "Cut and fill volumes between sections, and section area.", "خطأ الإقفال والدقة النسبية وتصحيح Bowditch.": "Misclosure, relative precision and Bowditch adjustment.",
+  "عناصر المنحنى الأفقي ونقاط التوقيع.": "Horizontal curve elements and setting-out points.", "الطول والمساحة والزوايا والحجم والميل.": "Length, area, angle, volume and slope.",
+  "احسب": "Calculate", "تعبئة مثال": "Fill example", "تعبئة مثال (القاهرة)": "Fill example (Cairo)", "إعادة تعيين": "Reset", "نسخ": "Copy", "نسخ كل النتائج": "Copy all results",
+  "اضغط «احسب» لعرض النتائج.": "Press “Calculate” to see the results.", "أدخل القيم لعرض النتائج.": "Enter values to see the results.", "أكمل كل الحقول المطلوبة بقيم صحيحة.": "Complete all required fields with valid values.",
+  /* modes */
+  "حساب أمامي (Direct)": "Direct", "حساب عكسي (Inverse)": "Inverse", "ارتفاع الجهاز (HI)": "Height of Instrument (HI)", "الصعود والهبوط (Rise & Fall)": "Rise & Fall", "من قيمتين": "From two values",
+  "طولي وعرضي": "Longitudinal & transverse", "حجوم بين مقاطع": "Volumes between sections", "مساحة مقطع": "Section area", "مسافات واتجاهات": "Distances & azimuths", "مسافات وزوايا": "Distances & angles",
+  "منحنى أفقي بسيط": "Simple horizontal curve", "WGS84 إلى UTM": "WGS84 to UTM", "UTM إلى WGS84": "UTM to WGS84", "شكل هندسي": "Geometric shape", "إحداثيات E,N": "E,N coordinates",
+  "إحداثيات جغرافية": "Geographic coordinates", "بين نقطتين": "Between two points", "نقطة من مسافة واتجاه": "Point from distance & direction", "جغرافي": "Geographic",
+  /* fields + hints */
+  "رقم المنطقة": "Zone number", "رقم المنطقة (اختياري)": "Zone number (optional)", "تلقائي": "Automatic", "نصف الكرة": "Hemisphere", "شمال": "North", "جنوب": "South", "خط العرض": "Latitude", "خط الطول": "Longitude",
+  "Easting (م)": "Easting (m)", "Northing (م)": "Northing (m)", "يقبل درجات عشرية أو درجات ودقائق وثوانٍ (مثال: 30 2 39.84 N).": "Accepts decimal degrees or degrees, minutes and seconds (example: 30 2 39.84 N).",
+  "النظام المرجعي: WGS84 / UTM.": "Datum: WGS84 / UTM.", "الشكل": "Shape", "مستطيل": "Rectangle", "مثلث (قاعدة وارتفاع)": "Triangle (base and height)", "مثلث (3 أضلاع)": "Triangle (3 sides)", "دائرة": "Circle", "شبه منحرف": "Trapezoid",
+  "الطول (م)": "Length (m)", "العرض (م)": "Width (m)", "القاعدة (م)": "Base (m)", "الارتفاع (م)": "Height (m)", "الضلع الأول (م)": "First side (m)", "الضلع الثاني (م)": "Second side (m)", "الضلع الثالث (م)": "Third side (m)",
+  "نصف القطر (م)": "Radius (m)", "القاعدة الأولى (م)": "First base (m)", "القاعدة الثانية (م)": "Second base (m)", "النقاط (E N)": "Points (E N)", "النقاط (خط العرض، خط الطول)": "Points (latitude, longitude)",
+  "كل سطر نقطة، وافصل بين E وN بمسافة أو فاصلة. رتّب النقاط بالتسلسل حول الحدود.": "One point per line; separate E and N with a space or comma. Order the points sequentially around the boundary.",
+  "كل سطر نقطة بالدرجات العشرية. تُحسب المساحة على مسقط UTM.": "One point per line in decimal degrees. The area is computed on the UTM projection.",
+  "المنسوب 1 (اختياري)": "Elevation 1 (optional)", "المنسوب 2 (اختياري)": "Elevation 2 (optional)", "الاتجاه Azimuth": "Azimuth", "45 أو 45 30 0": "45 or 45 30 0", "المسافة (م)": "Distance (m)",
+  "خط العرض 1": "Latitude 1", "خط الطول 1": "Longitude 1", "خط العرض 2": "Latitude 2", "خط الطول 2": "Longitude 2",
+  "Azimuth = الزاوية من الشمال مع عقارب الساعة.": "Azimuth = the angle from North, clockwise.", "الاتجاه بالدرجات العشرية أو درجات ودقائق وثوانٍ.": "Direction in decimal degrees or degrees, minutes and seconds.",
+  "المسافة على سطح الإهليلج WGS84 (طريقة Vincenty).": "Distance on the WGS84 ellipsoid (Vincenty method).", "القيمة": "Value", "من وحدة": "From unit", "نوع القيمة": "Value type",
+  "من نقطة البداية والاتجاه والمسافة نحسب نقطة النهاية. Azimuth من الشمال مع عقارب الساعة.": "From the start point, direction and distance we compute the end point. Azimuth is measured from North, clockwise.",
+  "من إحداثيات نقطتين نحسب المسافة وAzimuth وBearing وفروق الإحداثيات.": "From the coordinates of two points we compute the distance, Azimuth, Bearing and coordinate differences.",
+  "منسوب نقطة البداية RL (م)": "Starting point RL (m)", "القراءات (قراءة في كل سطر: BS أو IS أو FS ثم القيمة)": "Readings (one per line: BS, IS or FS followed by the value)", "منسوب نقطة الإقفال المعلومة (اختياري)": "Known closing point RL (optional)",
+  "كل ميزانية تبدأ بـ BS وتنتهي بـ FS. بعد FS تبدأ ميزانية جديدة بـ BS.": "Each level run starts with BS and ends with FS. After an FS a new run starts with BS.",
+  "فرق المنسوب (م)": "Elevation difference (m)", "الميل (%)": "Slope (%)", "زاوية الميل": "Slope angle", "النسبة 1 : n (أدخل n)": "Ratio 1 : n (enter n)", "المسافة المائلة (م)": "Slope distance (m)", "المسافة الأفقية (م)": "Horizontal distance (m)",
+  "أدخل أي قيمتين متوافقتين (مثل المسافة وفرق المنسوب، أو الميل % ومسافة) والباقي يُحسب.": "Enter any two compatible values (such as distance and elevation difference, or slope % and a distance) and the rest is calculated.",
+  "الميل الطولي (%)": "Longitudinal slope (%)", "الميل العرضي (%)": "Transverse slope (%)", "الميل المحصّل = الجذر التربيعي لمجموع مربعي الميلين المتعامدين.": "Resultant slope = the square root of the sum of the squares of the two perpendicular slopes.",
+  "المقاطع (كل سطر: المحطة، مساحة الحفر، مساحة الردم)": "Sections (one per line: station, cut area, fill area)", "طريقة متوسط المساحات (Average End Area): الحجم = (A1 + A2) / 2 × المسافة.": "Average End Area method: volume = (A1 + A2) / 2 × distance.",
+  "منسوب التصميم (م)": "Design level (m)", "نقاط الأرض (كل سطر: المسافة الأفقية من المحور، منسوب الأرض)": "Ground points (one per line: offset from the centerline, ground level)",
+  "تُحسب مساحة الحفر (الأرض فوق التصميم) ومساحة الردم (الأرض تحت التصميم).": "Cut area (ground above design) and fill area (ground below design) are computed.",
+  "E نقطة البداية": "Start point E", "N نقطة البداية": "Start point N", "الأضلاع (كل سطر: المسافة ثم Azimuth)": "Legs (one per line: distance then Azimuth)",
+  "ترافيرس مقفل. Azimuth بالدرجات العشرية أو درجات ودقائق وثوانٍ. التصحيح بطريقة Bowditch.": "Closed traverse. Azimuth in decimal degrees or degrees, minutes and seconds. Adjusted by the Bowditch rule.",
+  "Azimuth الضلع الأول": "Azimuth of first leg", "اتجاه المسير": "Traverse direction", "مع عقارب الساعة": "Clockwise", "عكس عقارب الساعة": "Counter-clockwise", "توزيع خطأ الزوايا": "Distribute angle error", "نعم": "Yes", "لا": "No",
+  "الأضلاع (كل سطر: المسافة ثم الزاوية الداخلية عند نهاية الضلع)": "Legs (one per line: distance then the interior angle at the end of the leg)",
+  "الزاوية في كل سطر هي الزاوية الداخلية عند المحطة التي ينتهي عندها الضلع (الأخيرة عند نقطة البداية).": "The angle on each line is the interior angle at the station where the leg ends (the last one is at the start point).",
+  "نصف القطر R (م)": "Radius R (m)", "زاوية الانحراف Δ": "Deflection angle Δ", "كيلومتراج PI (اختياري)": "PI chainage (optional)", "فاصل التوقيع (م)": "Setting-out interval (m)", "أو مسافات محددة من PC (اختياري)": "Or specific distances from PC (optional)",
+  "نحسب T وL وLC وE وM، ونقاط التوقيع بزاوية الانحراف والوتر والإحداثيات من المماس عند PC.": "We compute T, L, LC, E and M, and the setting-out points with deflection angle, chord and tangent coordinates from PC.",
+  /* units */
+  "الطول": "Length", "المساحة": "Area", "الزوايا": "Angles", "الحجم": "Volume", "الميل": "Slope", "متر (م)": "Meter (m)", "كيلومتر (كم)": "Kilometer (km)", "سنتيمتر (سم)": "Centimeter (cm)", "مليمتر (مم)": "Millimeter (mm)", "بوصة (in)": "Inch (in)", "قدم (ft)": "Foot (ft)",
+  "ياردة (yd)": "Yard (yd)", "ميل (mi)": "Mile (mi)", "قدم مساحي أمريكي": "US survey foot", "ميل بحري": "Nautical mile", "شين (Chain)": "Chain", "قصبة": "Qasaba (3.55 m)",
+  "متر مربع (م²)": "Square meter (m²)", "كيلومتر مربع (كم²)": "Square kilometer (km²)", "هكتار": "Hectare", "فدان": "Feddan", "قيراط": "Qirat", "سهم": "Sahm", "قصبة مربعة": "Square qasaba", "أكر (acre)": "Acre", "قدم مربع (ft²)": "Square foot (ft²)",
+  "ياردة مربعة (yd²)": "Square yard (yd²)", "ميل مربع (mi²)": "Square mile (mi²)", "درجة (°)": "Degree (°)", "راديان (rad)": "Radian (rad)", "جراد (gon)": "Gradian (gon)", "دقيقة قوسية (′)": "Arcminute (′)", "ثانية قوسية (″)": "Arcsecond (″)",
+  "متر مكعب (م³)": "Cubic meter (m³)", "لتر": "Liter", "سنتيمتر مكعب (سم³)": "Cubic centimeter (cm³)", "قدم مكعب (ft³)": "Cubic foot (ft³)", "ياردة مكعبة (yd³)": "Cubic yard (yd³)", "جالون أمريكي": "US gallon",
+  "نسبة مئوية %": "Percent %", "درجات °": "Degrees °", "نسبة 1 : n (أدخل n)": "Ratio 1 : n (enter n)", "نسبة مئوية (%)": "Percent (%)", "درجات (°)": "Degrees (°)", "نسبة (1 : n)": "Ratio (1 : n)",
+  /* results */
+  "المنطقة (Zone)": "Zone", "جنوب (S)": "South (S)", "شمال (N)": "North (N)", "UTM كنص": "UTM as text", "العرض DMS": "Latitude DMS", "الطول DMS": "Longitude DMS", "المساحة (م²)": "Area (m²)", "فدان / قيراط / سهم": "Feddan / Qirat / Sahm",
+  "كم²": "km²", "قدم² (ft²)": "ft²", "المحيط (م)": "Perimeter (m)", "عدد النقاط": "Number of points", "مركز E": "Centroid E", "مركز N": "Centroid N", "المنطقة (UTM)": "UTM zone", "المسافة (م)": "Distance (m)", "المسافة (كم)": "Distance (km)",
+  "الاتجاه (Azimuth)": "Azimuth", "الاتجاه العكسي": "Back azimuth", "الاتجاه الربعي": "Quadrant bearing", "الاتجاه الأمامي": "Forward azimuth", "الزاوية الرأسية": "Vertical angle", "المسافة المائلة": "Slope distance", "المسافة الأفقية": "Horizontal distance", "فرق المنسوب": "Elevation difference",
+  "ΔE (م)": "ΔE (m)", "ΔN (م)": "ΔN (m)", "ΔZ (م)": "ΔZ (m)", "Azimuth (د°ق′ث″)": "Azimuth (DMS)", "د°ق′ث″": "DMS", "د°ق′ث″ (DMS)": "DMS", "الميل %": "Slope %", "الميل (%)": "Slope (%)", "زاوية الميل °": "Slope angle °", "زاوية الميل (د°ق′ث″)": "Slope angle (DMS)", "النسبة 1:n": "Ratio 1:n",
+  "آخر RL − أول RL": "Last RL − first RL", "التحقق الحسابي": "Arithmetic check", "✓ سليم": "✓ Correct", "✗ يوجد خطأ حسابي": "✗ Arithmetic error", "خطأ الإقفال (م)": "Misclosure (m)", "خطأ الإقفال (مم)": "Misclosure (mm)",
+  "الميل المحصّل (%)": "Resultant slope (%)", "زاوية الميل المحصّل °": "Resultant slope angle °", "زاوية الاتجاه عن المحور الطولي °": "Direction angle from the longitudinal axis °",
+  "إجمالي الحفر (م³)": "Total cut (m³)", "إجمالي الردم (م³)": "Total fill (m³)", "الصافي: حفر − ردم (م³)": "Net: cut − fill (m³)", "مساحة الحفر (م²)": "Cut area (m²)", "مساحة الردم (م²)": "Fill area (m²)", "عرض المقطع (م)": "Section width (m)",
+  "خطأ إقفال الزوايا (°)": "Angular misclosure (°)", "ΣΔE = fE (م)": "ΣΔE = fE (m)", "ΣΔN = fN (م)": "ΣΔN = fN (m)", "خطأ الإقفال الخطي (م)": "Linear misclosure (m)", "الدقة النسبية": "Relative precision", "P1 (إغلاق)": "P1 (closure)",
+  "زاوية الانحراف Δ °": "Deflection angle Δ °", "طول المماس T (م)": "Tangent length T (m)", "طول المنحنى L (م)": "Curve length L (m)", "الوتر الطويل LC (م)": "Long chord LC (m)", "المسافة الخارجية E (م)": "External distance E (m)", "السهم الأوسط M (م)": "Middle ordinate M (m)", "كيلومتراج PC": "PC chainage", "كيلومتراج PT": "PT chainage",
+  /* errors */
+  "خط العرض يجب أن يكون بين -80 و84، وخط الطول بين -180 و180.": "Latitude must be between -80 and 84, and longitude between -180 and 180.", "رقم المنطقة يجب أن يكون بين 1 و60.": "The zone number must be between 1 and 60.",
+  "المنطقة المحددة بعيدة عن موقع النقطة. اترك الخانة فارغة للحساب التلقائي.": "The chosen zone is far from the point. Leave the field empty for automatic zone selection.", "قيم Easting/Northing خارج المدى المعقول لنظام UTM.": "Easting/Northing values are outside the plausible UTM range.",
+  "كل القيم يجب أن تكون أكبر من صفر.": "All values must be greater than zero.", "الأضلاع لا تكوّن مثلثاً.": "These sides do not form a triangle.", "أدخل 3 نقاط على الأقل.": "Enter at least 3 points.", "الصيغة: خط العرض ثم خط الطول بالدرجات العشرية.": "Format: latitude then longitude in decimal degrees.",
+  "النقاط تمتد على أكثر من منطقة UTM، قسّم الحدود.": "The points span more than one UTM zone; split the boundary.", "النقطتان متطابقتان.": "The two points are identical.", "المسافة يجب ألا تكون سالبة.": "The distance must not be negative.",
+  "العرض بين -90 و90، والطول بين -180 و180.": "Latitude must be between -90 and 90, and longitude between -180 and 180.", "تعذر الحساب (نقطتان متقابلتان تقريباً على الكرة).": "Calculation failed (the points are nearly antipodal).",
+  "الزاوية يجب أن تكون أقل من 90°.": "The angle must be less than 90°.", "نسبة الميل لا يمكن أن تكون صفراً.": "The slope ratio cannot be zero.", "كل ميزانية (وما بعد FS) تبدأ بقراءة BS.": "Each level run (and any run after an FS) must start with a BS reading.",
+  "القراءات لا يمكن أن تكون سالبة.": "Readings cannot be negative.", "لا تضع BS بعد BS أو IS مباشرة؛ ضع FS قبله.": "Do not put a BS directly after a BS or IS; put an FS before it.", "آخر قراءة يجب أن تكون FS.": "The last reading must be an FS.",
+  "المسافات يجب أن تكون أكبر من صفر.": "Distances must be greater than zero.", "قيم الميل المدخلة متعارضة.": "The slope values entered contradict each other.", "المسافة المائلة لا يمكن أن تقل عن الأفقية.": "The slope distance cannot be shorter than the horizontal distance.",
+  "المسافة المائلة لا يمكن أن تقل عن فرق المنسوب.": "The slope distance cannot be shorter than the elevation difference.", "القيم المدخلة متعارضة مع بعضها.": "The entered values contradict each other.", "كل سطر: المحطة ثم مساحة الحفر ثم مساحة الردم.": "Each line: station, then cut area, then fill area.",
+  "المساحات لا يمكن أن تكون سالبة.": "Areas cannot be negative.", "المحطات يجب أن تكون تصاعدية.": "Stations must be in ascending order.", "كل سطر: المسافة الأفقية من المحور ثم منسوب الأرض.": "Each line: offset from the centerline, then ground level.", "المسافات يجب أن تكون تصاعدية.": "Offsets must be in ascending order.",
+  "أدخل 3 أضلاع على الأقل.": "Enter at least 3 legs.", "كل سطر: المسافة ثم الاتجاه (أو الزاوية).": "Each line: distance, then direction (or angle).", "زاوية غير صالحة (يجب أن تكون بين 0° و360°).": "Invalid angle (must be between 0° and 360°).",
+  "نصف القطر يجب أن يكون أكبر من صفر.": "The radius must be greater than zero.", "زاوية الانحراف يجب أن تكون بين 0° و180°.": "The deflection angle must be between 0° and 180°.", "قيمة غير صالحة في الكيلومتراج أو الفاصل.": "Invalid value in the chainage or interval.",
+  "مسافات التوقيع يجب أن تكون بين 0 وطول المنحنى.": "Setting-out distances must be between 0 and the curve length.", "الفاصل صغير جداً (أكثر من 200 نقطة).": "The interval is too small (more than 200 points).",
+  /* governorates (shared) */
+  "القاهرة": "Cairo", "الجيزة": "Giza", "الإسكندرية": "Alexandria", "القليوبية": "Qalyubia", "الشرقية": "Sharqia", "الدقهلية": "Dakahlia", "الغربية": "Gharbia", "كفر الشيخ": "Kafr El Sheikh", "المنوفية": "Monufia", "البحيرة": "Beheira", "مطروح": "Matrouh",
+  "الإسماعيلية": "Ismailia", "بورسعيد": "Port Said", "السويس": "Suez", "شمال سيناء": "North Sinai", "جنوب سيناء": "South Sinai", "دمياط": "Damietta", "الفيوم": "Fayoum", "بني سويف": "Beni Suef", "المنيا": "Minya", "أسيوط": "Assiut", "سوهاج": "Sohag", "قنا": "Qena",
+  "الأقصر": "Luxor", "أسوان": "Aswan", "البحر الأحمر": "Red Sea", "الوادي الجديد": "New Valley", "أخرى": "Other"
+};
+const ENRX = [
+  [/^(\d+) أخصائي مساحة نشط في (.+)$/, m => `${m[1]} active survey specialist${m[1] === "1" ? "" : "s"} in ${trs(m[2])}`],
+  [/^لسه مفيش أخصائيين معتمدين في (.+)، وهنتواصل معاك لما يتوفر أخصائي\.$/, m => `No approved specialists in ${trs(m[1])} yet. We'll contact you when one becomes available.`],
+  [/^(\d+) سنة خبرة$/, m => `${m[1]} year${m[1] === "1" ? "" : "s"} of experience`], [/^(\d+) مشروع$/, m => `${m[1]} project${m[1] === "1" ? "" : "s"}`],
+  [/^اكتمال الملف (\d+)%$/, m => `Profile completeness ${m[1]}%`],
+  [/^(\d+) فدان (\d+) قيراط ([\d.]+) سهم$/, m => `${m[1]} feddan ${m[2]} qirat ${m[3]} sahm`],
+  [/^حفر ([\d.\-]+) \| ردم ([\d.\-]+)$/, m => `Cut ${m[1]} | Fill ${m[2]}`],
+  [/^l = ([\d.]+) م((?: \| CH [\d.]+)?)$/, m => `l = ${m[1]} m${m[2]}`],
+  [/^(P\d+) قبل التصحيح$/, m => `${m[1]} before adjustment`], [/^(P\d+) بعد التصحيح$/, m => `${m[1]} after adjustment`],
+  [/^P1 \(إغلاق\) قبل التصحيح$/, () => "P1 (closure) before adjustment"], [/^P1 \(إغلاق\) بعد التصحيح$/, () => "P1 (closure) after adjustment"],
+  [/^قيمة غير صالحة في: (.+)$/, m => "Invalid value in: " + trs(m[1])], [/^اتجاه غير صالح: (.+)$/, m => "Invalid direction: " + m[1]],
+  [/^سطر غير صالح: "(.+)"\. اكتب مثلاً: BS 1\.525$/, m => `Invalid line: "${m[1]}". Example: BS 1.525`],
+  [/^المسافة الأفقية$/, () => "Horizontal distance"], [/^الميل %$/, () => "Slope %"]
+];
+const trs = s => {
+  if (LANG === "ar") return s;
+  const k = s.trim(); if (!k) return s;
+  let r = EN[k];
+  if (r === undefined) for (const [re, f] of ENRX) { const m = k.match(re); if (m) { r = f(m); break; } }
+  if (r === undefined) { const sp = [" | ", " · "].find(x => k.includes(x)); if (sp) { const ps = k.split(sp), t = ps.map(p => trs(p)); if (t.some((x, i) => x !== ps[i])) r = t.join(sp); } }
+  return r === undefined ? s : s.replace(k, r);
+};
+function trTree(n) {
+  if (LANG === "ar" || !n) return;
+  if (n.nodeType === 3) { const t = trs(n.nodeValue); if (t !== n.nodeValue) n.nodeValue = t; return; }
+  if (n.nodeType !== 1 || /^(SCRIPT|STYLE)$/.test(n.tagName)) return;
+  ["placeholder", "title", "aria-label", "alt"].forEach(a => { const v = n.getAttribute(a); if (v) { const t = trs(v); if (t !== v) n.setAttribute(a, t); } });
+  n.childNodes.forEach(trTree);
+}
+function applyLang() {
+  document.documentElement.lang = LANG; document.documentElement.dir = LANG === "ar" ? "rtl" : "ltr";
+  document.title = LANG === "ar" ? "GeoLink | أخصائيو المساحة" : "GeoLink | Surveying Specialists";
+}
+function setLang(l) { LANG = l; try { localStorage.setItem("gl_lang", l); } catch (e) { } applyLang(); route(); }
+new MutationObserver(ms => { if (LANG === "ar") return; ms.forEach(m => { if (m.type === "characterData") trTree(m.target); else m.addedNodes.forEach(trTree); }); }).observe(document.body, { childList: true, subtree: true, characterData: true });
+applyLang();
+/* ===== end i18n ===== */
+
+function route() {
+  const h = location.hash.slice(1);
+  if (h === "client" || h === "surveyor") form(h);
+  else if (h === "admin") admin();
+  else if (h === "pro") pro();
+  else if (h === "ai") ai();
+  else if (h === "tools") tools();
+  else if (/^tool:\w+$/.test(h)) toolPage(h.slice(5));
+  else if (h === "my") my();
+  else if (h === "jobs") jobsPage();
+  else if (h === "specialists") specialistsPage();
+  else if (h === "profile") profilePage();
+  else if (/^sp:\w+$/.test(h)) specialistDetail(h.slice(3));
+  else if (h === "assistant") assistantForm();
+  else if (h === "account") account();
+  else home();
+  app.className = ["client", "surveyor", "admin", "pro", "ai", "my", "account", "assistant", "tools", "jobs", "specialists", "profile"].includes(h) || h.startsWith("sp:") || h.startsWith("tool:") ? "page" : "";
+  setNav(h);
+  trTree(app); trTree(document.getElementById("nav"));
+  scrollTo(0, 0);
+}
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+addEventListener("hashchange", route);
 route();
 </script>
 </body>
